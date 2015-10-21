@@ -16,6 +16,14 @@ class ViewController: UIViewController {
     
     @IBOutlet var password: UITextField!
     
+    @IBOutlet var signUpText: UIButton!
+    
+    @IBOutlet var registerLabel: UILabel!
+    
+    @IBOutlet var logInText: UIButton!
+    
+    var signUpActive = true
+    
     var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
     
     func displayAlert(title: String, message: String) {
@@ -71,6 +79,18 @@ class ViewController: UIViewController {
     }
     
     @IBAction func logInButton(sender: AnyObject) {
+        
+        if signUpActive == true {
+            signUpText.setTitle("Login", forState: UIControlState.Normal)
+            registerLabel.text = "Not registered?"
+            logInText.setTitle("SignUp", forState: UIControlState.Normal)
+            signUpActive = false
+        } else {
+            signUpText.setTitle("Sign Up", forState: UIControlState.Normal)
+            registerLabel.text = "Already registered?"
+            logInText.setTitle("Login", forState: UIControlState.Normal)
+            signUpActive = true
+        }
     }
     override func viewDidLoad() {
         super.viewDidLoad()
