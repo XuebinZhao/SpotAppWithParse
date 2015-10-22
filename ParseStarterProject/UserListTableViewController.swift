@@ -32,8 +32,11 @@ class UserListTableViewController: UITableViewController {
                 
                 for object in users {
                     if let user = object as? PFUser {
-                        self.userNames.append(user.username!)
-                        self.userIds.append(user.objectId!)
+                        // add one condition that don't show current user name on the table
+                        if user.objectId! != PFUser.currentUser()?.objectId {
+                            self.userNames.append(user.username!)
+                            self.userIds.append(user.objectId!)
+                        }
                     }
                 }
             }
