@@ -12,7 +12,7 @@ import Parse
 
 @available(iOS 8.0, *)
 class ViewController: UIViewController {
-
+    
     @IBOutlet var userName: UITextField!
     
     @IBOutlet var password: UITextField!
@@ -57,28 +57,28 @@ class ViewController: UIViewController {
             var errorMessage = "Please try again later"
             
             if signUpActive == true {
-            
-            let user = PFUser()
-            user.username = userName.text
-            user.password = password.text
-            
-            user.signUpInBackgroundWithBlock({ (success, error) -> Void in
                 
-                self.activityIndicator.stopAnimating()
-                UIApplication.sharedApplication().endIgnoringInteractionEvents()
+                let user = PFUser()
+                user.username = userName.text
+                user.password = password.text
                 
-                if error == nil {
-                    // Signup successful
-                    self.performSegueWithIdentifier("login", sender: self)
+                user.signUpInBackgroundWithBlock({ (success, error) -> Void in
                     
-                } else {
-                    if let errorString = error!.userInfo["error"] as? String {
-                        errorMessage = errorString
+                    self.activityIndicator.stopAnimating()
+                    UIApplication.sharedApplication().endIgnoringInteractionEvents()
+                    
+                    if error == nil {
+                        // Signup successful
+                        self.performSegueWithIdentifier("login", sender: self)
+                        
+                    } else {
+                        if let errorString = error!.userInfo["error"] as? String {
+                            errorMessage = errorString
+                        }
+                        
+                        self.displayAlert("Failed Signed", message: errorMessage)
                     }
-                    
-                    self.displayAlert("Failed Signed", message: errorMessage)
-                }
-            })
+                })
             } else {
                 PFUser.logInWithUsernameInBackground(userName.text!, password: password.text!, block: { (user, error) -> Void in
                     self.activityIndicator.stopAnimating()
@@ -117,12 +117,12 @@ class ViewController: UIViewController {
         // Do any additional setup after loading the view, typically from a nib.
     }
     
-    override func viewDidAppear(animated: Bool) {
+    /*override func viewDidAppear(animated: Bool) {
         if PFUser.currentUser() != nil {
             self.performSegueWithIdentifier("login", sender: self)
         }
-    }
-
+    }*/
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
