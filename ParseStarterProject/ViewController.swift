@@ -10,6 +10,7 @@
 import UIKit
 import Parse
 
+@available(iOS 8.0, *)
 class ViewController: UIViewController {
 
     @IBOutlet var userName: UITextField!
@@ -28,7 +29,7 @@ class ViewController: UIViewController {
     
     func displayAlert(title: String, message: String) {
         
-        var alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
+        let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
         alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: { (action) -> Void in
             self.dismissViewControllerAnimated(true, completion: nil)
         }))
@@ -57,7 +58,7 @@ class ViewController: UIViewController {
             
             if signUpActive == true {
             
-            var user = PFUser()
+            let user = PFUser()
             user.username = userName.text
             user.password = password.text
             
@@ -71,7 +72,7 @@ class ViewController: UIViewController {
                     self.performSegueWithIdentifier("login", sender: self)
                     
                 } else {
-                    if let errorString = error!.userInfo?["error"] as? String {
+                    if let errorString = error!.userInfo["error"] as? String {
                         errorMessage = errorString
                     }
                     
@@ -79,14 +80,14 @@ class ViewController: UIViewController {
                 }
             })
             } else {
-                PFUser.logInWithUsernameInBackground(userName.text, password: password.text, block: { (user, error) -> Void in
+                PFUser.logInWithUsernameInBackground(userName.text!, password: password.text!, block: { (user, error) -> Void in
                     self.activityIndicator.stopAnimating()
                     UIApplication.sharedApplication().endIgnoringInteractionEvents()
                     if user != nil {
                         // Logged IN
                         self.performSegueWithIdentifier("login", sender: self)
                     } else {
-                        if let errorString = error!.userInfo?["error"] as? String {
+                        if let errorString = error!.userInfo["error"] as? String {
                             errorMessage = errorString
                         }
                         self.displayAlert("Failed Login", message: errorMessage)

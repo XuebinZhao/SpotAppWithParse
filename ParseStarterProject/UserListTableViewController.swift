@@ -23,7 +23,7 @@ class UserListTableViewController: UITableViewController {
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
         
-        var query = PFUser.query()
+        let query = PFUser.query()
         
         query?.findObjectsInBackgroundWithBlock({ (objects, error) -> Void in
             if let users = objects {
@@ -38,8 +38,8 @@ class UserListTableViewController: UITableViewController {
                 }
             }
             
-            println(self.userNames)
-            println(self.userIds)
+            print(self.userNames)
+            print(self.userIds)
             self.tableView.reloadData()
         })
     }
@@ -65,7 +65,7 @@ class UserListTableViewController: UITableViewController {
 
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath) as! UITableViewCell
+        let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath) 
 
         // Configure the cell...
         cell.textLabel?.text = userNames[indexPath.row]
