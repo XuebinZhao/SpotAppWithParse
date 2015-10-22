@@ -55,6 +55,8 @@ class ViewController: UIViewController {
             
             var errorMessage = "Please try again later"
             
+            if signUpActive == true {
+            
             var user = PFUser()
             user.username = userName.text
             user.password = password.text
@@ -66,6 +68,8 @@ class ViewController: UIViewController {
                 
                 if error == nil {
                     // Signup successful
+                    self.performSegueWithIdentifier("login", sender: self)
+                    
                 } else {
                     if let errorString = error!.userInfo?["error"] as? String {
                         errorMessage = errorString
@@ -74,6 +78,21 @@ class ViewController: UIViewController {
                     self.displayAlert("Failed Signed", message: errorMessage)
                 }
             })
+            } else {
+                PFUser.logInWithUsernameInBackground(userName.text, password: password.text, block: { (user, error) -> Void in
+                    self.activityIndicator.stopAnimating()
+                    UIApplication.sharedApplication().endIgnoringInteractionEvents()
+                    if user != nil {
+                        // Logged IN
+                        self.performSegueWithIdentifier("login", sender: self)
+                    } else {
+                        if let errorString = error!.userInfo?["error"] as? String {
+                            errorMessage = errorString
+                        }
+                        self.displayAlert("Failed Login", message: errorMessage)
+                    }
+                })
+            }
         }
         
     }
@@ -95,6 +114,12 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        if PFUser.currentUser() != nil {
+            self.performSegueWithIdentifier("login", sender: self)
+        }
     }
 
     override func didReceiveMemoryWarning() {
