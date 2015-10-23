@@ -7,6 +7,8 @@
 * of patent rights can be found in the PATENTS file in the same directory.
 */
 
+// ADDED COMMENT IN APPDELEGATE
+
 import UIKit
 
 import Parse
