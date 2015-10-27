@@ -14,8 +14,18 @@ class UserListTableViewController: UITableViewController {
     var userNames = [""]
     var userIds   = [""]
 
+    @IBAction func logOut(sender: AnyObject) {
+        PFUser.logOut()
+        let currentUser = PFUser.currentUser()
+        if currentUser != nil {
+            dismissViewControllerAnimated(true, completion: nil)
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+
 
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -24,6 +34,7 @@ class UserListTableViewController: UITableViewController {
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
         
         let query = PFUser.query()
+        
         
         query?.findObjectsInBackgroundWithBlock({ (objects, error) -> Void in
             if let users = objects {

@@ -11,7 +11,7 @@ import UIKit
 import Parse
 
 @available(iOS 8.0, *)
-class ViewController: UIViewController {
+class ViewController: UIViewController, UITextFieldDelegate {
 
     @IBOutlet var userName: UITextField!
     
@@ -36,6 +36,11 @@ class ViewController: UIViewController {
         
         self.presentViewController(alert, animated: true, completion: nil)
         
+    }
+    
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
     }
     
     @IBAction func signUpButton(sender: AnyObject) {
@@ -115,6 +120,8 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        userName.delegate = self
+        password.delegate = self
     }
     
 //    override func viewDidAppear(animated: Bool) {

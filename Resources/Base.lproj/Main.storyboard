@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="8191" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9059" systemVersion="14F1021" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
@@ -158,16 +159,28 @@
                             <outlet property="delegate" destination="tmT-li-zR0" id="C6v-Ej-s1p"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="User List" id="DPL-ed-lPy"/>
+                    <navigationItem key="navigationItem" title="User List" id="DPL-ed-lPy">
+                        <barButtonItem key="leftBarButtonItem" title="Logout" id="JcI-yw-g7p">
+                            <color key="tintColor" red="1" green="0.1706450773" blue="0.23285478700000001" alpha="1" colorSpace="calibratedRGB"/>
+                            <connections>
+                                <action selector="logOut:" destination="tmT-li-zR0" id="UJn-Ia-9vd"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="Map" id="Qgx-G0-3vs">
+                            <connections>
+                                <segue destination="PRO-e7-39A" kind="show" identifier="ToMap" id="XXz-Mk-oVT"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nRW-Lc-4sn" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1845" y="392"/>
+            <point key="canvasLocation" x="1844" y="392"/>
         </scene>
-        <!--View Controller-->
+        <!--Map View Controller-->
         <scene sceneID="wPy-5h-so1">
             <objects>
-                <viewController id="PRO-e7-39A" sceneMemberID="viewController">
+                <viewController id="PRO-e7-39A" customClass="MapViewController" customModule="SpotAppParse" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="YYg-Wd-biy"/>
                         <viewControllerLayoutGuide type="bottom" id="q9p-Sf-ekf"/>
@@ -175,8 +188,22 @@
                     <view key="view" contentMode="scaleToFill" id="OBU-u0-BYo">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="UEG-J1-uah">
+                                <rect key="frame" x="0.0" y="64" width="600" height="536"/>
+                            </mapView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailingMargin" secondItem="UEG-J1-uah" secondAttribute="trailing" constant="-20" id="SE4-2w-MeL"/>
+                            <constraint firstItem="UEG-J1-uah" firstAttribute="leading" secondItem="OBU-u0-BYo" secondAttribute="leadingMargin" constant="-20" id="dDz-hR-y9p"/>
+                            <constraint firstItem="UEG-J1-uah" firstAttribute="top" secondItem="YYg-Wd-biy" secondAttribute="bottom" id="kg8-aD-I02"/>
+                            <constraint firstItem="q9p-Sf-ekf" firstAttribute="top" secondItem="UEG-J1-uah" secondAttribute="bottom" id="mKm-8o-7vO"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="mapView" destination="UEG-J1-uah" id="lbT-Tj-BcL"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="DZx-gs-hm7" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
