@@ -38,6 +38,11 @@ class ViewController: UIViewController {
         
     }
     
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+    
     @IBAction func signUpButton(sender: AnyObject) {
         
         if userName.text == "" || password.text == "" {
@@ -115,6 +120,8 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        userName.delegate = self
+        password.delegate = self
     }
     
     override func didReceiveMemoryWarning() {

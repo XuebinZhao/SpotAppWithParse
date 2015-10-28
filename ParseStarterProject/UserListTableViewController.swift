@@ -14,8 +14,18 @@ class UserListTableViewController: UITableViewController {
     var userNames = [""]
     var userIds   = [""]
 
+    @IBAction func logOut(sender: AnyObject) {
+        PFUser.logOut()
+        let currentUser = PFUser.currentUser()
+        if currentUser != nil {
+            dismissViewControllerAnimated(true, completion: nil)
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+
 
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -25,6 +35,7 @@ class UserListTableViewController: UITableViewController {
         
         let query = PFUser.query()
         
+        
         query?.findObjectsInBackgroundWithBlock({ (objects, error) -> Void in
             if let users = objects {
                 self.userNames.removeAll(keepCapacity: true)
@@ -32,8 +43,11 @@ class UserListTableViewController: UITableViewController {
                 
                 for object in users {
                     if let user = object as? PFUser {
-                        self.userNames.append(user.username!)
-                        self.userIds.append(user.objectId!)
+                        // add one condition that don't show current user name on the table
+                        if user.objectId! != PFUser.currentUser()?.objectId {
+                            self.userNames.append(user.username!)
+                            self.userIds.append(user.objectId!)
+                        }
                     }
                 }
             }
