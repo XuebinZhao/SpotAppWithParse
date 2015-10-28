@@ -190,15 +190,27 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="UEG-J1-uah">
-                                <rect key="frame" x="0.0" y="64" width="600" height="536"/>
+                                <rect key="frame" x="0.0" y="64" width="600" height="487"/>
                             </mapView>
+                            <tabBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mGs-u0-aD7">
+                                <rect key="frame" x="0.0" y="551" width="600" height="49"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <items>
+                                    <tabBarItem systemItem="bookmarks" id="DuC-pr-KsR"/>
+                                    <tabBarItem systemItem="recents" id="63O-Jx-5B2"/>
+                                </items>
+                            </tabBar>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="mGs-u0-aD7" firstAttribute="top" secondItem="UEG-J1-uah" secondAttribute="bottom" id="9Rb-nY-tUt"/>
+                            <constraint firstItem="mGs-u0-aD7" firstAttribute="leading" secondItem="OBU-u0-BYo" secondAttribute="leadingMargin" constant="-20" id="FGu-Ju-tR1"/>
                             <constraint firstAttribute="trailingMargin" secondItem="UEG-J1-uah" secondAttribute="trailing" constant="-20" id="SE4-2w-MeL"/>
+                            <constraint firstItem="q9p-Sf-ekf" firstAttribute="top" secondItem="mGs-u0-aD7" secondAttribute="bottom" id="Uiu-Ac-Lg1"/>
                             <constraint firstItem="UEG-J1-uah" firstAttribute="leading" secondItem="OBU-u0-BYo" secondAttribute="leadingMargin" constant="-20" id="dDz-hR-y9p"/>
                             <constraint firstItem="UEG-J1-uah" firstAttribute="top" secondItem="YYg-Wd-biy" secondAttribute="bottom" id="kg8-aD-I02"/>
-                            <constraint firstItem="q9p-Sf-ekf" firstAttribute="top" secondItem="UEG-J1-uah" secondAttribute="bottom" id="mKm-8o-7vO"/>
+                            <constraint firstItem="q9p-Sf-ekf" firstAttribute="top" secondItem="UEG-J1-uah" secondAttribute="bottom" constant="49" id="mKm-8o-7vO"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="mGs-u0-aD7" secondAttribute="trailing" constant="-20" id="yIx-L8-TaF"/>
                         </constraints>
                     </view>
                     <connections>
