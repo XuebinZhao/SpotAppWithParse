@@ -55,6 +55,13 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
         
         mapView.setRegion(region, animated: false)
         
+        let annotation = MKPointAnnotation()
+        
+        annotation.coordinate = location
+       
+        
+        mapView.addAnnotation(annotation)
+        
     }
     
     
