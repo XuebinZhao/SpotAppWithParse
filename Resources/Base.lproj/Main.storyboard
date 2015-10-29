@@ -5,12 +5,13 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="Navigation items with more than one left or right bar item" minToolsVersion="7.0"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="SpotAppParse" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="welcome" id="BYZ-38-t0r" customClass="ViewController" customModule="SpotAppParse" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -220,7 +221,24 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Map" id="PeO-Io-s3l">
-                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="QYv-6G-rpE"/>
+                        <barButtonItem key="leftBarButtonItem" title="Logout" id="gzF-4V-RFO">
+                            <color key="tintColor" red="1" green="0.1706450773" blue="0.23285478700000001" alpha="1" colorSpace="calibratedRGB"/>
+                            <connections>
+                                <action selector="logOut:" destination="1wF-R3-y0g" id="ibT-sA-sk5"/>
+                            </connections>
+                        </barButtonItem>
+                        <rightBarButtonItems>
+                            <barButtonItem systemItem="save" id="QYv-6G-rpE">
+                                <connections>
+                                    <action selector="saveParkLocation:" destination="1wF-R3-y0g" id="5Hz-cG-H5h"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem systemItem="refresh" id="DhE-9r-ukw">
+                                <connections>
+                                    <action selector="refreshMap:" destination="1wF-R3-y0g" id="bTk-a5-1fF"/>
+                                </connections>
+                            </barButtonItem>
+                        </rightBarButtonItems>
                     </navigationItem>
                     <connections>
                         <outlet property="map" destination="Uoe-DZ-Oh0" id="HVd-DU-oBy"/>
@@ -246,6 +264,9 @@
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <segue destination="1wF-R3-y0g" kind="show" id="3gh-f4-F2f"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -354,4 +375,7 @@
             <point key="canvasLocation" x="1270" y="20"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="drc-1t-M33"/>
+    </inferredMetricsTieBreakers>
 </document>
