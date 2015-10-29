@@ -9,6 +9,7 @@
 import UIKit
 import MapKit
 import CoreLocation
+import Parse
 
 class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
 
@@ -25,15 +26,26 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
         manager.desiredAccuracy = kCLLocationAccuracyBest
         manager.requestWhenInUseAuthorization()
         manager.startUpdatingLocation()
+        //let timer = NSTimer.scheduledTimerWithTimeInterval(3, target: self, selector: "stopUpdating", userInfo: nil, repeats: false)
         
         
     }
+    
+//    func stopUpdating() {
+//        manager.stopUpdatingLocation()
+//    }
+    
+    @IBAction func showProfile(sender: AnyObject) {
+        print("I am here")
+        performSegueWithIdentifier("profile", sender: self)
+    }
+    
     
     //NOTE: [AnyObject] changed to [CLLocation]
     
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         
-        print(locations)
+        //print(locations)
         
         //userLocation - there is no need for casting, because we are now using CLLocation object
         
@@ -43,9 +55,9 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
         
         let longitude:CLLocationDegrees = userLocation.coordinate.longitude
         
-        let latDelta:CLLocationDegrees = 0.05
+        let latDelta:CLLocationDegrees = 0.01
         
-        let lonDelta:CLLocationDegrees = 0.05
+        let lonDelta:CLLocationDegrees = 0.01
         
         let span:MKCoordinateSpan = MKCoordinateSpanMake(latDelta, lonDelta)
         

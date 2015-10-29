@@ -90,6 +90,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
                     UIApplication.sharedApplication().endIgnoringInteractionEvents()
                     if user != nil {
                         // Logged IN
+                        logIn = true
                         self.performSegueWithIdentifier("login", sender: self)
                     } else {
                         if let errorString = error!.userInfo["error"] as? String {
@@ -124,11 +125,13 @@ class ViewController: UIViewController, UITextFieldDelegate {
         password.delegate = self
     }
     
-//    override func viewDidAppear(animated: Bool) {
-//        if PFUser.currentUser() != nil {
-//            self.performSegueWithIdentifier("login", sender: self)
-//        }
-//    }
+    override func viewDidAppear(animated: Bool) {
+        if logIn == true {
+            if PFUser.currentUser() != nil {
+                self.performSegueWithIdentifier("login", sender: self)
+            }
+        }
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
