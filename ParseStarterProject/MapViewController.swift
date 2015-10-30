@@ -67,15 +67,13 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
         
         mapView.setRegion(region, animated: false)
         
-        print(latitude)
-        print(longitude)
+        mapView.showsUserLocation = true
         
-        let annotation = MKPointAnnotation()
+     //   let annotation = MKPointAnnotation()
         
-        annotation.coordinate = location
+      //  annotation.coordinate = location
         
-        mapView.addAnnotation(annotation)
-
+       // mapView.addAnnotation(annotation)
         
     }
     

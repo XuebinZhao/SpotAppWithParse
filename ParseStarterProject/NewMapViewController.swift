@@ -40,6 +40,7 @@ class NewMapViewController: UIViewController, CLLocationManagerDelegate {
         manager = CLLocationManager()
         manager.delegate = self
         manager.desiredAccuracy = kCLLocationAccuracyBest
+        self.map.showsUserLocation = true
         
         if activePlace == -1 {
             manager.requestAlwaysAuthorization()
@@ -69,6 +70,8 @@ class NewMapViewController: UIViewController, CLLocationManagerDelegate {
             
             self.map.addAnnotation(annotation)
             
+          
+            
         }
         
         let uilpgr = UILongPressGestureRecognizer(target: self, action: "action:")
@@ -76,6 +79,8 @@ class NewMapViewController: UIViewController, CLLocationManagerDelegate {
         uilpgr.minimumPressDuration = 1.0
         
         map.addGestureRecognizer(uilpgr)
+        
+        
     }
     
     func action(gestureRecognizer:UIGestureRecognizer) {
