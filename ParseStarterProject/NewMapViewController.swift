@@ -17,8 +17,7 @@ class NewMapViewController: UIViewController, CLLocationManagerDelegate {
     var manager: CLLocationManager!
     
     var saveCheck = false
-    
-//    var titleLocal = ""
+
     var latLocal:Double = 0.0
     var lonLocal:Double = 0.0
     
@@ -40,7 +39,7 @@ class NewMapViewController: UIViewController, CLLocationManagerDelegate {
         manager = CLLocationManager()
         manager.delegate = self
         manager.desiredAccuracy = kCLLocationAccuracyBest
-        self.map.showsUserLocation = true
+        //self.map.showsUserLocation = true
         
         if activePlace == -1 {
             manager.requestAlwaysAuthorization()
@@ -163,7 +162,7 @@ class NewMapViewController: UIViewController, CLLocationManagerDelegate {
 
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         
-        print(locations)
+        //print(locations)
         
         let userLocation:CLLocation = locations[0] as CLLocation
         
@@ -190,8 +189,8 @@ class NewMapViewController: UIViewController, CLLocationManagerDelegate {
         
         latLocal = latitude
         lonLocal = longitude
-        print(latLocal)
-        print(lonLocal)
+//        print(latLocal)
+//        print(lonLocal)
         
     }
     
