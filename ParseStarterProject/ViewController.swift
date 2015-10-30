@@ -131,6 +131,9 @@ class ViewController: UIViewController, UITextFieldDelegate {
                 self.performSegueWithIdentifier("login", sender: self)
             }
         }
+//        else {
+//            PFUser.logOut()
+//        }
     }
 
     override func didReceiveMemoryWarning() {

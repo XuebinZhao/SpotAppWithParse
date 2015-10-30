@@ -228,7 +228,7 @@
                             </connections>
                         </barButtonItem>
                         <rightBarButtonItems>
-                            <barButtonItem systemItem="save" id="QYv-6G-rpE">
+                            <barButtonItem title="Park" id="QYv-6G-rpE">
                                 <connections>
                                     <action selector="saveParkLocation:" destination="1wF-R3-y0g" id="5Hz-cG-H5h"/>
                                 </connections>

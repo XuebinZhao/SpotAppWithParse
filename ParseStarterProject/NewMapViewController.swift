@@ -18,6 +18,10 @@ class NewMapViewController: UIViewController, CLLocationManagerDelegate {
     
     var saveCheck = false
     
+//    var titleLocal = ""
+    var latLocal:Double = 0.0
+    var lonLocal:Double = 0.0
+    
     @IBAction func refreshMap(sender: AnyObject) {
         let annotationsToRemove = map.annotations
         self.map.removeAnnotations(annotationsToRemove)
@@ -25,14 +29,13 @@ class NewMapViewController: UIViewController, CLLocationManagerDelegate {
     
     @IBAction func saveParkLocation(sender: AnyObject) {
         saveCheck = true
-        manager.stopUpdatingLocation()
-        manager.requestAlwaysAuthorization()
-        manager.startUpdatingLocation()
+        self.saveLocation(latLocal, longitude: lonLocal)
     }
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
+//        self.map.showsUserLocation = true
 
         manager = CLLocationManager()
         manager.delegate = self
@@ -70,7 +73,7 @@ class NewMapViewController: UIViewController, CLLocationManagerDelegate {
         
         let uilpgr = UILongPressGestureRecognizer(target: self, action: "action:")
         
-        uilpgr.minimumPressDuration = 2.0
+        uilpgr.minimumPressDuration = 1.0
         
         map.addGestureRecognizer(uilpgr)
     }
@@ -112,6 +115,32 @@ class NewMapViewController: UIViewController, CLLocationManagerDelegate {
                 // save location information into a dictionary
                 places.append(["name":title,"lat":"\(newCoordinate.latitude)","lon":"\(newCoordinate.longitude)"])
                 
+                let carParkingLocation = PFObject(className: "car")
+                
+                let point = PFGeoPoint(latitude: newCoordinate.latitude, longitude: newCoordinate.longitude)
+                
+                let user = PFUser.currentUser()
+                
+                var uId = ""
+                
+                if let userId = user?.objectId {
+                    uId = userId
+                } else {
+                    
+                }
+                
+                carParkingLocation["location"] = point
+                carParkingLocation["UserobjectId"] = uId
+                carParkingLocation["name"] = title
+                
+                carParkingLocation.saveInBackgroundWithBlock({ (success, error) -> Void in
+                    if success {
+                        print("save success")
+                    } else {
+                        print("Failt")
+                    }
+                })
+                
                 let annotation = MKPointAnnotation()
                 
                 annotation.coordinate = newCoordinate
@@ -137,7 +166,8 @@ class NewMapViewController: UIViewController, CLLocationManagerDelegate {
         let longitude = userLocation.coordinate.longitude
         
         let coordinate = CLLocationCoordinate2DMake(latitude, longitude)
-        let location = CLLocation(latitude: latitude, longitude: longitude)
+        //let location = CLLocation(latitude: latitude, longitude: longitude)
+        
         
         let latDelta:CLLocationDegrees = 0.01
         let lonDelta:CLLocationDegrees = 0.01
@@ -146,6 +176,23 @@ class NewMapViewController: UIViewController, CLLocationManagerDelegate {
         let region:MKCoordinateRegion = MKCoordinateRegionMake(coordinate, span)
         
         self.map.setRegion(region, animated: true)
+        
+        let annotation = MKPointAnnotation()
+        
+        annotation.coordinate = coordinate
+        
+        map.addAnnotation(annotation)
+        
+        latLocal = latitude
+        lonLocal = longitude
+        print(latLocal)
+        print(lonLocal)
+        
+    }
+    
+    func saveLocation(latitude:Double, longitude:Double) {
+        let coordinate = CLLocationCoordinate2DMake(latitude, longitude)
+        let location = CLLocation(latitude: latitude, longitude: longitude)
         
         if saveCheck == true {
             
@@ -177,6 +224,33 @@ class NewMapViewController: UIViewController, CLLocationManagerDelegate {
                 // save location information into a dictionary
                 places.append(["name":title,"lat":"\(latitude)","lon":"\(longitude)"])
                 
+                
+                let carParkingLocation = PFObject(className: "car")
+                
+                let point = PFGeoPoint(latitude: latitude, longitude: longitude)
+                
+                let user = PFUser.currentUser()
+                
+                var uId = ""
+                
+                if let userId = user?.objectId {
+                    uId = userId
+                } else {
+                    
+                }
+                
+                carParkingLocation["location"] = point
+                carParkingLocation["UserobjectId"] = uId
+                carParkingLocation["name"] = title
+                
+                carParkingLocation.saveInBackgroundWithBlock({ (success, error) -> Void in
+                    if success {
+                        print("save success")
+                    } else {
+                        print("Failt")
+                    }
+                })
+                
                 let annotation = MKPointAnnotation()
                 
                 annotation.coordinate = coordinate
@@ -199,7 +273,6 @@ class NewMapViewController: UIViewController, CLLocationManagerDelegate {
             })
             
         }
-        
     }
 
     @IBAction func logOut(sender: AnyObject) {
