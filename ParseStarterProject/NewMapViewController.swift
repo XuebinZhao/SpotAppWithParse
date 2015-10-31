@@ -10,9 +10,11 @@ import UIKit
 import MapKit
 import Parse
 
-class NewMapViewController: UIViewController, CLLocationManagerDelegate {
+class NewMapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
 
     @IBOutlet weak var map: MKMapView!
+    
+    var destination = MKMapItem?()
     
     var manager: CLLocationManager!
     
@@ -34,12 +36,12 @@ class NewMapViewController: UIViewController, CLLocationManagerDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        self.map.showsUserLocation = true
+        map.delegate = self
 
         manager = CLLocationManager()
         manager.delegate = self
         manager.desiredAccuracy = kCLLocationAccuracyBest
-        //self.map.showsUserLocation = true
+        self.map.showsUserLocation = true
         
         if activePlace == -1 {
             manager.requestAlwaysAuthorization()
@@ -69,7 +71,26 @@ class NewMapViewController: UIViewController, CLLocationManagerDelegate {
             
             self.map.addAnnotation(annotation)
             
-          
+            // **********************************************************************
+            // code for route direction
+            
+            let place = MKPlacemark(coordinate: coordinate, addressDictionary: nil)
+            destination = MKMapItem(placemark: place)
+            
+            let request = MKDirectionsRequest()
+            request.source = MKMapItem.mapItemForCurrentLocation()
+            request.destination = destination!
+            request.requestsAlternateRoutes = false
+            
+            let directions = MKDirections(request: request)
+            directions.calculateDirectionsWithCompletionHandler({ (response: MKDirectionsResponse?, error:NSError?) -> Void in
+                if error != nil {
+                    // if error then handle it
+                } else {
+                    self.showRoute(response!)
+                }
+            })
+            // **********************************************************************
             
         }
         
@@ -79,8 +100,31 @@ class NewMapViewController: UIViewController, CLLocationManagerDelegate {
         
         map.addGestureRecognizer(uilpgr)
         
-        
     }
+    
+    // **********************************************************************
+    func showRoute(response:MKDirectionsResponse) {
+        for route in response.routes {
+            map.addOverlay(route.polyline, level: MKOverlayLevel.AboveRoads)
+            
+            for step in route.steps {
+                print(step.instructions)
+            }
+        }
+//        let region = MKCoordinateRegionMakeWithDistance(userLocation!.coordinate, 2000, 2000)
+//        map.setRegion(region, animated: true)
+    }
+    
+    func mapView(mapView: MKMapView, rendererForOverlay overlay: MKOverlay) -> MKOverlayRenderer {
+        let renderer = MKPolylineRenderer(overlay: overlay)
+        renderer.strokeColor = UIColor.blueColor()
+        renderer.lineWidth = 5.0
+        return renderer
+    }
+    
+    // **********************************************************************
+    
+    
     
     func action(gestureRecognizer:UIGestureRecognizer) {
         if gestureRecognizer.state == UIGestureRecognizerState.Began {

@@ -301,7 +301,7 @@
         <scene sceneID="Oor-8p-zac">
             <objects>
                 <navigationController id="KE6-Lo-VWF" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Map" id="SXs-Uu-MiJ"/>
+                    <tabBarItem key="tabBarItem" title="Map" image="map" id="SXs-Uu-MiJ"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="RYp-An-Ldo">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -375,6 +375,9 @@
             <point key="canvasLocation" x="1270" y="20"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="map" width="28" height="24"/>
+    </resources>
     <inferredMetricsTieBreakers>
         <segue reference="drc-1t-M33"/>
     </inferredMetricsTieBreakers>
