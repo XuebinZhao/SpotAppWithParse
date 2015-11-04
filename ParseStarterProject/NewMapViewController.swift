@@ -37,10 +37,13 @@ class NewMapViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
         performSegueWithIdentifier("meter", sender: self)
     }
     
+    override func viewDidAppear(animated: Bool) {
+        self.tabBarController?.tabBar.hidden = false
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         map.delegate = self
-        self.tabBarController?.tabBar.hidden = false
 
         manager = CLLocationManager()
         manager.delegate = self
