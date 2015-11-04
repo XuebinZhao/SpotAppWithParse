@@ -332,7 +332,24 @@ class NewMapViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
         let currentUser = PFUser.currentUser()
         if currentUser != nil {
             logIn = false
-            dismissViewControllerAnimated(true, completion: nil)
+            //dismissViewControllerAnimated(true, completion: nil)
+            let rootController = UIViewController
+            rootController.setEditing(<#T##UIViewController#>)
+            
+            
+            //            [PFUser logOut];
+            //            UIViewController *rootController = [[UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]] instantiateViewControllerWithIdentifier:@"ViewController"];
+            //            UINavigationController *navigation = [[UINavigationController alloc] initWithRootViewController:rootController];
+            //            navigation.navigationBar.tintColor = [UIColor redColor];
+            //            [self presentViewController:navigation animated:NO completion:NULL];
+            //            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Successfully logged out"
+            //                                                                message:nil
+            //                                                               delegate:self
+            //                                                      cancelButtonTitle:@"OK"
+            //                                                      otherButtonTitles:nil];
+            //            [alertView show];
+
+            
         }
     }
     
