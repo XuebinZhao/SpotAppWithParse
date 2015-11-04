@@ -127,13 +127,14 @@ class ViewController: UIViewController, UITextFieldDelegate {
     
     override func viewDidAppear(animated: Bool) {
         if logIn == true {
-            if PFUser.currentUser() != nil {
-                self.performSegueWithIdentifier("login", sender: self)
+            if let user = PFUser.currentUser(){
+                if user.objectId == nil {
+                    print("Please register")
+                }else {
+                    self.performSegueWithIdentifier("login", sender: self)
+                }
             }
         }
-//        else {
-//            PFUser.logOut()
-//        }
     }
 
     override func didReceiveMemoryWarning() {

@@ -333,9 +333,15 @@ class NewMapViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
         if currentUser != nil {
             logIn = false
             //dismissViewControllerAnimated(true, completion: nil)
-            let rootController = UIViewController
-            rootController.setEditing(<#T##UIViewController#>)
+//            let rootController = UIViewController
+//            rootController.setEditing(<#T##UIViewController#>)
             
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            
+            // instantiate your desired ViewController
+            let rootController = storyboard.instantiateViewControllerWithIdentifier("welcome")
+
+            self.presentViewController(rootController, animated: true, completion: nil)
             
             //            [PFUser logOut];
             //            UIViewController *rootController = [[UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]] instantiateViewControllerWithIdentifier:@"ViewController"];
