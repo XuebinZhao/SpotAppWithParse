@@ -23,6 +23,7 @@
 		915C6A301BE96FBB00CBD487 /* CounterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 915C6A2F1BE96FBB00CBD487 /* CounterViewController.swift */; };
 		915C6A321BE998E600CBD487 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 915C6A311BE998E600CBD487 /* CoreData.framework */; };
 		915C6A351BE99A1F00CBD487 /* SpotAppModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 915C6A331BE99A1F00CBD487 /* SpotAppModel.xcdatamodeld */; };
+		915C6A3B1BE9CDE900CBD487 /* UserProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 915C6A3A1BE9CDE900CBD487 /* UserProfileViewController.swift */; };
 		918468A31BE00EC600C2455E /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 918468A21BE00EC600C2455E /* MapViewController.swift */; };
 		918468A51BE03D7900C2455E /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 918468A41BE03D7900C2455E /* CoreLocation.framework */; };
 		91FEF8B21BD967B100DE6868 /* UserListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91FEF8B11BD967B100DE6868 /* UserListTableViewController.swift */; };
@@ -50,6 +51,7 @@
 		915C6A2F1BE96FBB00CBD487 /* CounterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CounterViewController.swift; sourceTree = "<group>"; };
 		915C6A311BE998E600CBD487 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		915C6A341BE99A1F00CBD487 /* SpotAppModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = SpotAppModel.xcdatamodel; sourceTree = "<group>"; };
+		915C6A3A1BE9CDE900CBD487 /* UserProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserProfileViewController.swift; sourceTree = "<group>"; };
 		918468A21BE00EC600C2455E /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		918468A41BE03D7900C2455E /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		91FEF8B11BD967B100DE6868 /* UserListTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserListTableViewController.swift; sourceTree = "<group>"; };
@@ -165,6 +167,7 @@
 				9157D5F31BE15D4000D63832 /* NewMapViewController.swift */,
 				9157D5F51BE15E2C00D63832 /* ParkHistoryTableViewController.swift */,
 				81BA814C1A49DA1800E65899 /* ViewController.swift */,
+				915C6A3A1BE9CDE900CBD487 /* UserProfileViewController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -275,6 +278,7 @@
 				9157D5F61BE15E2C00D63832 /* ParkHistoryTableViewController.swift in Sources */,
 				81BA814D1A49DA1800E65899 /* ViewController.swift in Sources */,
 				81BA814B1A49DA1800E65899 /* AppDelegate.swift in Sources */,
+				915C6A3B1BE9CDE900CBD487 /* UserProfileViewController.swift in Sources */,
 				918468A31BE00EC600C2455E /* MapViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
