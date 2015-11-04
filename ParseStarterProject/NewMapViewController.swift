@@ -33,10 +33,14 @@ class NewMapViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
         self.saveLocation(latLocal, longitude: lonLocal)
     }
     
+    @IBAction func meterButton(sender: AnyObject) {
+        performSegueWithIdentifier("meter", sender: self)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         map.delegate = self
+        self.tabBarController?.tabBar.hidden = false
 
         manager = CLLocationManager()
         manager.delegate = self

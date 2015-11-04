@@ -176,7 +176,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nRW-Lc-4sn" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1916" y="20"/>
+            <point key="canvasLocation" x="1916" y="-300"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="jc2-48-Co2">
@@ -238,6 +238,12 @@
                                     <action selector="refreshMap:" destination="1wF-R3-y0g" id="bTk-a5-1fF"/>
                                 </connections>
                             </barButtonItem>
+                            <barButtonItem title="Meter" id="ftV-Nd-CiK">
+                                <connections>
+                                    <action selector="meterButton:" destination="1wF-R3-y0g" id="g5a-Xr-5z5"/>
+                                    <segue destination="JgQ-rq-B92" kind="show" identifier="meter" id="pAn-e5-sEE"/>
+                                </connections>
+                            </barButtonItem>
                         </rightBarButtonItems>
                     </navigationItem>
                     <connections>
@@ -296,6 +302,24 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2VG-R0-xQl" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1270" y="1873"/>
+        </scene>
+        <!--Counter View Controller-->
+        <scene sceneID="xWk-Pw-v9D">
+            <objects>
+                <viewController id="JgQ-rq-B92" customClass="CounterViewController" customModule="SpotAppParse" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="zGW-eC-Znf"/>
+                        <viewControllerLayoutGuide type="bottom" id="R1C-fJ-dMq"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="QFP-0M-xyT">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="53v-ED-JUC" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1916" y="374"/>
         </scene>
         <!--Map-->
         <scene sceneID="Oor-8p-zac">
@@ -356,7 +380,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="DZx-gs-hm7" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2550" y="20"/>
+            <point key="canvasLocation" x="2550" y="-300"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="WqR-xw-EWk">
@@ -372,7 +396,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Gav-Iy-uwj" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1270" y="20"/>
+            <point key="canvasLocation" x="1270" y="-300"/>
         </scene>
     </scenes>
     <resources>
