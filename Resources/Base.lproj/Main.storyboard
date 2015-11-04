@@ -210,7 +210,7 @@
             </objects>
             <point key="canvasLocation" x="552" y="1557"/>
         </scene>
-        <!--Map-->
+        <!--New Map View Controller-->
         <scene sceneID="VUA-RH-ywo">
             <objects>
                 <viewController id="1wF-R3-y0g" customClass="NewMapViewController" customModule="SpotAppParse" customModuleProvider="target" sceneMemberID="viewController">
@@ -236,19 +236,19 @@
                             <constraint firstAttribute="trailingMargin" secondItem="Uoe-DZ-Oh0" secondAttribute="trailing" constant="-20" id="upQ-eS-L0L"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Map" id="PeO-Io-s3l">
+                    <navigationItem key="navigationItem" id="PeO-Io-s3l">
                         <rightBarButtonItems>
-                            <barButtonItem title="Park" id="QYv-6G-rpE">
+                            <barButtonItem image="parking" id="QYv-6G-rpE">
                                 <connections>
                                     <action selector="saveParkLocation:" destination="1wF-R3-y0g" id="5Hz-cG-H5h"/>
                                 </connections>
                             </barButtonItem>
-                            <barButtonItem systemItem="refresh" id="DhE-9r-ukw">
+                            <barButtonItem image="reflesh" id="DhE-9r-ukw">
                                 <connections>
                                     <action selector="refreshMap:" destination="1wF-R3-y0g" id="bTk-a5-1fF"/>
                                 </connections>
                             </barButtonItem>
-                            <barButtonItem title="Meter" id="ftV-Nd-CiK">
+                            <barButtonItem title="Item" image="meter" id="ftV-Nd-CiK">
                                 <connections>
                                     <action selector="meterButton:" destination="1wF-R3-y0g" id="g5a-Xr-5z5"/>
                                     <segue destination="JgQ-rq-B92" kind="show" identifier="meter" id="pAn-e5-sEE"/>
@@ -558,6 +558,9 @@
     </scenes>
     <resources>
         <image name="map" width="28" height="24"/>
+        <image name="meter" width="22" height="22"/>
+        <image name="parking" width="22" height="22"/>
+        <image name="reflesh" width="22" height="22"/>
         <image name="user" width="28" height="24"/>
     </resources>
     <inferredMetricsTieBreakers>
