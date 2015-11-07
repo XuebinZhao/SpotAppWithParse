@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4F9894341BEC2DFC003F34BB /* User+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F9894321BEC2DFC003F34BB /* User+CoreDataProperties.swift */; };
+		4F9894351BEC2DFC003F34BB /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F9894331BEC2DFC003F34BB /* User.swift */; };
+		4F9894371BEC2F4C003F34BB /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F9894361BEC2F4C003F34BB /* Foundation.framework */; };
+		4F9894391BEC3033003F34BB /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F9894381BEC3033003F34BB /* CoreFoundation.framework */; };
 		814C3ACA1B69877600E307BB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 814C3AC61B69877600E307BB /* Main.storyboard */; };
 		814C3ACB1B69877600E307BB /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 814C3AC81B69877600E307BB /* Images.xcassets */; };
 		81BA814B1A49DA1800E65899 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81BA814A1A49DA1800E65899 /* AppDelegate.swift */; };
@@ -30,6 +34,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4F9894321BEC2DFC003F34BB /* User+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "User+CoreDataProperties.swift"; path = "../User+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		4F9894331BEC2DFC003F34BB /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = User.swift; path = ../User.swift; sourceTree = "<group>"; };
+		4F9894361BEC2F4C003F34BB /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		4F9894381BEC3033003F34BB /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 		814C3AC71B69877600E307BB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		814C3AC81B69877600E307BB /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		814C3AC91B69877600E307BB /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -62,6 +70,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4F9894391BEC3033003F34BB /* CoreFoundation.framework in Frameworks */,
+				4F9894371BEC2F4C003F34BB /* Foundation.framework in Frameworks */,
 				915C6A321BE998E600CBD487 /* CoreData.framework in Frameworks */,
 				918468A51BE03D7900C2455E /* CoreLocation.framework in Frameworks */,
 				81BA817F1A49E0F000E65899 /* libstdc++.6.dylib in Frameworks */,
@@ -119,6 +129,8 @@
 		81BA816A1A49DB5600E65899 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4F9894381BEC3033003F34BB /* CoreFoundation.framework */,
+				4F9894361BEC2F4C003F34BB /* Foundation.framework */,
 				915C6A311BE998E600CBD487 /* CoreData.framework */,
 				918468A41BE03D7900C2455E /* CoreLocation.framework */,
 				81BA816B1A49DB6800E65899 /* Bolts.framework */,
@@ -162,6 +174,8 @@
 		915C6A381BE99A9A00CBD487 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				4F9894331BEC2DFC003F34BB /* User.swift */,
+				4F9894321BEC2DFC003F34BB /* User+CoreDataProperties.swift */,
 				81BA814A1A49DA1800E65899 /* AppDelegate.swift */,
 				915C6A2F1BE96FBB00CBD487 /* CounterViewController.swift */,
 				9157D5F31BE15D4000D63832 /* NewMapViewController.swift */,
@@ -279,7 +293,9 @@
 				81BA814D1A49DA1800E65899 /* ViewController.swift in Sources */,
 				81BA814B1A49DA1800E65899 /* AppDelegate.swift in Sources */,
 				915C6A3B1BE9CDE900CBD487 /* UserProfileViewController.swift in Sources */,
+				4F9894341BEC2DFC003F34BB /* User+CoreDataProperties.swift in Sources */,
 				918468A31BE00EC600C2455E /* MapViewController.swift in Sources */,
+				4F9894351BEC2DFC003F34BB /* User.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

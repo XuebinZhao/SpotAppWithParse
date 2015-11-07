@@ -9,6 +9,7 @@
 
 import UIKit
 import Parse
+import CoreData
 
 @available(iOS 8.0, *)
 class ViewController: UIViewController, UITextFieldDelegate {
@@ -89,7 +90,38 @@ class ViewController: UIViewController, UITextFieldDelegate {
                     self.activityIndicator.stopAnimating()
                     UIApplication.sharedApplication().endIgnoringInteractionEvents()
                     if user != nil {
-                        // Logged IN
+                        // Assuming type has a reference to managed object context
+                        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+                        
+                        let managedObjectContext = appDelegate.managedObjectContext
+                        
+                        let fetchRequest = NSFetchRequest(entityName: "User")
+                        do {
+                            let fetchedEntities = try managedObjectContext.executeFetchRequest(fetchRequest) as! [User]
+                            
+                            let person = fetchedEntities[0]
+                            
+                            person.username = user?.username
+                            
+                            // Do something with fetchedEntities
+                            
+                        } catch {
+                        let entity = NSEntityDescription.entityForName("User", inManagedObjectContext: managedObjectContext)
+                            let person = NSManagedObject(entity: entity!, insertIntoManagedObjectContext: managedObjectContext)
+                            person.setValue(user?.username, forKey: "username")
+                        }
+                        
+                        
+                        do {
+                            try managedObjectContext.save()
+                        } catch {
+                            fatalError("SHIT WENT DOWN... \(error)")
+                        }
+                        
+                        //let fetchRequest1 = NSFetchRequest(entityName: "User")
+                        //let fetchedEntities = try managedObjectContext.executeFetchRequest(fetchRequest1) as! [User]
+                        //let person1 = fetchedEntities[0]
+                        
                         logIn = true
                         self.performSegueWithIdentifier("login", sender: self)
                     } else {
