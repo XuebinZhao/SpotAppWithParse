@@ -238,20 +238,20 @@
                     </view>
                     <navigationItem key="navigationItem" id="PeO-Io-s3l">
                         <rightBarButtonItems>
-                            <barButtonItem image="parking" id="QYv-6G-rpE">
+                            <barButtonItem image="parking" style="plain" id="Qjd-i8-WaN">
                                 <connections>
-                                    <action selector="saveParkLocation:" destination="1wF-R3-y0g" id="5Hz-cG-H5h"/>
+                                    <action selector="saveParkLocation:" destination="1wF-R3-y0g" id="ThK-uK-55u"/>
                                 </connections>
                             </barButtonItem>
-                            <barButtonItem image="reflesh" id="DhE-9r-ukw">
+                            <barButtonItem image="reflesh" id="8ml-d0-Udi">
                                 <connections>
-                                    <action selector="refreshMap:" destination="1wF-R3-y0g" id="bTk-a5-1fF"/>
+                                    <action selector="refreshMap:" destination="1wF-R3-y0g" id="cO7-OF-g0M"/>
                                 </connections>
                             </barButtonItem>
-                            <barButtonItem title="Item" image="meter" id="ftV-Nd-CiK">
+                            <barButtonItem image="meter" id="PM1-pv-rOI">
                                 <connections>
-                                    <action selector="meterButton:" destination="1wF-R3-y0g" id="g5a-Xr-5z5"/>
-                                    <segue destination="JgQ-rq-B92" kind="show" identifier="meter" id="pAn-e5-sEE"/>
+                                    <action selector="meterButton:" destination="1wF-R3-y0g" id="4xY-7x-SP3"/>
+                                    <segue destination="JgQ-rq-B92" kind="show" identifier="meter" id="fhx-Yu-rxL"/>
                                 </connections>
                             </barButtonItem>
                         </rightBarButtonItems>

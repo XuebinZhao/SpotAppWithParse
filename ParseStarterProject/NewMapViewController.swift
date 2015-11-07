@@ -23,16 +23,19 @@ class NewMapViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
     var latLocal:Double = 0.0
     var lonLocal:Double = 0.0
     
+    
     @IBAction func refreshMap(sender: AnyObject) {
         let annotationsToRemove = map.annotations
         self.map.removeAnnotations(annotationsToRemove)
     }
     
+  
     @IBAction func saveParkLocation(sender: AnyObject) {
         saveCheck = true
         self.saveLocation(latLocal, longitude: lonLocal)
     }
     
+   
     @IBAction func meterButton(sender: AnyObject) {
         performSegueWithIdentifier("meter", sender: self)
     }
@@ -232,11 +235,11 @@ class NewMapViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
         
         self.map.setRegion(region, animated: true)
         
-        let annotation = MKPointAnnotation()
-        
-        annotation.coordinate = coordinate
-        
-        map.addAnnotation(annotation)
+//        let annotation = MKPointAnnotation()
+//        
+//        annotation.coordinate = coordinate
+//        
+//        map.addAnnotation(annotation)
         
         latLocal = latitude
         lonLocal = longitude
