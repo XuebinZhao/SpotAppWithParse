@@ -27,7 +27,6 @@ class UserProfileViewController: UIViewController {
         PFUser.logOut()
         let currentUser = PFUser.currentUser()
         if currentUser != nil {
-            logIn = false
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
             
             // instantiate your desired ViewController

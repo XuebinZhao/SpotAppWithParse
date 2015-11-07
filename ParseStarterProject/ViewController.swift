@@ -11,7 +11,7 @@ import UIKit
 import Parse
 import CoreData
 
-@available(iOS 8.0, *)
+//@available(iOS 8.0, *)
 class ViewController: UIViewController, UITextFieldDelegate {
 
     @IBOutlet var userName: UITextField!
@@ -29,14 +29,11 @@ class ViewController: UIViewController, UITextFieldDelegate {
     var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
     
     func displayAlert(title: String, message: String) {
-        
         let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
         alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: { (action) -> Void in
-            self.dismissViewControllerAnimated(true, completion: nil)
+            //self.dismissViewControllerAnimated(true, completion: nil)
         }))
-        
         self.presentViewController(alert, animated: true, completion: nil)
-        
     }
     
     func textFieldShouldReturn(textField: UITextField) -> Bool {
@@ -63,26 +60,27 @@ class ViewController: UIViewController, UITextFieldDelegate {
             var errorMessage = "Please try again later"
             
             if signUpActive == true {
+                let user = PFUser()
+                user.username = userName.text
+                user.password = password.text
             
-            let user = PFUser()
-            user.username = userName.text
-            user.password = password.text
-            
-            user.signUpInBackgroundWithBlock({ (success, error) -> Void in
-                
-                self.activityIndicator.stopAnimating()
-                UIApplication.sharedApplication().endIgnoringInteractionEvents()
-                
-                if error == nil {
-                    // Signup successful
-                    self.performSegueWithIdentifier("login", sender: self)
+                user.signUpInBackgroundWithBlock({ (success, error) -> Void in
+                    self.activityIndicator.stopAnimating()
+                    UIApplication.sharedApplication().endIgnoringInteractionEvents()
                     
-                } else {
-                    if let errorString = error!.userInfo["error"] as? String {
-                        errorMessage = errorString
-                    }
-                    
-                    self.displayAlert("Failed Signed", message: errorMessage)
+                    if success {
+                        // Signup successful
+                        //let appDel = UIApplication.sharedApplication().delegate as! AppDelegate
+                        
+                        
+                        
+                        let mapViewControllerObejct = self.storyboard?.instantiateViewControllerWithIdentifier("logined")
+                        self.presentViewController(mapViewControllerObejct!, animated: true, completion: nil)
+                    } else {
+                        if let errorString = error!.userInfo["error"] as? String {
+                            errorMessage = errorString
+                        }
+                        self.displayAlert("Failed Signed", message: errorMessage)
                 }
             })
             } else {
@@ -90,40 +88,43 @@ class ViewController: UIViewController, UITextFieldDelegate {
                     self.activityIndicator.stopAnimating()
                     UIApplication.sharedApplication().endIgnoringInteractionEvents()
                     if user != nil {
-                        // Assuming type has a reference to managed object context
-                        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-                        
-                        let managedObjectContext = appDelegate.managedObjectContext
-                        
-                        let fetchRequest = NSFetchRequest(entityName: "User")
-                        do {
-                            let fetchedEntities = try managedObjectContext.executeFetchRequest(fetchRequest) as! [User]
-                            
-                            let person = fetchedEntities[0]
-                            
-                            person.username = user?.username
-                            
-                            // Do something with fetchedEntities
-                            
-                        } catch {
-                        let entity = NSEntityDescription.entityForName("User", inManagedObjectContext: managedObjectContext)
-                            let person = NSManagedObject(entity: entity!, insertIntoManagedObjectContext: managedObjectContext)
-                            person.setValue(user?.username, forKey: "username")
-                        }
-                        
-                        
-                        do {
-                            try managedObjectContext.save()
-                        } catch {
-                            fatalError("SHIT WENT DOWN... \(error)")
-                        }
+//                        // Assuming type has a reference to managed object context
+//                        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+//                        
+//                        let managedObjectContext = appDelegate.managedObjectContext
+//                        
+//                        let fetchRequest = NSFetchRequest(entityName: "User")
+//                        do {
+//                            let fetchedEntities = try managedObjectContext.executeFetchRequest(fetchRequest) as! [User]
+//                            
+//                            let person = fetchedEntities[0]
+//                            
+//                            person.username = user?.username
+//                            
+//                            // Do something with fetchedEntities
+//                            
+//                        } catch {
+//                        let entity = NSEntityDescription.entityForName("User", inManagedObjectContext: managedObjectContext)
+//                            let person = NSManagedObject(entity: entity!, insertIntoManagedObjectContext: managedObjectContext)
+//                            person.setValue(user?.username, forKey: "username")
+//                        }
+//                        
+//                        
+//                        do {
+//                            try managedObjectContext.save()
+//                        } catch {
+//                            fatalError("SHIT WENT DOWN... \(error)")
+//                        }
                         
                         //let fetchRequest1 = NSFetchRequest(entityName: "User")
                         //let fetchedEntities = try managedObjectContext.executeFetchRequest(fetchRequest1) as! [User]
                         //let person1 = fetchedEntities[0]
                         
-                        logIn = true
-                        self.performSegueWithIdentifier("login", sender: self)
+                        //self.performSegueWithIdentifier("login", sender: self)
+                        
+                        let mapViewControllerObejct = self.storyboard?.instantiateViewControllerWithIdentifier("logined")
+                        self.presentViewController(mapViewControllerObejct!, animated: true, completion: nil)
+                        
                     } else {
                         if let errorString = error!.userInfo["error"] as? String {
                             errorMessage = errorString
@@ -158,19 +159,15 @@ class ViewController: UIViewController, UITextFieldDelegate {
     }
     
     override func viewDidAppear(animated: Bool) {
-        if logIn == true {
-            if let user = PFUser.currentUser(){
-                if user.objectId == nil {
-                    print("Please register")
-                }else {
-                    self.performSegueWithIdentifier("login", sender: self)
-                }
+        if let user = PFUser.currentUser(){
+            if user.objectId == nil {
+                print("Please register")
+            }else {
+                let mapViewControllerObejct = self.storyboard?.instantiateViewControllerWithIdentifier("logined")
+                self.presentViewController(mapViewControllerObejct!, animated: true, completion: nil)
+                //self.performSegueWithIdentifier("login", sender: self)
             }
         }
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
 }

@@ -75,7 +75,6 @@
                                 </state>
                                 <connections>
                                     <action selector="signUpButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="BD0-sa-Jyw"/>
-                                    <segue destination="J1H-rA-kuo" kind="show" identifier="login" id="ma2-iK-1sd"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UU7-27-mFZ">
@@ -193,7 +192,7 @@
         <!--Tab Bar Controller-->
         <scene sceneID="jc2-48-Co2">
             <objects>
-                <tabBarController id="J1H-rA-kuo" sceneMemberID="viewController">
+                <tabBarController storyboardIdentifier="logined" id="J1H-rA-kuo" sceneMemberID="viewController">
                     <tabBar key="tabBar" contentMode="scaleToFill" id="chy-NX-7V1">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -564,6 +563,6 @@
         <image name="user" width="28" height="24"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="3gh-f4-F2f"/>
+        <segue reference="drc-1t-M33"/>
     </inferredMetricsTieBreakers>
 </document>

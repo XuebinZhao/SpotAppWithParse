@@ -12,8 +12,6 @@ var places = [Dictionary<String,String>()]
 
 var activePlace = -1
 
-var logIn = true
-
 class ParkHistoryTableViewController: UITableViewController {
 
     override func viewDidLoad() {
