@@ -70,9 +70,30 @@ class ViewController: UIViewController, UITextFieldDelegate {
                     
                     if success {
                         // Signup successful
-                        //let appDel = UIApplication.sharedApplication().delegate as! AppDelegate
+                        let appDel: AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+                        let context: NSManagedObjectContext = appDel.managedObjectContext
                         
+                        let newUser = NSEntityDescription.insertNewObjectForEntityForName("Users", inManagedObjectContext: context)
                         
+                        newUser.setValue(user.username, forKey: "username")
+                        newUser.setValue(user.password, forKey: "password")
+                        newUser.setValue(user.objectId, forKey: "objectId")
+                        
+                        do {
+                            try context.save()
+                        } catch {
+                            print("There was a problem")
+                        }
+                        
+                        let request = NSFetchRequest(entityName: "Users")
+                        request.returnsObjectsAsFaults = false
+                        
+                        do {
+                            let results = try context.executeFetchRequest(request)
+                            print(results)
+                        } catch {
+                            print("Fetch Failed")
+                        }
                         
                         let mapViewControllerObejct = self.storyboard?.instantiateViewControllerWithIdentifier("logined")
                         self.presentViewController(mapViewControllerObejct!, animated: true, completion: nil)
