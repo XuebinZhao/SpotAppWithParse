@@ -610,8 +610,9 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" highlightedImage="Default.png" translatesAutoresizingMaskIntoConstraints="NO" id="C7r-Y8-4By">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="empty_avatar" translatesAutoresizingMaskIntoConstraints="NO" id="C7r-Y8-4By">
                                 <rect key="frame" x="250" y="64" width="100" height="100"/>
+                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="C7r-Y8-4By" secondAttribute="height" multiplier="1:1" id="cq9-F7-jcQ"/>
                                     <constraint firstAttribute="width" constant="100" id="npi-vt-ILv"/>
@@ -626,25 +627,25 @@
                                 <state key="normal" title="Tap to change"/>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="First Name:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K2L-i9-87y">
-                                <rect key="frame" x="153" y="222" width="87.5" height="20.5"/>
+                                <rect key="frame" x="174.5" y="222" width="87.5" height="20.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="prd-KU-ai2">
-                                <rect key="frame" x="248.5" y="218" width="153" height="30"/>
+                                <rect key="frame" x="270" y="218" width="130" height="30"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="153" id="7hk-E4-XRd"/>
-                                    <constraint firstAttribute="width" secondItem="prd-KU-ai2" secondAttribute="height" multiplier="51:10" id="hMw-Zr-MF5"/>
+                                    <constraint firstAttribute="width" secondItem="prd-KU-ai2" secondAttribute="height" multiplier="13:3" id="6WW-p3-kHv"/>
+                                    <constraint firstAttribute="width" constant="130" id="7hk-E4-XRd"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Quv-dz-STU">
-                                <rect key="frame" x="248.5" y="256" width="153" height="30"/>
+                                <rect key="frame" x="270" y="256" width="130" height="30"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="153" id="Ks9-Mq-oTs"/>
-                                    <constraint firstAttribute="width" secondItem="Quv-dz-STU" secondAttribute="height" multiplier="51:10" id="YlY-QL-lJW"/>
+                                    <constraint firstAttribute="width" constant="130" id="Ks9-Mq-oTs"/>
+                                    <constraint firstAttribute="width" secondItem="Quv-dz-STU" secondAttribute="height" multiplier="13:3" id="ez4-WY-Qez"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
@@ -661,7 +662,7 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Last Name:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TYp-od-KZ4">
-                                <rect key="frame" x="153" y="259.5" width="86.5" height="20.5"/>
+                                <rect key="frame" x="174.5" y="259.5" width="86.5" height="20.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
@@ -674,14 +675,14 @@
                             <constraint firstItem="cMV-Vf-tpd" firstAttribute="centerX" secondItem="eZJ-hz-spj" secondAttribute="centerX" id="8jH-aD-qWs"/>
                             <constraint firstItem="5N1-kp-vDY" firstAttribute="top" secondItem="C7r-Y8-4By" secondAttribute="bottom" constant="8" id="E3R-RS-URV"/>
                             <constraint firstItem="prd-KU-ai2" firstAttribute="top" secondItem="5N1-kp-vDY" secondAttribute="bottom" constant="16" id="EVn-ss-7nP"/>
-                            <constraint firstItem="Quv-dz-STU" firstAttribute="centerX" secondItem="eZJ-hz-spj" secondAttribute="centerX" constant="25" id="JKV-6l-Qkd"/>
+                            <constraint firstItem="Quv-dz-STU" firstAttribute="centerX" secondItem="eZJ-hz-spj" secondAttribute="centerX" constant="35" id="JKV-6l-Qkd"/>
                             <constraint firstItem="cMV-Vf-tpd" firstAttribute="top" secondItem="Quv-dz-STU" secondAttribute="bottom" constant="30" id="Lnc-k8-cNq"/>
                             <constraint firstItem="5N1-kp-vDY" firstAttribute="centerX" secondItem="eZJ-hz-spj" secondAttribute="centerX" id="QCw-b8-SGh"/>
                             <constraint firstItem="C7r-Y8-4By" firstAttribute="top" secondItem="vu3-Jx-rH4" secondAttribute="bottom" id="QQG-k8-kdJ"/>
                             <constraint firstItem="prd-KU-ai2" firstAttribute="leading" secondItem="K2L-i9-87y" secondAttribute="trailing" constant="8" id="fLg-hD-fmH"/>
                             <constraint firstItem="TYp-od-KZ4" firstAttribute="top" secondItem="K2L-i9-87y" secondAttribute="bottom" constant="17" id="kph-xF-zwo"/>
                             <constraint firstItem="C7r-Y8-4By" firstAttribute="centerX" secondItem="eZJ-hz-spj" secondAttribute="centerX" id="mm3-SC-vaU"/>
-                            <constraint firstItem="prd-KU-ai2" firstAttribute="centerX" secondItem="eZJ-hz-spj" secondAttribute="centerX" constant="25" id="pMK-mX-Nu5"/>
+                            <constraint firstItem="prd-KU-ai2" firstAttribute="centerX" secondItem="eZJ-hz-spj" secondAttribute="centerX" constant="35" id="pMK-mX-Nu5"/>
                             <constraint firstItem="Quv-dz-STU" firstAttribute="top" secondItem="prd-KU-ai2" secondAttribute="bottom" constant="8" id="twA-wF-Qi4"/>
                         </constraints>
                     </view>
@@ -699,7 +700,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="Default.png" width="22" height="22"/>
+        <image name="empty_avatar" width="500" height="500"/>
         <image name="map" width="28" height="24"/>
         <image name="meter" width="22" height="22"/>
         <image name="parking" width="22" height="22"/>
