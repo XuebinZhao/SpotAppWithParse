@@ -11,10 +11,13 @@ import Parse
 
 class UserProfileViewController: UIViewController {
 
+    @IBOutlet weak var fullName: UILabel!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
         // Do any additional setup after loading the view.
+        
+        fullName.text = "User Name"
     }
 
     override func didReceiveMemoryWarning() {
