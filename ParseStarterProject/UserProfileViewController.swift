@@ -16,8 +16,15 @@ class UserProfileViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        
-        fullName.text = "User Name"
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        let user = PFUser.currentUser()
+        if let firstName = user!["firstName"] {
+            fullName.text = "\(firstName) \(user!["lastName"])"
+        } else {
+            fullName.text = "User Name"
+        }
     }
 
     override func didReceiveMemoryWarning() {

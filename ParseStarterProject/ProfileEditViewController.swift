@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Parse
 
 class ProfileEditViewController: UIViewController {
 
@@ -27,6 +28,24 @@ class ProfileEditViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    
+    @IBAction func saveProfile(sender: AnyObject) {
+        print(firstNameText.text)
+        print(lastNameText.text)
+        let user = PFUser.currentUser()
+        
+        user?.setValue(firstNameText.text, forKey: "firstName")
+        user?.setValue(lastNameText.text,  forKey: "lastName")
+        
+        
+        user?.saveInBackgroundWithBlock({ (success, error) -> Void in
+            if success {
+                self.dismissViewControllerAnimated(true, completion: nil)
+            } else {
+                print("Something wrong")
+            }
+        })
+    }
 
     /*
     // MARK: - Navigation
