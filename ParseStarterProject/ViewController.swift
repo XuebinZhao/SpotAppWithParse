@@ -76,7 +76,6 @@ class ViewController: UIViewController, UITextFieldDelegate {
                         let newUser = NSEntityDescription.insertNewObjectForEntityForName("Users", inManagedObjectContext: context)
                         
                         newUser.setValue(user.username, forKey: "username")
-                        newUser.setValue(user.password, forKey: "password")
                         newUser.setValue(user.objectId, forKey: "objectId")
                         
                         do {
@@ -125,7 +124,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
                             
                             if results.count > 0 {
                                 
-                                for result in results as! [NSManagedObject] {            
+                                for result in results as! [NSManagedObject] {
                                     
                                     if result.valueForKey("objectId")!.isEqual(user?.objectId) {
                                         // if the user exist in the local database, we don't need to update local database
