@@ -109,39 +109,62 @@ class ViewController: UIViewController, UITextFieldDelegate {
                     self.activityIndicator.stopAnimating()
                     UIApplication.sharedApplication().endIgnoringInteractionEvents()
                     if user != nil {
-//                        // Assuming type has a reference to managed object context
-//                        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-//                        
-//                        let managedObjectContext = appDelegate.managedObjectContext
-//                        
-//                        let fetchRequest = NSFetchRequest(entityName: "User")
-//                        do {
-//                            let fetchedEntities = try managedObjectContext.executeFetchRequest(fetchRequest) as! [User]
-//                            
-//                            let person = fetchedEntities[0]
-//                            
-//                            person.username = user?.username
-//                            
-//                            // Do something with fetchedEntities
-//                            
-//                        } catch {
-//                        let entity = NSEntityDescription.entityForName("User", inManagedObjectContext: managedObjectContext)
-//                            let person = NSManagedObject(entity: entity!, insertIntoManagedObjectContext: managedObjectContext)
-//                            person.setValue(user?.username, forKey: "username")
-//                        }
-//                        
-//                        
-//                        do {
-//                            try managedObjectContext.save()
-//                        } catch {
-//                            fatalError("SHIT WENT DOWN... \(error)")
-//                        }
+                        var userExist = false
                         
-                        //let fetchRequest1 = NSFetchRequest(entityName: "User")
-                        //let fetchedEntities = try managedObjectContext.executeFetchRequest(fetchRequest1) as! [User]
-                        //let person1 = fetchedEntities[0]
+                        let appDel: AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
                         
-                        //self.performSegueWithIdentifier("login", sender: self)
+                        let context: NSManagedObjectContext = appDel.managedObjectContext
+                        
+                        let request = NSFetchRequest(entityName: "Users")
+                        
+                        request.returnsObjectsAsFaults = false
+                        
+                        do {
+                            
+                            let results = try context.executeFetchRequest(request)
+                            
+                            if results.count > 0 {
+                                
+                                for result in results as! [NSManagedObject] {            
+                                    
+                                    if result.valueForKey("objectId")!.isEqual(user?.objectId) {
+                                        // if the user exist in the local database, we don't need to update local database
+                                        userExist = true
+                                    }
+                     
+                                }
+                                
+                            }
+                            
+                        } catch {
+                            
+                            print("Fetch Failed")
+                        }
+                        
+                        // this is updating local database, when user is not exist in local database
+                        if userExist==false {
+                            let newUser = NSEntityDescription.insertNewObjectForEntityForName("Users", inManagedObjectContext: context)
+                            
+                            newUser.setValue(user!.username, forKey: "username")
+                            newUser.setValue(user!.objectId, forKey: "objectId")
+                            
+                            do {
+                                try context.save()
+                            } catch {
+                                print("There was a problem")
+                            }
+                            
+                            let requestAfterInsert = NSFetchRequest(entityName: "Users")
+                            requestAfterInsert.returnsObjectsAsFaults = false
+                            
+                            do {
+                                let results = try context.executeFetchRequest(requestAfterInsert)
+                                print(results)
+                            } catch {
+                                print("Fetch Failed")
+                            }
+                        }
+
                         
                         let mapViewControllerObejct = self.storyboard?.instantiateViewControllerWithIdentifier("logined")
                         self.presentViewController(mapViewControllerObejct!, animated: true, completion: nil)
