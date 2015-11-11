@@ -601,7 +601,7 @@
         <!--Profile Edit View Controller-->
         <scene sceneID="nPo-Dj-qXH">
             <objects>
-                <viewController id="2eb-3z-orz" customClass="ProfileEditViewController" customModule="SpotAppParse" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="profileController" id="2eb-3z-orz" customClass="ProfileEditViewController" customModule="SpotAppParse" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="vu3-Jx-rH4"/>
                         <viewControllerLayoutGuide type="bottom" id="kct-2i-Hbv"/>
@@ -625,6 +625,9 @@
                                     <constraint firstAttribute="width" constant="98" id="lTT-AD-Scf"/>
                                 </constraints>
                                 <state key="normal" title="Tap to change"/>
+                                <connections>
+                                    <segue destination="ImY-eD-NeU" kind="show" id="o0M-9Y-sR8"/>
+                                </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="First Name:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K2L-i9-87y">
                                 <rect key="frame" x="174.5" y="222" width="87.5" height="20.5"/>
@@ -651,12 +654,12 @@
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cMV-Vf-tpd">
-                                <rect key="frame" x="277" y="316" width="46" height="30"/>
+                                <rect key="frame" x="275" y="316" width="51" height="30"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="46" id="MPX-Ah-FeC"/>
-                                    <constraint firstAttribute="width" secondItem="cMV-Vf-tpd" secondAttribute="height" multiplier="23:15" id="ydG-aD-WyO"/>
+                                    <constraint firstAttribute="width" secondItem="cMV-Vf-tpd" secondAttribute="height" multiplier="17:10" id="FPp-as-QTw"/>
+                                    <constraint firstAttribute="width" constant="51" id="MPX-Ah-FeC"/>
                                 </constraints>
-                                <state key="normal" title="Save"/>
+                                <state key="normal" title="Update"/>
                                 <connections>
                                     <action selector="saveProfile:" destination="2eb-3z-orz" eventType="touchUpInside" id="Qen-GV-aeg"/>
                                 </connections>
@@ -697,6 +700,68 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eF3-ri-Bth" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2576" y="2580"/>
+        </scene>
+        <!--Picking Image View Controller-->
+        <scene sceneID="eKR-v4-Kba">
+            <objects>
+                <viewController id="ImY-eD-NeU" customClass="PickingImageViewController" customModule="SpotAppParse" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="wqp-pf-arT"/>
+                        <viewControllerLayoutGuide type="bottom" id="9yE-dS-YCx"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="aN5-Ed-yK1">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <navigationBar contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Zgi-KW-kKz">
+                                <rect key="frame" x="0.0" y="20" width="600" height="44"/>
+                            </navigationBar>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="kRo-mE-kAu">
+                                <rect key="frame" x="0.0" y="64" width="600" height="492"/>
+                            </imageView>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KXv-jR-KvF">
+                                <rect key="frame" x="0.0" y="556" width="600" height="44"/>
+                                <items/>
+                            </toolbar>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="kRo-mE-kAu" firstAttribute="leading" secondItem="aN5-Ed-yK1" secondAttribute="leadingMargin" constant="-20" id="Gt6-wq-Hhx"/>
+                            <constraint firstItem="KXv-jR-KvF" firstAttribute="leading" secondItem="aN5-Ed-yK1" secondAttribute="leadingMargin" constant="-20" id="LKJ-q5-eAx"/>
+                            <constraint firstItem="9yE-dS-YCx" firstAttribute="top" secondItem="kRo-mE-kAu" secondAttribute="bottom" id="Pt8-uv-uyc"/>
+                            <constraint firstItem="kRo-mE-kAu" firstAttribute="top" secondItem="wqp-pf-arT" secondAttribute="bottom" id="XKU-eD-dqW"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="kRo-mE-kAu" secondAttribute="trailing" constant="-20" id="aZc-86-mpq"/>
+                            <constraint firstItem="KXv-jR-KvF" firstAttribute="bottom" secondItem="aN5-Ed-yK1" secondAttribute="bottomMargin" id="fep-NW-6TC"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="KXv-jR-KvF" secondAttribute="trailing" constant="-20" id="hBB-H5-9Vz"/>
+                        </constraints>
+                    </view>
+                    <toolbarItems/>
+                    <navigationItem key="navigationItem" id="0TU-gG-AbQ">
+                        <rightBarButtonItems>
+                            <barButtonItem title="Item" systemItem="camera" id="Py6-rj-Ecc">
+                                <connections>
+                                    <action selector="pickAnImageFromCamera:" destination="ImY-eD-NeU" id="3aB-9z-C3m"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem systemItem="organize" id="7Xl-tb-ARG">
+                                <connections>
+                                    <action selector="pickAnImageFromAlbum:" destination="ImY-eD-NeU" id="S0I-3L-uUX"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem systemItem="save" id="rzo-tE-eZX">
+                                <connections>
+                                    <action selector="savePhoto:" destination="ImY-eD-NeU" id="As4-qu-QEh"/>
+                                </connections>
+                            </barButtonItem>
+                        </rightBarButtonItems>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="imagePickerView" destination="kRo-mE-kAu" id="OJm-Mo-PPC"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="cuU-dx-63w" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3240" y="2580"/>
         </scene>
     </scenes>
     <resources>

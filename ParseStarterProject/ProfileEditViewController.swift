@@ -18,11 +18,26 @@ class ProfileEditViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
-        
     }
 
+    override func viewDidAppear(animated: Bool) {
+        self.tabBarController?.tabBar.hidden = false
+        
+        let user = PFUser.currentUser()
+        let imageFile: PFFile = user!["userImage"] as! PFFile
+        
+        imageFile.getDataInBackgroundWithBlock { (imageData, error) -> Void in
+            if error == nil {
+                let image = UIImage(data: imageData!)
+                self.userImage.image = image
+            }
+        }
+        
+        
+//        PFFile *imageFile = [object objectForKey:@"profileImage"];
+//        cell.thumbnailProfilePic.file = imageFile;
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.

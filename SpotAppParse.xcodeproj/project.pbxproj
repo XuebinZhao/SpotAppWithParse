@@ -31,6 +31,7 @@
 		918468A31BE00EC600C2455E /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 918468A21BE00EC600C2455E /* MapViewController.swift */; };
 		918468A51BE03D7900C2455E /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 918468A41BE03D7900C2455E /* CoreLocation.framework */; };
 		91A2683E1BF2CD8C00288D6B /* ProfileEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91A2683D1BF2CD8C00288D6B /* ProfileEditViewController.swift */; };
+		91FB78D51BF3C1EC006F2DFD /* PickingImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91FB78D41BF3C1EC006F2DFD /* PickingImageViewController.swift */; };
 		91FEF8B21BD967B100DE6868 /* UserListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91FEF8B11BD967B100DE6868 /* UserListTableViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -64,6 +65,7 @@
 		918468A21BE00EC600C2455E /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		918468A41BE03D7900C2455E /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		91A2683D1BF2CD8C00288D6B /* ProfileEditViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileEditViewController.swift; sourceTree = "<group>"; };
+		91FB78D41BF3C1EC006F2DFD /* PickingImageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PickingImageViewController.swift; sourceTree = "<group>"; };
 		91FEF8B11BD967B100DE6868 /* UserListTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserListTableViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -177,6 +179,7 @@
 			isa = PBXGroup;
 			children = (
 				4F9894331BEC2DFC003F34BB /* User.swift */,
+				91FB78D41BF3C1EC006F2DFD /* PickingImageViewController.swift */,
 				4F9894321BEC2DFC003F34BB /* User+CoreDataProperties.swift */,
 				81BA814A1A49DA1800E65899 /* AppDelegate.swift */,
 				915C6A2F1BE96FBB00CBD487 /* CounterViewController.swift */,
@@ -298,6 +301,7 @@
 				81BA814B1A49DA1800E65899 /* AppDelegate.swift in Sources */,
 				915C6A3B1BE9CDE900CBD487 /* UserProfileViewController.swift in Sources */,
 				4F9894341BEC2DFC003F34BB /* User+CoreDataProperties.swift in Sources */,
+				91FB78D51BF3C1EC006F2DFD /* PickingImageViewController.swift in Sources */,
 				918468A31BE00EC600C2455E /* MapViewController.swift in Sources */,
 				4F9894351BEC2DFC003F34BB /* User.swift in Sources */,
 			);
