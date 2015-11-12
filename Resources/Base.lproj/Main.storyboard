@@ -298,16 +298,16 @@
             </objects>
             <point key="canvasLocation" x="1916" y="1825"/>
         </scene>
-        <!--Table View Controller-->
+        <!--Car List Table View Controller-->
         <scene sceneID="mP3-Nf-lo2">
             <objects>
-                <tableViewController id="gLr-jW-zB2" sceneMemberID="viewController">
+                <tableViewController id="gLr-jW-zB2" customClass="CarListTableViewController" customModule="SpotAppParse" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="edO-M0-yv7">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="uqR-mB-vZX">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" id="uqR-mB-vZX">
                                 <rect key="frame" x="0.0" y="92" width="600" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="uqR-mB-vZX" id="qVq-6v-Bps">
