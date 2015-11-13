@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9059" systemVersion="14F1021" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9060" systemVersion="14F1021" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Navigation items with more than one left or right bar item" minToolsVersion="7.0"/>
@@ -77,7 +77,7 @@
                                     <action selector="signUpButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="BD0-sa-Jyw"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UU7-27-mFZ">
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UU7-27-mFZ">
                                 <rect key="frame" x="340" y="276" width="70" height="32"/>
                                 <animations/>
                                 <constraints>
@@ -159,7 +159,7 @@
                                 <rect key="frame" x="0.0" y="86" width="600" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="O9w-bR-25T" id="QIA-0Q-3Ls">
-                                    <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <animations/>
                                 </tableViewCellContentView>
@@ -277,7 +277,7 @@
                                 <rect key="frame" x="0.0" y="92" width="600" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="xk4-gT-j7T" id="8to-6o-vTb">
-                                    <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <animations/>
                                 </tableViewCellContentView>
@@ -614,9 +614,19 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Cars" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="voE-UR-7lI">
-                                <rect key="frame" x="496" y="367" width="49.5" height="29"/>
+                                <rect key="frame" x="496" y="367" width="50" height="29"/>
                                 <animations/>
                                 <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hpH-WP-l4b">
+                                <rect key="frame" x="248" y="72" width="104" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="104" id="mbe-83-sS4"/>
+                                    <constraint firstAttribute="width" secondItem="hpH-WP-l4b" secondAttribute="height" multiplier="104:21" id="me1-XE-h6b"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -631,6 +641,7 @@
                             <constraint firstItem="tHF-lk-ha5" firstAttribute="top" secondItem="0en-de-3Iz" secondAttribute="bottom" constant="8" id="XJu-cK-z0p"/>
                             <constraint firstItem="S8u-Tf-fmY" firstAttribute="leading" secondItem="ING-wf-hj1" secondAttribute="leadingMargin" constant="-20" id="ZpK-Ry-MQ1"/>
                             <constraint firstItem="S8u-Tf-fmY" firstAttribute="top" secondItem="EKs-ZY-o5A" secondAttribute="bottom" constant="-160" id="bHU-1f-PyO"/>
+                            <constraint firstItem="hpH-WP-l4b" firstAttribute="top" secondItem="U8o-Vq-992" secondAttribute="bottom" constant="8" id="csr-cl-mtI"/>
                             <constraint firstItem="U0w-YD-Czj" firstAttribute="centerX" secondItem="ING-wf-hj1" secondAttribute="centerX" id="dHl-i9-IuD"/>
                             <constraint firstItem="0en-de-3Iz" firstAttribute="top" secondItem="U0w-YD-Czj" secondAttribute="bottom" constant="13" id="dwi-nU-ZGj"/>
                             <constraint firstAttribute="trailingMargin" secondItem="voE-UR-7lI" secondAttribute="trailing" constant="34" id="glp-Yn-W8W"/>
@@ -638,8 +649,10 @@
                             <constraint firstItem="tHF-lk-ha5" firstAttribute="top" secondItem="S8u-Tf-fmY" secondAttribute="bottom" constant="283" id="roe-bV-Zmm"/>
                             <constraint firstAttribute="trailingMargin" secondItem="bel-Vc-ube" secondAttribute="trailing" id="tBW-UG-6mz"/>
                             <constraint firstItem="S8u-Tf-fmY" firstAttribute="top" secondItem="ING-wf-hj1" secondAttribute="topMargin" constant="64" id="tdU-Fv-soT"/>
+                            <constraint firstItem="hpH-WP-l4b" firstAttribute="centerX" secondItem="ING-wf-hj1" secondAttribute="centerX" id="tmS-Sn-jgm"/>
                             <constraint firstItem="0en-de-3Iz" firstAttribute="centerX" secondItem="ING-wf-hj1" secondAttribute="centerX" id="yRZ-j5-Ij6"/>
                             <constraint firstItem="bS8-mV-yuU" firstAttribute="top" secondItem="EKs-ZY-o5A" secondAttribute="bottom" constant="8" id="ziK-ta-jYS"/>
+                            <constraint firstItem="hpH-WP-l4b" firstAttribute="width" secondItem="hpH-WP-l4b" secondAttribute="height" multiplier="104:21" id="zt9-pn-NvU"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="xnC-K8-qLX">
@@ -657,6 +670,8 @@
                         </rightBarButtonItems>
                     </navigationItem>
                     <connections>
+                        <outlet property="UserImage" destination="EKs-ZY-o5A" id="7Qf-YA-22o"/>
+                        <outlet property="UserName" destination="hpH-WP-l4b" id="Xv3-yi-V2J"/>
                         <outlet property="fullName" destination="bS8-mV-yuU" id="dPb-Ir-JqC"/>
                     </connections>
                 </viewController>
@@ -695,10 +710,10 @@
                                     <segue destination="ImY-eD-NeU" kind="show" id="o0M-9Y-sR8"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="First Name:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K2L-i9-87y">
-                                <rect key="frame" x="174.5" y="222" width="87.5" height="20.5"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="First Name:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K2L-i9-87y">
+                                <rect key="frame" x="175" y="222" width="88" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="prd-KU-ai2">
@@ -730,10 +745,10 @@
                                     <action selector="saveProfile:" destination="2eb-3z-orz" eventType="touchUpInside" id="Qen-GV-aeg"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Last Name:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TYp-od-KZ4">
-                                <rect key="frame" x="174.5" y="259.5" width="86.5" height="20.5"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Last Name:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TYp-od-KZ4">
+                                <rect key="frame" x="175" y="260" width="87" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
