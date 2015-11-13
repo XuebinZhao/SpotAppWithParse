@@ -8,12 +8,15 @@
 
 import UIKit
 import Parse
+import CoreData
 
 class UserProfileViewController: UIViewController {
 
     @IBOutlet weak var fullName: UILabel!
     
     @IBOutlet weak var UserName: UILabel!
+    
+    @IBOutlet weak var carName: UILabel!
     
     @IBOutlet weak var UserImage: UIImageView!
     
@@ -43,6 +46,36 @@ class UserProfileViewController: UIViewController {
         } else {
             fullName.text = ""
         }
+        
+        
+        let appDel: AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        
+        let context: NSManagedObjectContext = appDel.managedObjectContext
+        
+        let request = NSFetchRequest(entityName: "Cars")
+        
+        request.returnsObjectsAsFaults = false
+        
+        do {
+            
+            let results = try context.executeFetchRequest(request)
+            
+            if results.count > 0 {
+                
+                for result in results as! [NSManagedObject] {
+                    
+                    self.carName.text = "\(result.valueForKey("model") as! String)"
+//                    self.model.append(result.valueForKey("model") as! String)
+//                    self.userId.append(result.valueForKey("userId") as! String)
+                }
+            }
+        } catch {
+            
+            print("Fetch Failed")
+        }
+
+        
+        
     }
 
     override func didReceiveMemoryWarning() {

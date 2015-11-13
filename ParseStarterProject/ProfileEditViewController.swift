@@ -9,7 +9,7 @@
 import UIKit
 import Parse
 
-class ProfileEditViewController: UIViewController {
+class ProfileEditViewController: UIViewController, UITextFieldDelegate {
 
     @IBOutlet weak var userImage: UIImageView!
     @IBOutlet weak var firstNameText: UITextField!
@@ -18,13 +18,21 @@ class ProfileEditViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.tabBarController?.tabBar.hidden = false
+        firstNameText.delegate = self
+        lastNameText.delegate  = self
+    }
+    
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
     }
 
     override func viewDidAppear(animated: Bool) {
         self.tabBarController?.tabBar.hidden = false
         
         let user = PFUser.currentUser()
-        if let imageFile: PFFile = user!["userImage"] as? PFFile {
+        if let imageFile: PFFile = user!["userImage"] as? PFFile{
         
         imageFile.getDataInBackgroundWithBlock { (imageData, error) -> Void in
             if error == nil {
@@ -41,8 +49,7 @@ class ProfileEditViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    
-    @IBAction func saveProfile(sender: AnyObject) {
+    @IBAction func saveProf(sender: AnyObject) {
         print(firstNameText.text)
         print(lastNameText.text)
         let user = PFUser.currentUser()
@@ -54,14 +61,16 @@ class ProfileEditViewController: UIViewController {
         user?.saveInBackgroundWithBlock({ (success, error) -> Void in
             if success {
                 //self.dismissViewControllerAnimated(true, completion: nil)
-                let mapViewControllerObejct = self.storyboard?.instantiateViewControllerWithIdentifier("navProfile")
+                let mapViewControllerObejct = self.storyboard?.instantiateViewControllerWithIdentifier("logined")
                 self.presentViewController(mapViewControllerObejct!, animated: true, completion: nil)
-
+                
             } else {
                 print("Something wrong")
             }
         })
     }
+    
+
 
     /*
     // MARK: - Navigation
