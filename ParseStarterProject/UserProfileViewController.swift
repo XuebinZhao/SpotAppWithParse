@@ -13,6 +13,10 @@ class UserProfileViewController: UIViewController {
 
     @IBOutlet weak var fullName: UILabel!
     
+    @IBOutlet weak var UserName: UILabel!
+    
+    @IBOutlet weak var UserImage: UIImageView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -20,10 +24,24 @@ class UserProfileViewController: UIViewController {
     
     override func viewDidAppear(animated: Bool) {
         let user = PFUser.currentUser()
+        if let imageFile: PFFile = user!["userImage"] as? PFFile{
+            
+            imageFile.getDataInBackgroundWithBlock { (imageData, error) -> Void in
+                if error == nil {
+                    let image = UIImage(data: imageData!)
+                    self.UserImage.image = image
+                }
+            }
+        }
         if let firstName = user!["firstName"] {
             fullName.text = "\(firstName) \(user!["lastName"])"
         } else {
-            fullName.text = "User Name"
+            fullName.text = ""
+        }
+        if let userName = user!["username"] {
+            UserName.text = "\(userName)"
+        } else {
+            fullName.text = ""
         }
     }
 

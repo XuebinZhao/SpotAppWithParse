@@ -24,13 +24,14 @@ class ProfileEditViewController: UIViewController {
         self.tabBarController?.tabBar.hidden = false
         
         let user = PFUser.currentUser()
-        let imageFile: PFFile = user!["userImage"] as! PFFile
+        if let imageFile: PFFile = user!["userImage"] as? PFFile{
         
         imageFile.getDataInBackgroundWithBlock { (imageData, error) -> Void in
             if error == nil {
                 let image = UIImage(data: imageData!)
                 self.userImage.image = image
             }
+        }
         }
         
         
