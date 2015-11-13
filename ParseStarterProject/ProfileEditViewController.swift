@@ -24,18 +24,16 @@ class ProfileEditViewController: UIViewController {
         self.tabBarController?.tabBar.hidden = false
         
         let user = PFUser.currentUser()
-        let imageFile: PFFile = user!["userImage"] as! PFFile
+        if let imageFile: PFFile = user!["userImage"] as? PFFile {
         
         imageFile.getDataInBackgroundWithBlock { (imageData, error) -> Void in
             if error == nil {
                 let image = UIImage(data: imageData!)
                 self.userImage.image = image
             }
+            
+            }
         }
-        
-        
-//        PFFile *imageFile = [object objectForKey:@"profileImage"];
-//        cell.thumbnailProfilePic.file = imageFile;
     }
     
     override func didReceiveMemoryWarning() {
@@ -55,7 +53,10 @@ class ProfileEditViewController: UIViewController {
         
         user?.saveInBackgroundWithBlock({ (success, error) -> Void in
             if success {
-                self.dismissViewControllerAnimated(true, completion: nil)
+                //self.dismissViewControllerAnimated(true, completion: nil)
+                let mapViewControllerObejct = self.storyboard?.instantiateViewControllerWithIdentifier("navProfile")
+                self.presentViewController(mapViewControllerObejct!, animated: true, completion: nil)
+
             } else {
                 print("Something wrong")
             }

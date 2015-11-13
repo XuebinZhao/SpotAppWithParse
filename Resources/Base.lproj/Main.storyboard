@@ -298,33 +298,99 @@
             </objects>
             <point key="canvasLocation" x="1916" y="1825"/>
         </scene>
-        <!--Car List Table View Controller-->
-        <scene sceneID="mP3-Nf-lo2">
+        <!--Car List-->
+        <scene sceneID="YUg-TP-Fv6">
             <objects>
-                <tableViewController id="gLr-jW-zB2" customClass="CarListTableViewController" customModule="SpotAppParse" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="edO-M0-yv7">
+                <tableViewController id="1QL-MP-gcr" customClass="CarListTableViewController" customModule="SpotAppParse" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="1fr-5c-aCN">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" id="uqR-mB-vZX">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" id="u32-ui-rfz">
                                 <rect key="frame" x="0.0" y="92" width="600" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="uqR-mB-vZX" id="qVq-6v-Bps">
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="u32-ui-rfz" id="fbb-TY-zi4">
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
                             </tableViewCell>
                         </prototypes>
                         <connections>
-                            <outlet property="dataSource" destination="gLr-jW-zB2" id="GHz-Kj-zwH"/>
-                            <outlet property="delegate" destination="gLr-jW-zB2" id="lwX-0C-aOh"/>
+                            <outlet property="dataSource" destination="1QL-MP-gcr" id="UtN-Za-w2x"/>
+                            <outlet property="delegate" destination="1QL-MP-gcr" id="pbn-nH-hDo"/>
                         </connections>
                     </tableView>
+                    <toolbarItems>
+                        <barButtonItem title="Item" id="e7E-0V-mcE">
+                            <connections>
+                                <segue destination="AOA-pI-2Qu" kind="show" id="Ybi-Kh-aiF"/>
+                            </connections>
+                        </barButtonItem>
+                    </toolbarItems>
+                    <navigationItem key="navigationItem" title="Car List" id="30H-3p-5S6"/>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                 </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="iKb-2W-nnX" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="WjH-id-HPN" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3240" y="1060"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="lJn-04-75J">
+            <objects>
+                <navigationController id="pvj-0a-90H" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="6kj-iO-UQo">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="1QL-MP-gcr" kind="relationship" relationship="rootViewController" id="IbB-sc-XK1"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="2JG-dX-b7j" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2576" y="1825"/>
+        </scene>
+        <!--Add Car View Controller-->
+        <scene sceneID="bLI-xo-qvD">
+            <objects>
+                <viewController id="AOA-pI-2Qu" customClass="AddCarViewController" customModule="SpotAppParse" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="O3f-7D-dMW"/>
+                        <viewControllerLayoutGuide type="bottom" id="Bke-q5-4CI"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="vTG-JR-HFU">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="model:" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TCM-dB-B2R">
+                                <rect key="frame" x="126" y="106" width="67" height="27"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="14K-NQ-Ege">
+                                <rect key="frame" x="206" y="106" width="188" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="14K-NQ-Ege" secondAttribute="height" multiplier="94:15" id="jUr-dh-mhN"/>
+                                    <constraint firstAttribute="height" constant="30" id="kEn-ZX-paW"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="TCM-dB-B2R" firstAttribute="top" secondItem="O3f-7D-dMW" secondAttribute="bottom" constant="86" id="3Wp-20-sQl"/>
+                            <constraint firstItem="14K-NQ-Ege" firstAttribute="leading" secondItem="TCM-dB-B2R" secondAttribute="trailing" constant="13" id="JqE-YU-mTO"/>
+                            <constraint firstItem="14K-NQ-Ege" firstAttribute="top" secondItem="O3f-7D-dMW" secondAttribute="bottom" constant="86" id="NhL-5l-eAW"/>
+                            <constraint firstItem="14K-NQ-Ege" firstAttribute="centerX" secondItem="vTG-JR-HFU" secondAttribute="centerX" id="ybi-hi-S2Y"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="6FD-iY-bKA" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3240" y="1825"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="lNk-RV-Uan">
@@ -448,7 +514,7 @@
         <!--Profile-->
         <scene sceneID="9iY-NI-Zzo">
             <objects>
-                <navigationController id="2qL-XE-bTk" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="navProfile" id="2qL-XE-bTk" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Profile" image="user" id="osF-9A-3Wf"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="9fJ-bf-3m1">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -585,7 +651,7 @@
                             </barButtonItem>
                             <barButtonItem systemItem="add" id="dsr-ME-TRa">
                                 <connections>
-                                    <segue destination="gLr-jW-zB2" kind="show" id="Y7Z-Bn-Oor"/>
+                                    <segue destination="pvj-0a-90H" kind="show" id="LJf-si-bXB"/>
                                 </connections>
                             </barButtonItem>
                         </rightBarButtonItems>

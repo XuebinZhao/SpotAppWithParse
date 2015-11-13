@@ -76,7 +76,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
                         let newUser = NSEntityDescription.insertNewObjectForEntityForName("Users", inManagedObjectContext: context)
                         
                         newUser.setValue(user.username, forKey: "username")
-                        newUser.setValue(user.objectId, forKey: "objectId")
+                        newUser.setValue(user.objectId, forKey: "userId")
                         
                         do {
                             try context.save()
@@ -126,7 +126,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
                                 
                                 for result in results as! [NSManagedObject] {
                                     
-                                    if result.valueForKey("objectId")!.isEqual(user?.objectId) {
+                                    if result.valueForKey("userId")!.isEqual(user?.objectId) {
                                         // if the user exist in the local database, we don't need to update local database
                                         userExist = true
                                     }
@@ -141,11 +141,15 @@ class ViewController: UIViewController, UITextFieldDelegate {
                         }
                         
                         // this is updating local database, when user is not exist in local database
-                        if userExist==false {
+                        if !(userExist) {
                             let newUser = NSEntityDescription.insertNewObjectForEntityForName("Users", inManagedObjectContext: context)
+                            let newCar = NSEntityDescription.insertNewObjectForEntityForName("Cars", inManagedObjectContext: context)
                             
                             newUser.setValue(user!.username, forKey: "username")
-                            newUser.setValue(user!.objectId, forKey: "objectId")
+                            newUser.setValue(user!.objectId, forKey: "userId")
+                            
+                            newCar.setValue(user!.objectId, forKey: "userId")
+                            newCar.setValue("Default Car", forKey: "model")
                             
                             do {
                                 try context.save()
@@ -158,6 +162,17 @@ class ViewController: UIViewController, UITextFieldDelegate {
                             
                             do {
                                 let results = try context.executeFetchRequest(requestAfterInsert)
+                                print(results)
+                            } catch {
+                                print("Fetch Failed")
+                            }
+                            
+                            // try to see what is in Cars entity
+                            let requestForCars = NSFetchRequest(entityName: "Cars")
+                            requestForCars.returnsObjectsAsFaults = false
+                            
+                            do {
+                                let results = try context.executeFetchRequest(requestForCars)
                                 print(results)
                             } catch {
                                 print("Fetch Failed")

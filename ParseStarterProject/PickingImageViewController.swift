@@ -43,7 +43,7 @@ class PickingImageViewController: UIViewController, UIImagePickerControllerDeleg
         user?.setObject(userImage, forKey: "userImage")
         user?.saveInBackgroundWithBlock({ (success, error) -> Void in
             if success {
-//                let mapViewControllerObejct = self.storyboard?.instantiateViewControllerWithIdentifier("profileController")
+//                let mapViewControllerObejct = self.storyboard?.instantiateViewControllerWithIdentifier("navProfile")
 //                self.presentViewController(mapViewControllerObejct!, animated: true, completion: nil)
             } else {
                 print("Something wrong")

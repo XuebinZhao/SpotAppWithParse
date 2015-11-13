@@ -7,8 +7,13 @@
 //
 
 import UIKit
+import Parse
+import CoreData
 
 class CarListTableViewController: UITableViewController {
+    
+    var model  = [""]
+    var userId = [""]
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -19,7 +24,34 @@ class CarListTableViewController: UITableViewController {
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
         
-        navigationController?.title = "Car List"
+        let appDel: AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        
+        let context: NSManagedObjectContext = appDel.managedObjectContext
+        
+        let request = NSFetchRequest(entityName: "Cars")
+        
+        request.returnsObjectsAsFaults = false
+        
+        do {
+            self.model.removeAll(keepCapacity: true)
+            self.userId.removeAll(keepCapacity: true)
+            
+            let results = try context.executeFetchRequest(request)
+            
+            if results.count > 0 {
+                
+                for result in results as! [NSManagedObject] {
+                    
+                    self.model.append(result.valueForKey("model") as! String)
+                    self.userId.append(result.valueForKey("userId") as! String)
+                }
+            }
+        } catch {
+            
+            print("Fetch Failed")
+        }
+        
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -36,7 +68,7 @@ class CarListTableViewController: UITableViewController {
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 3
+        return model.count
     }
 
     
@@ -44,7 +76,8 @@ class CarListTableViewController: UITableViewController {
         let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath)
 
         // Configure the cell...
-        cell.textLabel?.text = "Test Car"
+        cell.textLabel?.text = model[indexPath.row]
+        
 
         return cell
     }
