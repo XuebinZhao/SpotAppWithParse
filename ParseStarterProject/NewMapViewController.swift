@@ -23,6 +23,9 @@ class NewMapViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
     var latLocal:Double = 0.0
     var lonLocal:Double = 0.0
     
+//    var latDelta:CLLocationDegrees = 0.01
+//    var lonDelta:CLLocationDegrees = 0.01
+    
     
     @IBAction func refreshMap(sender: AnyObject) {
         let annotationsToRemove = map.annotations
@@ -199,11 +202,15 @@ class NewMapViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
                     }
                 })
                 
+                // Putting a pin into map
                 let annotation = MKPointAnnotation()
                 
                 annotation.coordinate = newCoordinate
                 
                 annotation.title = title
+                
+                // Try to add a UIButton in the pin
+                //annotation.
                 
                 self.map.addAnnotation(annotation)
                 
@@ -227,8 +234,9 @@ class NewMapViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
         //let location = CLLocation(latitude: latitude, longitude: longitude)
         
         
-        let latDelta:CLLocationDegrees = 0.01
-        let lonDelta:CLLocationDegrees = 0.01
+        let latDelta:CLLocationDegrees = 0.001
+        let lonDelta:CLLocationDegrees = 0.001
+        
         
         let span:MKCoordinateSpan = MKCoordinateSpanMake(latDelta, lonDelta)
         let region:MKCoordinateRegion = MKCoordinateRegionMake(coordinate, span)
@@ -243,6 +251,7 @@ class NewMapViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
         
         latLocal = latitude
         lonLocal = longitude
+        
 //        print(latLocal)
 //        print(lonLocal)
         
@@ -333,19 +342,67 @@ class NewMapViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
         }
     }
 
-//    @IBAction func logOut(sender: AnyObject) {
-//        PFUser.logOut()
-//        let currentUser = PFUser.currentUser()
-//        if currentUser != nil {
-//            logIn = false
-//            let storyboard = UIStoryboard(name: "Main", bundle: nil)
-//            
-//            // instantiate your desired ViewController
-//            let rootController = storyboard.instantiateViewControllerWithIdentifier("welcome")
-//
-//            self.presentViewController(rootController, animated: true, completion: nil)
-//        }
-//    }
+
+    // MARK: - MKMapViewDelegate
+    
+    // Here we create a view with a "right callout accessory view"
+    func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
+        
+        let reuseId = "pin"
+        
+        var pinView = mapView.dequeueReusableAnnotationViewWithIdentifier(reuseId) as? MKPinAnnotationView
+        
+        if pinView == nil {
+            pinView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: reuseId)
+            pinView!.canShowCallout = true
+            pinView!.pinColor = .Red
+            pinView!.rightCalloutAccessoryView = UIButton(type: .DetailDisclosure)
+        }
+        else {
+            pinView!.annotation = annotation
+        }
+        
+        return pinView
+    }
+    
+    func mapView(mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
+        if control == view.rightCalloutAccessoryView {
+            
+            let ind = places.count - 1
+            //print(places[places.count-1]["name"])
+            
+            let lat = Double(places[ind]["lat"]!)
+            let lon = Double(places[ind]["lon"]!)
+            
+            // Upload to Parse class name "spot"
+            let spotReport = PFObject(className: "spot")
+            
+            let point = PFGeoPoint(latitude: lat!, longitude: lon!)
+            
+            let user = PFUser.currentUser()
+            
+            var uId = ""
+            
+            if let userId = user?.objectId {
+                uId = userId
+            } else {
+                
+            }
+            
+            spotReport["location"] = point
+            spotReport["userId"] = uId
+            
+            spotReport.saveInBackgroundWithBlock({ (success, error) -> Void in
+                if success {
+                    print("save success")
+                } else {
+                    print("Failt")
+                }
+            })
+            
+        }
+    }
+
     
     
     
