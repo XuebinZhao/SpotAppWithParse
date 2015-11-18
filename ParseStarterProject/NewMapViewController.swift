@@ -33,6 +33,40 @@ class NewMapViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
         self.map.removeAnnotations(annotationsToRemove)
     }
     
+    @IBAction func getSpots(sender: AnyObject) {
+        var query = PFQuery(className:"spot")
+        // User's location
+        let user = PFUser.currentUser()
+        
+        let point = PFGeoPoint(latitude: latLocal, longitude: lonLocal)
+        // Create a query for places
+        // Interested in locations near user.
+        query.whereKey("location", nearGeoPoint:point)
+        // Limit what could be a lot of points.
+        query.limit = 10
+        // Final list of objects
+        query.findObjectsInBackgroundWithBlock {
+            (objects: [PFObject]?, error: NSError?) -> Void in
+            
+            if error == nil {
+                // The find succeeded.
+                print("Successfully retrieved \(objects!.count) locations.")
+                
+                // cycles through the 10 spots and adds each of them to the map.
+                for spots in objects!{
+                    var point = spots["location"]
+                    let annotation = MKPointAnnotation()
+                    annotation.coordinate = CLLocationCoordinate2DMake(point.latitude, point.longitude)
+                    self.map.addAnnotation(annotation)
+                }
+                
+
+            } else {
+                // Log details of the failure
+                print("Error: \(error!) \(error!.userInfo)")
+            }
+        }
+    }
   
     @IBAction func saveParkLocation(sender: AnyObject) {
         saveCheck = true
@@ -87,7 +121,7 @@ class NewMapViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
             
             annotation.title = places[activePlace]["name"]
             
-            self.map.addAnnotation(annotation)
+            //self.map.addAnnotation(annotation)
             
             // **********************************************************************
             // code for route direction
@@ -246,7 +280,9 @@ class NewMapViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
         let span:MKCoordinateSpan = MKCoordinateSpanMake(latDelta, lonDelta)
         let region:MKCoordinateRegion = MKCoordinateRegionMake(coordinate, span)
         
-        self.map.setRegion(region, animated: true)
+        // Commented out the below code so we can scroll around on the map.
+        
+        //self.map.setRegion(region, animated: true)
         
 //        let annotation = MKPointAnnotation()
 //        
