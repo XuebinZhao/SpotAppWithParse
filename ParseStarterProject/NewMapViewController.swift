@@ -12,6 +12,7 @@ import Parse
 
 class NewMapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
 
+    @IBOutlet weak var openParkingSpot: UIBarButtonItem!
     @IBOutlet weak var map: MKMapView!
     
     var destination = MKMapItem?()
@@ -38,6 +39,10 @@ class NewMapViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
         self.saveLocation(latLocal, longitude: lonLocal)
     }
     
+    @IBAction func indicateParking(sender: AnyObject) {
+        self.indicateParkingLocation(latLocal, longitude: lonLocal)
+        
+    }
    
     @IBAction func meterButton(sender: AnyObject) {
         performSegueWithIdentifier("meter", sender: self)
@@ -257,9 +262,44 @@ class NewMapViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
         
     }
     
+    func indicateParkingLocation(latitude:Double, longitude:Double){
+        
+        
+        let point = PFGeoPoint(latitude: latitude, longitude: longitude)
+        
+        let openParkingLocation = PFObject(className: "spot")
+        
+        let user = PFUser.currentUser()
+        
+        var uId = ""
+        
+        if let userId = user?.objectId {
+            uId = userId
+        } else {
+            
+        }
+        
+        openParkingLocation["location"] = point
+        openParkingLocation["userId"] = uId
+        
+        openParkingLocation.saveInBackgroundWithBlock({ (success, error) -> Void in
+            if success {
+                print("save success")
+            } else {
+                print("Failt")
+            }
+        })
+
+        
+    }
+
+    
+    
+    
     func saveLocation(latitude:Double, longitude:Double) {
         let coordinate = CLLocationCoordinate2DMake(latitude, longitude)
         let location = CLLocation(latitude: latitude, longitude: longitude)
+        
         
         if saveCheck == true {
             
