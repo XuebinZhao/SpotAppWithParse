@@ -24,10 +24,6 @@ class NewMapViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
     var latLocal:Double = 0.0
     var lonLocal:Double = 0.0
     
-//    var latDelta:CLLocationDegrees = 0.01
-//    var lonDelta:CLLocationDegrees = 0.01
-    
-    
     @IBAction func refreshMap(sender: AnyObject) {
         let annotationsToRemove = map.annotations
         self.map.removeAnnotations(annotationsToRemove)
@@ -59,6 +55,7 @@ class NewMapViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
         manager = CLLocationManager()
         manager.delegate = self
         manager.desiredAccuracy = kCLLocationAccuracyBest
+        
         self.map.showsUserLocation = true
         
         if activePlace == -1 {
@@ -364,6 +361,15 @@ class NewMapViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
                 
                 annotation.title = title
                 
+                // ============================
+                let reuseId = "pin"
+                let pinView = self.map.dequeueReusableAnnotationViewWithIdentifier(reuseId) as? MKPinAnnotationView
+                
+                pinView!.rightCalloutAccessoryView = UIButton(type: .DetailDisclosure)
+                // ============================
+                
+                
+                
                 self.map.addAnnotation(annotation)
                 
                 self.saveCheck = false
@@ -386,24 +392,25 @@ class NewMapViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
     // MARK: - MKMapViewDelegate
     
     // Here we create a view with a "right callout accessory view"
-    func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
-        
-        let reuseId = "pin"
-        
-        var pinView = mapView.dequeueReusableAnnotationViewWithIdentifier(reuseId) as? MKPinAnnotationView
-        
-        if pinView == nil {
-            pinView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: reuseId)
-            pinView!.canShowCallout = true
-            pinView!.pinColor = .Red
-            pinView!.rightCalloutAccessoryView = UIButton(type: .DetailDisclosure)
-        }
-        else {
-            pinView!.annotation = annotation
-        }
-        
-        return pinView
-    }
+//    func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
+//        
+//        let reuseId = "pin"
+//        
+//        var pinView = mapView.dequeueReusableAnnotationViewWithIdentifier(reuseId) as? MKPinAnnotationView
+//        
+//        if pinView == nil {
+//            pinView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: reuseId)
+//            pinView!.canShowCallout = true
+//            pinView!.pinColor = .Red
+//            pinView!.rightCalloutAccessoryView = UIButton(type: .DetailDisclosure)
+//        }
+//        else {
+//            pinView!.annotation = annotation
+//        }
+//        
+//        return pinView
+//    }
+    
     
     func mapView(mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
         if control == view.rightCalloutAccessoryView {
