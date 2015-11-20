@@ -57,7 +57,9 @@ class CarListTableViewController: UITableViewController {
             print("Fetch Failed")
         }
         
-        print(make)
+        self.tableView.reloadData()
+        
+  
     }
 
     override func didReceiveMemoryWarning() {
