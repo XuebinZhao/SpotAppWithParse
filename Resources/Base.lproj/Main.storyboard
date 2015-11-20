@@ -349,7 +349,7 @@
                                 </tableViewCellContentView>
                                 <animations/>
                                 <connections>
-                                    <segue destination="xBI-Si-auZ" kind="show" id="ZBz-3n-dnF"/>
+                                    <segue destination="xBI-Si-auZ" kind="show" identifier="modifyCar" id="LFB-M9-QNS"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -359,7 +359,14 @@
                         </connections>
                     </tableView>
                     <toolbarItems/>
-                    <navigationItem key="navigationItem" title="Car List" id="30H-3p-5S6"/>
+                    <navigationItem key="navigationItem" title="Car List" id="30H-3p-5S6">
+                        <barButtonItem key="rightBarButtonItem" title="Add" id="C5c-Je-XdQ">
+                            <connections>
+                                <action selector="addCar:" destination="1QL-MP-gcr" id="W59-bD-HWO"/>
+                                <segue destination="xBI-Si-auZ" kind="show" identifier="addCar" id="WWH-Ic-vME"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WjH-id-HPN" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -534,17 +541,6 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Nissan Sentra" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bel-Vc-ube">
-                                <rect key="frame" x="247" y="397" width="106" height="21"/>
-                                <animations/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="21" id="4oA-s4-hLP"/>
-                                    <constraint firstAttribute="width" secondItem="bel-Vc-ube" secondAttribute="height" multiplier="106:21" id="agr-lM-dDB"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0en-de-3Iz">
                                 <rect key="frame" x="179" y="513" width="243" height="30"/>
                                 <animations/>
@@ -565,7 +561,6 @@
                                 <animations/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="voE-UR-7lI" secondAttribute="height" multiplier="50:29" id="LLm-i3-EN8"/>
-                                    <constraint firstAttribute="height" constant="29" id="j7O-Oy-4Ue"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -586,21 +581,32 @@
                                 <rect key="frame" x="0.0" y="64" width="600" height="204"/>
                                 <animations/>
                             </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Nissan Sentra" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bel-Vc-ube">
+                                <rect key="frame" x="241" y="396" width="117" height="31"/>
+                                <animations/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="bel-Vc-ube" secondAttribute="height" multiplier="117:31" id="OC3-LE-o5q"/>
+                                    <constraint firstAttribute="width" constant="117" id="Rzg-Nj-n0Z"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="voE-UR-7lI" firstAttribute="top" secondItem="S8u-Tf-fmY" secondAttribute="bottom" constant="29" id="E4g-Gy-tpJ"/>
+                            <constraint firstItem="bel-Vc-ube" firstAttribute="centerX" secondItem="ING-wf-hj1" secondAttribute="centerX" id="FLb-Ni-enA"/>
                             <constraint firstAttribute="trailingMargin" secondItem="S8u-Tf-fmY" secondAttribute="trailing" constant="-20" id="KaV-ti-50r"/>
                             <constraint firstItem="voE-UR-7lI" firstAttribute="centerX" secondItem="ING-wf-hj1" secondAttribute="centerX" id="Psu-Xu-Hg2"/>
-                            <constraint firstItem="bel-Vc-ube" firstAttribute="centerX" secondItem="ING-wf-hj1" secondAttribute="centerX" id="Qup-2h-YNe"/>
                             <constraint firstItem="EKs-ZY-o5A" firstAttribute="centerX" secondItem="ING-wf-hj1" secondAttribute="centerX" id="UfL-nS-KDn"/>
                             <constraint firstItem="tHF-lk-ha5" firstAttribute="top" secondItem="0en-de-3Iz" secondAttribute="bottom" constant="8" id="XJu-cK-z0p"/>
                             <constraint firstItem="S8u-Tf-fmY" firstAttribute="leading" secondItem="ING-wf-hj1" secondAttribute="leadingMargin" constant="-20" id="ZpK-Ry-MQ1"/>
                             <constraint firstItem="S8u-Tf-fmY" firstAttribute="top" secondItem="EKs-ZY-o5A" secondAttribute="bottom" constant="-160" id="bHU-1f-PyO"/>
                             <constraint firstItem="hpH-WP-l4b" firstAttribute="top" secondItem="U8o-Vq-992" secondAttribute="bottom" constant="8" id="csr-cl-mtI"/>
                             <constraint firstItem="bS8-mV-yuU" firstAttribute="centerX" secondItem="ING-wf-hj1" secondAttribute="centerX" id="kgW-wz-vx0"/>
-                            <constraint firstItem="bel-Vc-ube" firstAttribute="leading" secondItem="voE-UR-7lI" secondAttribute="trailing" constant="-78" id="oji-Kw-YuC"/>
+                            <constraint firstItem="bel-Vc-ube" firstAttribute="top" secondItem="voE-UR-7lI" secondAttribute="bottom" constant="70" id="pqM-Nc-dWc"/>
                             <constraint firstItem="tHF-lk-ha5" firstAttribute="top" secondItem="S8u-Tf-fmY" secondAttribute="bottom" constant="283" id="roe-bV-Zmm"/>
                             <constraint firstItem="S8u-Tf-fmY" firstAttribute="top" secondItem="ING-wf-hj1" secondAttribute="topMargin" constant="64" id="tdU-Fv-soT"/>
                             <constraint firstItem="hpH-WP-l4b" firstAttribute="centerX" secondItem="ING-wf-hj1" secondAttribute="centerX" id="tmS-Sn-jgm"/>
@@ -889,13 +895,14 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="addOrUpdateButton" destination="uLD-du-Iit" id="SCY-Vk-bMZ"/>
                         <outlet property="makeTextField" destination="dZT-23-85X" id="wbP-Hh-8Rz"/>
                         <outlet property="modelTextField" destination="fsF-V8-MB9" id="9Tt-mb-KLd"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="TLD-pJ-Xvd" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3240" y="1060"/>
+            <point key="canvasLocation" x="3240" y="1825"/>
         </scene>
     </scenes>
     <resources>
@@ -908,6 +915,7 @@
         <image name="user" width="28" height="24"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="WWH-Ic-vME"/>
         <segue reference="drc-1t-M33"/>
     </inferredMetricsTieBreakers>
 </document>

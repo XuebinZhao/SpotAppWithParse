@@ -16,7 +16,12 @@ class ModifyCarViewController: UIViewController, UITextFieldDelegate {
     
     @IBOutlet weak var makeTextField: UITextField!
     
+    @IBOutlet weak var addOrUpdateButton: UIButton!
     var index:Int = 0
+    
+    var addCar = false
+    
+    var cars = [NSManagedObject]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,7 +31,11 @@ class ModifyCarViewController: UIViewController, UITextFieldDelegate {
      }
     
     override func viewWillAppear(animated: Bool) {
-        print(index)
+        if addCar {
+            addOrUpdateButton.setTitle("Add", forState: UIControlState.Normal)
+        } else {
+            addOrUpdateButton.setTitle("Update", forState: UIControlState.Normal)
+        
         
         let user = PFUser.currentUser()
         
@@ -41,23 +50,21 @@ class ModifyCarViewController: UIViewController, UITextFieldDelegate {
             let results = try context.executeFetchRequest(request)
             
             if results.count > 0 {
-                
-                print(results[0])
-                
                 for result in results as! [NSManagedObject] {
                     if result.valueForKey("userId")!.isEqual(user?.objectId) {
-                        let model = String(result.valueForKey("model")!)
-                        modelTextField.text = model
-                        makeTextField.text = String(result.valueForKey("make")!)
+                        cars.append(result)
                     }
                 }
+                let car = cars[index]
+                modelTextField.text =
+                    car.valueForKey("model") as? String
+                makeTextField.text =
+                    car.valueForKey("make") as? String
             }
         } catch {
             print("Fetch Failed")
         }
-        
-        
-        
+        }
     }
     
     func textFieldShouldReturn(textField: UITextField) -> Bool {
@@ -66,44 +73,55 @@ class ModifyCarViewController: UIViewController, UITextFieldDelegate {
     }
     
     @IBAction func updateCar(sender: AnyObject) {
-        let appDel: AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-        
-        let context: NSManagedObjectContext = appDel.managedObjectContext
-        
-        let request = NSFetchRequest(entityName: "Cars")
-        request.returnsObjectsAsFaults = false
-        do {
-            let results = try context.executeFetchRequest(request)
+        if addCar {
+            //addOrUpdateButton.setTitle("Add", forState: UIControlState.Normal)
+            let user = PFUser.currentUser()
+            let userID = user?.objectId
             
-            if results.count > 0 {
-                
-                print(results[0])
-                
-                let managedObject = results[0]
-                managedObject.setValue(modelTextField.text, forKey:"model")
-                managedObject.setValue(makeTextField.text, forKey:"make")
-                do {
-                    try context.save()
-                } catch {
-                    print("There was a problem")
-                }
+            let appDel: AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+            
+            let context: NSManagedObjectContext = appDel.managedObjectContext
+            
+            let cars = NSEntityDescription.insertNewObjectForEntityForName("Cars", inManagedObjectContext: context)
+            
+            cars.setValue(modelTextField.text, forKey: "model")
+            cars.setValue(makeTextField.text, forKey: "make")
+            cars.setValue(userID, forKey: "userId")
+            do {
+                try context.save()
+            } catch {
+                print("There was a problem")
             }
-        } catch {
-            print("Fetch Failed")
+        } else {
+            let appDel: AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+            
+            let context: NSManagedObjectContext = appDel.managedObjectContext
+            
+            let request = NSFetchRequest(entityName: "Cars")
+            request.returnsObjectsAsFaults = false
+            do {
+                let results = try context.executeFetchRequest(request)
+                
+                if results.count > 0 {
+                    
+                    print(results[index])
+                    
+                    let managedObject = results[index]
+                    managedObject.setValue(modelTextField.text, forKey:"model")
+                    managedObject.setValue(makeTextField.text, forKey:"make")
+                    do {
+                        try context.save()
+                    } catch {
+                        print("There was a problem")
+                    }
+                }
+            } catch {
+                print("Fetch Failed")
+            }
         }
         
         let mapViewControllerObejct = self.storyboard?.instantiateViewControllerWithIdentifier("logined")
         self.presentViewController(mapViewControllerObejct!, animated: true, completion: nil)
-        
-//        let requestForCars = NSFetchRequest(entityName: "Cars")
-//        requestForCars.returnsObjectsAsFaults = false
-//        // to see did I update
-//        do {
-//            let results = try context.executeFetchRequest(requestForCars)
-//            print(results)
-//        } catch {
-//            print("Fetch Failed")
-//        }
     }
     
     
@@ -122,6 +140,5 @@ class ModifyCarViewController: UIViewController, UITextFieldDelegate {
     // Pass the selected object to the new view controller.
     }
     */
-
 
 }

@@ -149,7 +149,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
                             newUser.setValue(user!.objectId, forKey: "userId")
                             
                             newCar.setValue(user!.objectId, forKey: "userId")
-                            newCar.setValue("Default Car", forKey: "model")
+                            newCar.setValue("Default", forKey: "model")
                             newCar.setValue("Car", forKey: "make")
                             
                             

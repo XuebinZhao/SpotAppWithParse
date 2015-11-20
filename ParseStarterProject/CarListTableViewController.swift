@@ -53,8 +53,10 @@ class CarListTableViewController: UITableViewController {
             
             print("Fetch Failed")
         }
-        
-        
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        tableView.reloadData()
     }
 
     override func didReceiveMemoryWarning() {
@@ -89,7 +91,6 @@ class CarListTableViewController: UITableViewController {
     override func tableView(tableView: UITableView, willSelectRowAtIndexPath indexPath: NSIndexPath) -> NSIndexPath? {
         return indexPath
     }
-
 
     /*
     // Override to support conditional editing of the table view.
@@ -133,20 +134,20 @@ class CarListTableViewController: UITableViewController {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
         
-        let vc: ModifyCarViewController = segue.destinationViewController as! ModifyCarViewController
-        
-        let selectedIndex = self.tableView.indexPathForCell(sender as! UITableViewCell)
-        
-        vc.index = (selectedIndex?.row)!
+        if segue.identifier == "modifyCar" {
+            let vc: ModifyCarViewController = segue.destinationViewController as! ModifyCarViewController
+            
+            let selectedIndex = self.tableView.indexPathForCell(sender as! UITableViewCell)
+            
+            vc.index = (selectedIndex?.row)!
+        } else {
+            let vc: ModifyCarViewController = segue.destinationViewController as! ModifyCarViewController
+            
+            vc.addCar = true
+        }
         
     }
 
-    
-    
-    
-    
-    
-    
     
     
     

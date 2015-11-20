@@ -259,42 +259,27 @@ class NewMapViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
 
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         
-        //print(locations)
-        
         let userLocation:CLLocation = locations[0] as CLLocation
         
         let latitude  = userLocation.coordinate.latitude
         let longitude = userLocation.coordinate.longitude
         
-        let coordinate = CLLocationCoordinate2DMake(latitude, longitude)
-        //let location = CLLocation(latitude: latitude, longitude: longitude)
         
-        
-        let latDelta:CLLocationDegrees = 0.001
-        let lonDelta:CLLocationDegrees = 0.001
-        
-        
-        let span:MKCoordinateSpan = MKCoordinateSpanMake(latDelta, lonDelta)
-        let region:MKCoordinateRegion = MKCoordinateRegionMake(coordinate, span)
-        
-        // Commented out the below code so we can scroll around on the map.
-        
-        //self.map.setRegion(region, animated: true)
-        
-        
-        
-//        let annotation = MKPointAnnotation()
+        // *********Commented out the below code so we can scroll around on the map.*********
+//        let coordinate = CLLocationCoordinate2DMake(latitude, longitude)
+//        //let location = CLLocation(latitude: latitude, longitude: longitude)
 //        
-//        annotation.coordinate = coordinate
+//        let latDelta:CLLocationDegrees = 0.001
+//        let lonDelta:CLLocationDegrees = 0.001
 //        
-//        map.addAnnotation(annotation)
+//        let span:MKCoordinateSpan = MKCoordinateSpanMake(latDelta, lonDelta)
+//        let region:MKCoordinateRegion = MKCoordinateRegionMake(coordinate, span)
+//        
+//        self.map.setRegion(region, animated: true)
+        // *********Commented out the below code so we can scroll around on the map.*********
         
         latLocal = latitude
         lonLocal = longitude
-        
-//        print(latLocal)
-//        print(lonLocal)
-        
     }
     
     func indicateParkingLocation(latitude:Double, longitude:Double){
