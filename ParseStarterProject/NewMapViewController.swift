@@ -30,9 +30,9 @@ class NewMapViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
     }
     
     @IBAction func getSpots(sender: AnyObject) {
-        var query = PFQuery(className:"spot")
+        let query = PFQuery(className:"spot")
         // User's location
-        let user = PFUser.currentUser()
+        //let user = PFUser.currentUser()
         
         let point = PFGeoPoint(latitude: latLocal, longitude: lonLocal)
         // Create a query for places
@@ -50,7 +50,7 @@ class NewMapViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
                 
                 // cycles through the 10 spots and adds each of them to the map.
                 for spots in objects!{
-                    var point = spots["location"]
+                    let point = spots["location"]
                     let annotation = MKPointAnnotation()
                     annotation.coordinate = CLLocationCoordinate2DMake(point.latitude, point.longitude)
                     self.map.addAnnotation(annotation)
@@ -281,6 +281,8 @@ class NewMapViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
         
         //self.map.setRegion(region, animated: true)
         
+        
+        
 //        let annotation = MKPointAnnotation()
 //        
 //        annotation.coordinate = coordinate
@@ -398,10 +400,10 @@ class NewMapViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
                 annotation.title = title
                 
                 // ============================
-                let reuseId = "pin"
-                let pinView = self.map.dequeueReusableAnnotationViewWithIdentifier(reuseId) as? MKPinAnnotationView
-                
-                pinView!.rightCalloutAccessoryView = UIButton(type: .DetailDisclosure)
+//                let reuseId = "pin"
+//                let pinView = self.map.dequeueReusableAnnotationViewWithIdentifier(reuseId) as? MKPinAnnotationView
+//                
+//                pinView!.rightCalloutAccessoryView = UIButton(type: .DetailDisclosure)
                 // ============================
                 
                 
@@ -428,24 +430,24 @@ class NewMapViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
     // MARK: - MKMapViewDelegate
     
     // Here we create a view with a "right callout accessory view"
-//    func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
-//        
-//        let reuseId = "pin"
-//        
-//        var pinView = mapView.dequeueReusableAnnotationViewWithIdentifier(reuseId) as? MKPinAnnotationView
-//        
-//        if pinView == nil {
-//            pinView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: reuseId)
-//            pinView!.canShowCallout = true
-//            pinView!.pinColor = .Red
-//            pinView!.rightCalloutAccessoryView = UIButton(type: .DetailDisclosure)
-//        }
-//        else {
-//            pinView!.annotation = annotation
-//        }
-//        
-//        return pinView
-//    }
+    func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
+        
+        let reuseId = "pin"
+        
+        var pinView = mapView.dequeueReusableAnnotationViewWithIdentifier(reuseId) as? MKPinAnnotationView
+        
+        if pinView == nil {
+            pinView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: reuseId)
+            pinView!.canShowCallout = true
+            pinView!.pinColor = .Red
+            pinView!.rightCalloutAccessoryView = UIButton(type: .DetailDisclosure)
+        }
+        else {
+            pinView!.annotation = annotation
+        }
+        
+        return pinView
+    }
     
     
     func mapView(mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
@@ -474,6 +476,7 @@ class NewMapViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
             
             spotReport["location"] = point
             spotReport["userId"] = uId
+            
             
             spotReport.saveInBackgroundWithBlock({ (success, error) -> Void in
                 if success {

@@ -150,6 +150,8 @@ class ViewController: UIViewController, UITextFieldDelegate {
                             
                             newCar.setValue(user!.objectId, forKey: "userId")
                             newCar.setValue("Default Car", forKey: "model")
+                            newCar.setValue("Car", forKey: "make")
+                            
                             
                             do {
                                 try context.save()

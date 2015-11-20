@@ -14,6 +14,7 @@ class CarListTableViewController: UITableViewController {
     
     var model  = [""]
     var userId = [""]
+    var make  = [""]
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,6 +36,7 @@ class CarListTableViewController: UITableViewController {
         do {
             self.model.removeAll(keepCapacity: true)
             self.userId.removeAll(keepCapacity: true)
+            self.make.removeAll(keepCapacity: true)
             
             let results = try context.executeFetchRequest(request)
             
@@ -44,6 +46,7 @@ class CarListTableViewController: UITableViewController {
                     
                     self.model.append(result.valueForKey("model") as! String)
                     self.userId.append(result.valueForKey("userId") as! String)
+                    self.make.append(result.valueForKey("make") as! String)
                 }
             }
         } catch {
@@ -77,9 +80,14 @@ class CarListTableViewController: UITableViewController {
 
         // Configure the cell...
         cell.textLabel?.text = model[indexPath.row]
+        cell.detailTextLabel?.text = make[indexPath.row]
         
 
         return cell
+    }
+    
+    override func tableView(tableView: UITableView, willSelectRowAtIndexPath indexPath: NSIndexPath) -> NSIndexPath? {
+        return indexPath
     }
 
 
@@ -91,7 +99,7 @@ class CarListTableViewController: UITableViewController {
     }
     */
 
-    /*
+    
     // Override to support editing the table view.
     override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         if editingStyle == .Delete {
@@ -101,7 +109,7 @@ class CarListTableViewController: UITableViewController {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
         }    
     }
-    */
+
 
     /*
     // Override to support rearranging the table view.
@@ -118,14 +126,28 @@ class CarListTableViewController: UITableViewController {
     }
     */
 
-    /*
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
+        
+        let vc: ModifyCarViewController = segue.destinationViewController as! ModifyCarViewController
+        
+        let selectedIndex = self.tableView.indexPathForCell(sender as! UITableViewCell)
+        
+        vc.index = (selectedIndex?.row)!
+        
     }
-    */
 
+    
+    
+    
+    
+    
+    
+    
+    
+    
 }

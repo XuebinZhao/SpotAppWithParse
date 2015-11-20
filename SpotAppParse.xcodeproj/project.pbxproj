@@ -28,12 +28,12 @@
 		915C6A321BE998E600CBD487 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 915C6A311BE998E600CBD487 /* CoreData.framework */; };
 		915C6A351BE99A1F00CBD487 /* SpotAppModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 915C6A331BE99A1F00CBD487 /* SpotAppModel.xcdatamodeld */; };
 		915C6A3B1BE9CDE900CBD487 /* UserProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 915C6A3A1BE9CDE900CBD487 /* UserProfileViewController.swift */; };
+		917587EC1BFEA2E50087D9BA /* ModifyCarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 917587EB1BFEA2E50087D9BA /* ModifyCarViewController.swift */; };
 		918468A31BE00EC600C2455E /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 918468A21BE00EC600C2455E /* MapViewController.swift */; };
 		918468A51BE03D7900C2455E /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 918468A41BE03D7900C2455E /* CoreLocation.framework */; };
 		91A2683E1BF2CD8C00288D6B /* ProfileEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91A2683D1BF2CD8C00288D6B /* ProfileEditViewController.swift */; };
 		91FB78D51BF3C1EC006F2DFD /* PickingImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91FB78D41BF3C1EC006F2DFD /* PickingImageViewController.swift */; };
 		91FB78D71BF55B2B006F2DFD /* CarListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91FB78D61BF55B2B006F2DFD /* CarListTableViewController.swift */; };
-		91FB78D91BF5717E006F2DFD /* AddCarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91FB78D81BF5717E006F2DFD /* AddCarViewController.swift */; };
 		91FEF8B21BD967B100DE6868 /* UserListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91FEF8B11BD967B100DE6868 /* UserListTableViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -64,12 +64,12 @@
 		915C6A311BE998E600CBD487 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		915C6A341BE99A1F00CBD487 /* SpotAppModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = SpotAppModel.xcdatamodel; sourceTree = "<group>"; };
 		915C6A3A1BE9CDE900CBD487 /* UserProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserProfileViewController.swift; sourceTree = "<group>"; };
+		917587EB1BFEA2E50087D9BA /* ModifyCarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModifyCarViewController.swift; sourceTree = "<group>"; };
 		918468A21BE00EC600C2455E /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		918468A41BE03D7900C2455E /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		91A2683D1BF2CD8C00288D6B /* ProfileEditViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileEditViewController.swift; sourceTree = "<group>"; };
 		91FB78D41BF3C1EC006F2DFD /* PickingImageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PickingImageViewController.swift; sourceTree = "<group>"; };
 		91FB78D61BF55B2B006F2DFD /* CarListTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CarListTableViewController.swift; sourceTree = "<group>"; };
-		91FB78D81BF5717E006F2DFD /* AddCarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddCarViewController.swift; sourceTree = "<group>"; };
 		91FEF8B11BD967B100DE6868 /* UserListTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserListTableViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -182,13 +182,13 @@
 		915C6A381BE99A9A00CBD487 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				91FB78D81BF5717E006F2DFD /* AddCarViewController.swift */,
+				81BA814A1A49DA1800E65899 /* AppDelegate.swift */,
 				91FB78D61BF55B2B006F2DFD /* CarListTableViewController.swift */,
 				915C6A2F1BE96FBB00CBD487 /* CounterViewController.swift */,
 				4F9894331BEC2DFC003F34BB /* User.swift */,
 				91FB78D41BF3C1EC006F2DFD /* PickingImageViewController.swift */,
 				4F9894321BEC2DFC003F34BB /* User+CoreDataProperties.swift */,
-				81BA814A1A49DA1800E65899 /* AppDelegate.swift */,
+				917587EB1BFEA2E50087D9BA /* ModifyCarViewController.swift */,
 				9157D5F31BE15D4000D63832 /* NewMapViewController.swift */,
 				9157D5F51BE15E2C00D63832 /* ParkHistoryTableViewController.swift */,
 				91A2683D1BF2CD8C00288D6B /* ProfileEditViewController.swift */,
@@ -302,6 +302,7 @@
 				9157D5F41BE15D4000D63832 /* NewMapViewController.swift in Sources */,
 				915C6A301BE96FBB00CBD487 /* CounterViewController.swift in Sources */,
 				91A2683E1BF2CD8C00288D6B /* ProfileEditViewController.swift in Sources */,
+				917587EC1BFEA2E50087D9BA /* ModifyCarViewController.swift in Sources */,
 				9157D5F61BE15E2C00D63832 /* ParkHistoryTableViewController.swift in Sources */,
 				91FB78D71BF55B2B006F2DFD /* CarListTableViewController.swift in Sources */,
 				81BA814D1A49DA1800E65899 /* ViewController.swift in Sources */,
@@ -309,7 +310,6 @@
 				915C6A3B1BE9CDE900CBD487 /* UserProfileViewController.swift in Sources */,
 				4F9894341BEC2DFC003F34BB /* User+CoreDataProperties.swift in Sources */,
 				91FB78D51BF3C1EC006F2DFD /* PickingImageViewController.swift in Sources */,
-				91FB78D91BF5717E006F2DFD /* AddCarViewController.swift in Sources */,
 				918468A31BE00EC600C2455E /* MapViewController.swift in Sources */,
 				4F9894351BEC2DFC003F34BB /* User.swift in Sources */,
 			);
