@@ -13,6 +13,7 @@ import CoreData
 class CarListTableViewController: UITableViewController {
     
     var model  = [""]
+    var make = [""]
     var userId = [""]
 
     override func viewDidLoad() {
@@ -30,10 +31,13 @@ class CarListTableViewController: UITableViewController {
         
         let request = NSFetchRequest(entityName: "Cars")
         
+        
+        
         request.returnsObjectsAsFaults = false
         
         do {
             self.model.removeAll(keepCapacity: true)
+            self.make.removeAll(keepCapacity: true)
             self.userId.removeAll(keepCapacity: true)
             
             let results = try context.executeFetchRequest(request)
@@ -43,6 +47,8 @@ class CarListTableViewController: UITableViewController {
                 for result in results as! [NSManagedObject] {
                     
                     self.model.append(result.valueForKey("model") as! String)
+                    
+                    self.make.append(result.valueForKey("make") as! String)
                     self.userId.append(result.valueForKey("userId") as! String)
                 }
             }
@@ -51,7 +57,7 @@ class CarListTableViewController: UITableViewController {
             print("Fetch Failed")
         }
         
-        
+        print(make)
     }
 
     override func didReceiveMemoryWarning() {
@@ -77,6 +83,7 @@ class CarListTableViewController: UITableViewController {
 
         // Configure the cell...
         cell.textLabel?.text = model[indexPath.row]
+        cell.detailTextLabel?.text = make[indexPath.row]
         
 
         return cell

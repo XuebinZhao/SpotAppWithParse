@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="9057" systemVersion="14F1021" minimumToolsVersion="Xcode 7.0">
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="9057" systemVersion="15B42" minimumToolsVersion="Xcode 7.0">
     <entity name="Cars" syncable="YES">
+        <attribute name="make" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="model" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="userId" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="relationship" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Users" inverseName="relationship" inverseEntity="Users" syncable="YES"/>
@@ -11,7 +12,7 @@
         <relationship name="relationship" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Cars" inverseName="relationship" inverseEntity="Cars" syncable="YES"/>
     </entity>
     <elements>
+        <element name="Cars" positionX="-63" positionY="9" width="128" height="105"/>
         <element name="Users" positionX="-63" positionY="-9" width="128" height="90"/>
-        <element name="Cars" positionX="-63" positionY="9" width="128" height="90"/>
     </elements>
 </model>

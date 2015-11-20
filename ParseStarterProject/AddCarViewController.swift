@@ -7,9 +7,19 @@
 //
 
 import UIKit
+import CoreData
+import Parse
 
 class AddCarViewController: UIViewController {
 
+    @IBOutlet weak var model: UITextField!
+    @IBOutlet weak var make: UITextField!
+    
+    @IBAction func addCar(sender: AnyObject) {
+        setNewCar()
+    }
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -19,6 +29,28 @@ class AddCarViewController: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    func setNewCar(){
+        let user = PFUser.currentUser()
+        let userID = user?.objectId
+        
+        let appDel: AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        
+        let context: NSManagedObjectContext = appDel.managedObjectContext
+        
+        let cars = NSEntityDescription.insertNewObjectForEntityForName("Cars", inManagedObjectContext: context)
+        
+        
+        let carModel = model.text
+        let carMake = make.text
+        
+        cars.setValue(carModel, forKey: "model")
+        cars.setValue(carMake, forKey: "make")
+        cars.setValue(userID, forKey: "userId")
+        
+        
+        
     }
     
 
