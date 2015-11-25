@@ -10,10 +10,13 @@ import UIKit
 import MapKit
 import Parse
 
+
 class NewMapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
 
     @IBOutlet weak var openParkingSpot: UIBarButtonItem!
     @IBOutlet weak var map: MKMapView!
+    
+    @IBOutlet var secondaryMenu: UIView!
     
     var destination = MKMapItem?()
     
@@ -438,41 +441,65 @@ class NewMapViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
     func mapView(mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
         if control == view.rightCalloutAccessoryView {
             
-            let ind = places.count - 1
-            //print(places[places.count-1]["name"])
+//            let ind = places.count - 1
+//            //print(places[places.count-1]["name"])
+//            
+//            let lat = Double(places[ind]["lat"]!)
+//            let lon = Double(places[ind]["lon"]!)
+//            
+//            // Upload to Parse class name "spot"
+//            let spotReport = PFObject(className: "spot")
+//            
+//            let point = PFGeoPoint(latitude: lat!, longitude: lon!)
+//            
+//            let user = PFUser.currentUser()
+//            
+//            var uId = ""
+//            
+//            if let userId = user?.objectId {
+//                uId = userId
+//            } else {
+//                
+//            }
+//            
+//            spotReport["location"] = point
+//            spotReport["userId"] = uId
+//            
+//            
+//            spotReport.saveInBackgroundWithBlock({ (success, error) -> Void in
+//                if success {
+//                    print("save success")
+//                } else {
+//                    print("Failt")
+//                }
+//            })
             
-            let lat = Double(places[ind]["lat"]!)
-            let lon = Double(places[ind]["lon"]!)
+            let actionSheet = UIAlertController(title: "Spot App", message: nil, preferredStyle: .ActionSheet)
             
-            // Upload to Parse class name "spot"
-            let spotReport = PFObject(className: "spot")
+            actionSheet.addAction(UIAlertAction(title: "Report Spot", style: .Default, handler: { action in
+                self.reportSpot()
+            }))
             
-            let point = PFGeoPoint(latitude: lat!, longitude: lon!)
+            actionSheet.addAction(UIAlertAction(title: "Claim Spot", style: .Default, handler: { action in
+                self.claimSpot()
+            }))
             
-            let user = PFUser.currentUser()
+            actionSheet.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
             
-            var uId = ""
-            
-            if let userId = user?.objectId {
-                uId = userId
-            } else {
-                
-            }
-            
-            spotReport["location"] = point
-            spotReport["userId"] = uId
-            
-            
-            spotReport.saveInBackgroundWithBlock({ (success, error) -> Void in
-                if success {
-                    print("save success")
-                } else {
-                    print("Failt")
-                }
-            })
+            self.presentViewController(actionSheet, animated: true, completion: nil)
             
         }
     }
+    
+    func reportSpot() {
+        print("report spot")
+    }
+    
+    func claimSpot() {
+        print("Claim spot")
+        
+    }
+    
 
     
     

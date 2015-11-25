@@ -18,6 +18,9 @@ class CarListTableViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        let object = UIApplication.sharedApplication().delegate
+        let applicationDelegate = object as! AppDelegate
+        print(applicationDelegate.storeUserId)
 
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
