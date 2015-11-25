@@ -94,6 +94,11 @@ class ViewController: UIViewController, UITextFieldDelegate {
                             print("Fetch Failed")
                         }
                         
+                        
+                        
+                        let object = UIApplication.sharedApplication().delegate
+                        let applicationDelegate = object as! AppDelegate
+                        applicationDelegate.storeUserId = user.objectId!
                         let mapViewControllerObejct = self.storyboard?.instantiateViewControllerWithIdentifier("logined")
                         self.presentViewController(mapViewControllerObejct!, animated: true, completion: nil)
                     } else {
@@ -180,6 +185,11 @@ class ViewController: UIViewController, UITextFieldDelegate {
                                 print("Fetch Failed")
                             }
                         }
+                        
+                        
+                        let object = UIApplication.sharedApplication().delegate
+                        let applicationDelegate = object as! AppDelegate
+                        applicationDelegate.storeUserId = user!.objectId!
 
                         
                         let mapViewControllerObejct = self.storyboard?.instantiateViewControllerWithIdentifier("logined")
@@ -218,11 +228,17 @@ class ViewController: UIViewController, UITextFieldDelegate {
         password.delegate = self
     }
     
+    
     override func viewDidAppear(animated: Bool) {
         if let user = PFUser.currentUser(){
             if user.objectId == nil {
                 print("Please register")
             }else {
+                let object = UIApplication.sharedApplication().delegate
+                let applicationDelegate = object as! AppDelegate
+                applicationDelegate.storeUserId = user.objectId!
+                
+                
                 let mapViewControllerObejct = self.storyboard?.instantiateViewControllerWithIdentifier("logined")
                 self.presentViewController(mapViewControllerObejct!, animated: true, completion: nil)
                 //self.performSegueWithIdentifier("login", sender: self)
