@@ -28,40 +28,9 @@ class CarListTableViewController: UITableViewController {
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
         
-        let appDel: AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-        
-        let context: NSManagedObjectContext = appDel.managedObjectContext
-        
-        let request = NSFetchRequest(entityName: "Cars")
-        
-        request.returnsObjectsAsFaults = false
-        
-        do {
-            
-            let results = try context.executeFetchRequest(request)
-            
-            if results.count > 0 {
-                
-                for result in results as! [NSManagedObject] {
-                    
-                    if result.valueForKey("")!.isEqual(user?.objectId) {
-                        // if the user exist in the local database, we don't need to update local database
-                        userExist = true
-                    }
-                    
-                }
-                
-            }
-            
-        } catch {
-            
-            print("Fetch Failed")
-        }
-
-        
         let query = PFQuery(className:"car")
         
-        query.whereKey("UserObjectId", equalTo:"<BINSMAGICALGLOBALID>")
+        query.whereKey("UserObjectId", equalTo:"\(applicationDelegate.storeUserId)")
         
         query.findObjectsInBackgroundWithBlock{
             (objects: [PFObject]?, error: NSError?) -> Void in
@@ -69,10 +38,42 @@ class CarListTableViewController: UITableViewController {
             if error == nil {
                 // The find succeeded.
                 print("Successfully retrieved \(objects!.count) cars.")
+                
+                let appDel: AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+                
+                let context: NSManagedObjectContext = appDel.managedObjectContext
+                
+                let request = NSFetchRequest(entityName: "Cars")
+                
+                request.returnsObjectsAsFaults = false
+                
+                do {
+                    
+                    let results = try context.executeFetchRequest(request)
+                    
+                    if results.count > 0 {
+                        
+                        for result in results as! [NSManagedObject] {
+                            
+                            if result.valueForKey("")!.isEqual(user?.objectId) {
+                                // if the user exist in the local database, we don't need to update local database
+                                userExist = true
+                            }
+                            
+                        }
+                        
+                    }
+                    
+                } catch {
+                    
+                    print("Fetch Failed")
+                }
+                
+                
                 // Do something with the found objects
                 if let objects = objects {
                     for object in objects {
-                        if object != 
+                        if object !=
                     }
                 }
             } else {
@@ -80,6 +81,11 @@ class CarListTableViewController: UITableViewController {
                 print("Error: \(error!) \(error!.userInfo)")
             }
         }
+        
+
+
+        
+
         
         if !(userExist) {
             let newUser = NSEntityDescription.insertNewObjectForEntityForName("Users", inManagedObjectContext: context)
