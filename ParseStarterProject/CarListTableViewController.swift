@@ -34,6 +34,70 @@ class CarListTableViewController: UITableViewController {
         request.returnsObjectsAsFaults = false
         
         do {
+            
+            let results = try context.executeFetchRequest(request)
+            
+            if results.count > 0 {
+                
+                for result in results as! [NSManagedObject] {
+                    
+                    if result.valueForKey("")!.isEqual(user?.objectId) {
+                        // if the user exist in the local database, we don't need to update local database
+                        userExist = true
+                    }
+                    
+                }
+                
+            }
+            
+        } catch {
+            
+            print("Fetch Failed")
+        }
+
+        
+        let query = PFQuery(className:"car")
+        
+        query.whereKey("UserObjectId", equalTo:"<BINSMAGICALGLOBALID>")
+        
+        query.findObjectsInBackgroundWithBlock{
+            (objects: [PFObject]?, error: NSError?) -> Void in
+            
+            if error == nil {
+                // The find succeeded.
+                print("Successfully retrieved \(objects!.count) cars.")
+                // Do something with the found objects
+                if let objects = objects {
+                    for object in objects {
+                        if object != 
+                    }
+                }
+            } else {
+                // Log details of the failure
+                print("Error: \(error!) \(error!.userInfo)")
+            }
+        }
+        
+        if !(userExist) {
+            let newUser = NSEntityDescription.insertNewObjectForEntityForName("Users", inManagedObjectContext: context)
+            let newCar = NSEntityDescription.insertNewObjectForEntityForName("Cars", inManagedObjectContext: context)
+            
+            newUser.setValue(user!.username, forKey: "username")
+            newUser.setValue(user!.objectId, forKey: "userId")
+            
+            newCar.setValue(user!.objectId, forKey: "userId")
+            newCar.setValue("Default", forKey: "model")
+            newCar.setValue("Car", forKey: "make")
+        
+        let appDel: AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        
+        let context: NSManagedObjectContext = appDel.managedObjectContext
+        
+        let request = NSFetchRequest(entityName: "Cars")
+        
+        request.returnsObjectsAsFaults = false
+        
+        do {
             self.model.removeAll(keepCapacity: true)
             self.userId.removeAll(keepCapacity: true)
             self.make.removeAll(keepCapacity: true)
