@@ -70,31 +70,6 @@ class ViewController: UIViewController, UITextFieldDelegate {
                     
                     if success {
                         // Signup successful
-                        // update local user database as well
-                        let appDel: AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-                        let context: NSManagedObjectContext = appDel.managedObjectContext
-                        
-                        let newUser = NSEntityDescription.insertNewObjectForEntityForName("Users", inManagedObjectContext: context)
-                        
-                        newUser.setValue(user.username, forKey: "username")
-                        newUser.setValue(user.objectId, forKey: "userId")
-                        
-                        do {
-                            try context.save()
-                        } catch {
-                            print("There was a problem")
-                        }
-                        
-                        let request = NSFetchRequest(entityName: "Users")
-                        request.returnsObjectsAsFaults = false
-                        
-                        do {
-                            let results = try context.executeFetchRequest(request)
-                            print(results)
-                        } catch {
-                            print("Fetch Failed")
-                        } // end updating local user table
-                        
                         
                         // save user's object Id into appdelegate variable
                         let object = UIApplication.sharedApplication().delegate
@@ -104,22 +79,78 @@ class ViewController: UIViewController, UITextFieldDelegate {
                         // Set a default car onto Parse car database
                         let defaultCar = PFObject(className: "car")
                         defaultCar["UserobjectId"] = user.objectId!
-                        defaultCar["model"]        = "default"
-                        defaultCar["make"]         = "car"
+                        defaultCar["model"]        = "Default"
+                        defaultCar["make"]         = "Car"
+                        defaultCar["isDefault"]    = "YES"
                         
                         defaultCar.saveInBackgroundWithBlock({ (success, error) -> Void in
                             if success {
                                 print("default car save")
+                                self.saveInLocalDatabase(user.objectId!, userName:self.userName.text!)
                             } else {
                                 print("default failt")
                             }
                         }) // end setting a default for new user
                         
+//                        // update local user database as well
+//                        var carId = ""
+//                        let query = PFQuery(className: "car")
+//                        query.whereKey("UserobjectId", equalTo: user.objectId!)
+//                        query.whereKey("isDefault", equalTo: "YES")
+//                        query.findObjectsInBackgroundWithBlock { (cars:[PFObject]?, error:NSError?) -> Void in
+//                            if error == nil {
+//                                //print(cars)
+//                                for car in cars! {
+//                                    print("I am here \(car.objectId)")
+//                                    carId = car.objectId!
+//                                    
+//                                    let appDel: AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+//                                    let context: NSManagedObjectContext = appDel.managedObjectContext
+//                                    
+//                                    let newUser = NSEntityDescription.insertNewObjectForEntityForName("Users", inManagedObjectContext: context)
+//                                    
+//                                    newUser.setValue(user.username, forKey: "username")
+//                                    newUser.setValue(user.objectId, forKey: "userId")
+//                                    
+//                                    let newCar = NSEntityDescription.insertNewObjectForEntityForName("Cars", inManagedObjectContext: context)
+//                                    
+//                                    newCar.setValue(user.objectId, forKey: "userId")
+//                                    newCar.setValue("Default", forKey: "model")
+//                                    newCar.setValue("Car", forKey: "make")
+//                                    newCar.setValue(carId, forKey: "carId")
+//                                    
+//                                    do {
+//                                        try context.save()
+//                                    } catch {
+//                                        print("There was a problem")
+//                                    } // end updating local user table
+//                                    
+//                                    // show result after updated local user table
+//                                    let request = NSFetchRequest(entityName: "Cars")
+//                                    request.returnsObjectsAsFaults = false
+//                                    
+//                                    do {
+//                                        let results = try context.executeFetchRequest(request)
+//                                        print(results)
+//                                    } catch {
+//                                        print("Fetch Failed")
+//                                    }
+//                                    
+//                                    
+//                                    let mapViewControllerObejct = self.storyboard?.instantiateViewControllerWithIdentifier("logined")
+//                                    print("11111")
+//                                    self.presentViewController(mapViewControllerObejct!, animated: true, completion: nil)
+//
+//                                }
+//                            } else {
+//                                print(error)
+//                            }
+//                        }
+                        
+
                         
                         
                         
-                        let mapViewControllerObejct = self.storyboard?.instantiateViewControllerWithIdentifier("logined")
-                        self.presentViewController(mapViewControllerObejct!, animated: true, completion: nil)
                     } else {
                         if let errorString = error!.userInfo["error"] as? String {
                             errorMessage = errorString
@@ -225,6 +256,65 @@ class ViewController: UIViewController, UITextFieldDelegate {
         }
         
     }
+    
+    func saveInLocalDatabase(userId:String, userName:String) {
+        // update local user database as well
+        var carId = ""
+        let query = PFQuery(className: "car")
+        query.whereKey("UserobjectId", equalTo: userId)
+        query.whereKey("isDefault", equalTo: "YES")
+        query.findObjectsInBackgroundWithBlock { (cars:[PFObject]?, error:NSError?) -> Void in
+            if error == nil {
+                //print(cars)
+                for car in cars! {
+                    print("I am here \(car.objectId)")
+                    carId = car.objectId!
+                    
+                    let appDel: AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+                    let context: NSManagedObjectContext = appDel.managedObjectContext
+                    
+                    let newUser = NSEntityDescription.insertNewObjectForEntityForName("Users", inManagedObjectContext: context)
+                    
+                    newUser.setValue(userName, forKey: "username")
+                    newUser.setValue(userId, forKey: "userId")
+                    
+                    let newCar = NSEntityDescription.insertNewObjectForEntityForName("Cars", inManagedObjectContext: context)
+                    
+                    newCar.setValue(userId, forKey: "userId")
+                    newCar.setValue("Default", forKey: "model")
+                    newCar.setValue("Car", forKey: "make")
+                    newCar.setValue(carId, forKey: "carId")
+                    
+                    do {
+                        try context.save()
+                    } catch {
+                        print("There was a problem")
+                    } // end updating local user table
+                    
+                    // show result after updated local user table
+                    let request = NSFetchRequest(entityName: "Cars")
+                    request.returnsObjectsAsFaults = false
+                    
+                    do {
+                        let results = try context.executeFetchRequest(request)
+                        print(results)
+                    } catch {
+                        print("Fetch Failed")
+                    }
+                    
+                    
+                    let mapViewControllerObejct = self.storyboard?.instantiateViewControllerWithIdentifier("logined")
+                    self.presentViewController(mapViewControllerObejct!, animated: true, completion: nil)
+                    
+                }
+            } else {
+                print(error)
+            }
+        }
+
+    }
+    
+    
     
     @IBAction func logInButton(sender: AnyObject) {
         
