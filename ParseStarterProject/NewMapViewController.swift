@@ -27,6 +27,8 @@ class NewMapViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
     var latLocal:Double = 0.0
     var lonLocal:Double = 0.0
     
+    let appDel: AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+    
     @IBAction func refreshMap(sender: AnyObject) {
         let annotationsToRemove = map.annotations
         self.map.removeAnnotations(annotationsToRemove)
@@ -219,18 +221,19 @@ class NewMapViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
                 
                 let point = PFGeoPoint(latitude: newCoordinate.latitude, longitude: newCoordinate.longitude)
                 
-                let user = PFUser.currentUser()
-                
-                var uId = ""
-                
-                if let userId = user?.objectId {
-                    uId = userId
-                } else {
-                    
-                }
+//                let user = PFUser.currentUser()
+//                
+//                var uId = ""
+//                
+//                if let userId = user?.objectId {
+//                    uId = userId
+//                } else {
+//                    
+//                }
                 
                 carParkingLocation["location"] = point
-                carParkingLocation["UserobjectId"] = uId
+                //carParkingLocation["UserobjectId"] = uId
+                carParkingLocation["UserobjectId"] = self.appDel.storeUserId
                 carParkingLocation["name"] = title
                 
                 carParkingLocation.saveInBackgroundWithBlock({ (success, error) -> Void in

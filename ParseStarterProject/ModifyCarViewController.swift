@@ -87,7 +87,7 @@ class ModifyCarViewController: UIViewController, UITextFieldDelegate {
             cars.setValue(modelTextField.text, forKey: "model")
             cars.setValue(makeTextField.text, forKey: "make")
             cars.setValue(userID, forKey: "userId")
-            cars.setValue(carID, forKey: "objectId")
+            //cars.setValue(carID,  forKey: "objectId")
             do {
                 try context.save()
             } catch {

@@ -70,6 +70,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
                     
                     if success {
                         // Signup successful
+                        // update local user database as well
                         let appDel: AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
                         let context: NSManagedObjectContext = appDel.managedObjectContext
                         
@@ -92,13 +93,31 @@ class ViewController: UIViewController, UITextFieldDelegate {
                             print(results)
                         } catch {
                             print("Fetch Failed")
-                        }
+                        } // end updating local user table
                         
                         
-                        
+                        // save user's object Id into appdelegate variable
                         let object = UIApplication.sharedApplication().delegate
                         let applicationDelegate = object as! AppDelegate
                         applicationDelegate.storeUserId = user.objectId!
+                        
+                        // Set a default car onto Parse car database
+                        let defaultCar = PFObject(className: "car")
+                        defaultCar["UserobjectId"] = user.objectId!
+                        defaultCar["model"]        = "default"
+                        defaultCar["make"]         = "car"
+                        
+                        defaultCar.saveInBackgroundWithBlock({ (success, error) -> Void in
+                            if success {
+                                print("default car save")
+                            } else {
+                                print("default failt")
+                            }
+                        }) // end setting a default for new user
+                        
+                        
+                        
+                        
                         let mapViewControllerObejct = self.storyboard?.instantiateViewControllerWithIdentifier("logined")
                         self.presentViewController(mapViewControllerObejct!, animated: true, completion: nil)
                     } else {
