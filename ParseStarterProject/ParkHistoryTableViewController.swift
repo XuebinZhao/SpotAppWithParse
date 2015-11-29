@@ -21,7 +21,7 @@ class ParkHistoryTableViewController: UITableViewController {
             
             places.removeAtIndex(0)
             
-            places.append(["name":"Grand Central","lat":"40.7528","lon":"-73.9765"])
+            places.append(["name":"Grand Central Terminal","lat":"40.7528","lon":"-73.9765"])
         }
     }
 
