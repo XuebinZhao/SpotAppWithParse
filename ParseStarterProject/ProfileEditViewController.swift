@@ -10,6 +10,8 @@ import UIKit
 import Parse
 
 class ProfileEditViewController: UIViewController, UITextFieldDelegate {
+    
+    let user = PFUser.currentUser()
 
     @IBOutlet weak var userImage: UIImageView!
     @IBOutlet weak var firstNameText: UITextField!
@@ -31,7 +33,6 @@ class ProfileEditViewController: UIViewController, UITextFieldDelegate {
     override func viewDidAppear(animated: Bool) {
         self.tabBarController?.tabBar.hidden = false
         
-        let user = PFUser.currentUser()
         if let imageFile: PFFile = user!["userImage"] as? PFFile{
         
         imageFile.getDataInBackgroundWithBlock { (imageData, error) -> Void in
@@ -50,26 +51,16 @@ class ProfileEditViewController: UIViewController, UITextFieldDelegate {
     }
     
     @IBAction func saveProf(sender: AnyObject) {
-        print(firstNameText.text)
-        print(lastNameText.text)
-        let user = PFUser.currentUser()
         
-        user?.setValue(firstNameText.text, forKey: "firstName")
-        user?.setValue(lastNameText.text,  forKey: "lastName")
+        user!["firstName"] = firstNameText.text!
+        user!["lastName"] = lastNameText.text!
         
+        user!.saveEventually()
         
-        user?.saveInBackgroundWithBlock({ (success, error) -> Void in
-            if success {
-                //self.dismissViewControllerAnimated(true, completion: nil)
-                let mapViewControllerObejct = self.storyboard?.instantiateViewControllerWithIdentifier("logined")
-                self.presentViewController(mapViewControllerObejct!, animated: true, completion: nil)
-                
-            } else {
-                print("Something wrong")
-            }
-        })
+        let mapViewControllerObejct = self.storyboard?.instantiateViewControllerWithIdentifier("logined")
+        self.presentViewController(mapViewControllerObejct!, animated: true, completion: nil)
     }
-    
+
 
 
     /*

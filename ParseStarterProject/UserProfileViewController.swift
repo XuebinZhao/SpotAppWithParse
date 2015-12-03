@@ -11,6 +11,8 @@ import Parse
 import CoreData
 
 class UserProfileViewController: UIViewController {
+    
+    let user = PFUser.currentUser()
 
     @IBOutlet weak var fullName: UILabel!
     
@@ -26,7 +28,7 @@ class UserProfileViewController: UIViewController {
     }
     
     override func viewDidAppear(animated: Bool) {
-        let user = PFUser.currentUser()
+
         if let imageFile: PFFile = user!["userImage"] as? PFFile{
             
             imageFile.getDataInBackgroundWithBlock { (imageData, error) -> Void in
@@ -36,45 +38,18 @@ class UserProfileViewController: UIViewController {
                 }
             }
         }
-        if let firstName = user!["firstName"] {
-            fullName.text = "\(firstName) \(user!["lastName"])"
-        } else {
-            fullName.text = ""
-        }
-        if let userName = user!["username"] {
-            UserName.text = "\(userName)"
-        } else {
-            fullName.text = ""
-        }
         
+        fullName.text! = "\(user!["firstName"]) \(user!["lastName"])"
         
-        let appDel: AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        UserName.text! = "\(user!["username"])"
         
-        let context: NSManagedObjectContext = appDel.managedObjectContext
-        
-        let request = NSFetchRequest(entityName: "Cars")
-        
-        request.returnsObjectsAsFaults = false
-        
-        do {
-            
-            let results = try context.executeFetchRequest(request)
-            
-            if results.count > 0 {
-                
-                for result in results as! [NSManagedObject] {
-                    
-                    self.carName.text = "\(result.valueForKey("model") as! String)"
-//                    self.model.append(result.valueForKey("model") as! String)
-//                    self.userId.append(result.valueForKey("userId") as! String)
-                }
+        for vehicle in (user!["vehicles"] as? NSArray)!
+        {
+            if vehicle[3] as? Bool == true
+            {
+                self.carName.text! = "\(vehicle[0]) \(vehicle[1])"
             }
-        } catch {
-            
-            print("Fetch Failed")
         }
-
-        
         
     }
 
@@ -85,16 +60,14 @@ class UserProfileViewController: UIViewController {
     
     // logout from current user
     @IBAction func logoutButton(sender: AnyObject) {
+        user!.unpinInBackground()
         PFUser.logOut()
-        let currentUser = PFUser.currentUser()
-        if currentUser != nil {
-            let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            
-            // instantiate your desired ViewController
-            let rootController = storyboard.instantiateViewControllerWithIdentifier("welcome")
-            
-            self.presentViewController(rootController, animated: true, completion: nil)
-        }
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        
+        // instantiate your desired ViewController
+        let rootController = storyboard.instantiateViewControllerWithIdentifier("welcome")
+        
+        self.presentViewController(rootController, animated: true, completion: nil)
     }
 
 }

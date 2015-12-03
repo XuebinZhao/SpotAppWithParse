@@ -12,17 +12,23 @@ import Parse
 
 
 class NewMapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
+    
+    let user = PFUser.currentUser()
 
     @IBOutlet weak var openParkingSpot: UIBarButtonItem!
     @IBOutlet weak var map: MKMapView!
+    
+    var canClaim = false
+    
+    var claimId = ""
+    
+    var canReport = false
     
     @IBOutlet var secondaryMenu: UIView!
     
     var destination = MKMapItem?()
     
     var manager: CLLocationManager!
-    
-    var saveCheck = false
 
     var latLocal:Double = 0.0
     var lonLocal:Double = 0.0
@@ -35,29 +41,34 @@ class NewMapViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
     }
     
     @IBAction func getSpots(sender: AnyObject) {
+        // Create a query for spots
         let query = PFQuery(className:"spot")
-        // User's location
-        //let user = PFUser.currentUser()
         
+        // Set geoPoint of users location called point
         let point = PFGeoPoint(latitude: latLocal, longitude: lonLocal)
-        // Create a query for places
-        // Interested in locations near user.
-        query.whereKey("location", nearGeoPoint:point)
+
+        // Interested in locations within 10 miles of user.
+        query.whereKey("location", nearGeoPoint:point, withinMiles: 5)
+        
+        query.whereKey("isTaken", equalTo: false)
+
         // Limit what could be a lot of points.
         query.limit = 10
+        
         // Final list of objects
         query.findObjectsInBackgroundWithBlock {
             (objects: [PFObject]?, error: NSError?) -> Void in
             
             if error == nil {
-                // The find succeeded.
-                print("Successfully retrieved \(objects!.count) locations.")
                 
-                // cycles through the 10 spots and adds each of them to the map.
+                // cycles through the (up to) 10 spots and adds each of them to the map.
                 for spots in objects!{
                     let point = spots["location"]
+                    
                     let annotation = MKPointAnnotation()
                     annotation.coordinate = CLLocationCoordinate2DMake(point.latitude, point.longitude)
+                    annotation.title = "Open Spot!"
+                    annotation.subtitle = spots.objectId!
                     self.map.addAnnotation(annotation)
                 }
                 
@@ -70,13 +81,11 @@ class NewMapViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
     }
   
     @IBAction func saveParkLocation(sender: AnyObject) {
-        saveCheck = true
         self.saveLocation(latLocal, longitude: lonLocal)
     }
     
     @IBAction func indicateParking(sender: AnyObject) {
         self.indicateParkingLocation(latLocal, longitude: lonLocal)
-        
     }
    
     @IBAction func meterButton(sender: AnyObject) {
@@ -90,7 +99,6 @@ class NewMapViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
     override func viewDidLoad() {
         super.viewDidLoad()
         map.delegate = self
-
         manager = CLLocationManager()
         manager.delegate = self
         manager.desiredAccuracy = kCLLocationAccuracyBest
@@ -187,9 +195,9 @@ class NewMapViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
             
             let newCoordinate = self.map.convertPoint(touchPoint, toCoordinateFromView: self.map)
             
-            let location = CLLocation(latitude: newCoordinate.latitude, longitude: newCoordinate.longitude)
+            let pinLocation = CLLocation(latitude: newCoordinate.latitude, longitude: newCoordinate.longitude)
             
-            CLGeocoder().reverseGeocodeLocation(location, completionHandler: { (placemarks, error) -> Void in
+            CLGeocoder().reverseGeocodeLocation(pinLocation, completionHandler: { (placemarks, error) -> Void in
                 
                 var title = ""
                 
@@ -213,37 +221,7 @@ class NewMapViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
                 if title == "" {
                     title = "Added \(NSDate())"
                 }
-                
-                // save location information into a dictionary
-                places.append(["name":title,"lat":"\(newCoordinate.latitude)","lon":"\(newCoordinate.longitude)"])
-                
-                let carParkingLocation = PFObject(className: "car")
-                
-                let point = PFGeoPoint(latitude: newCoordinate.latitude, longitude: newCoordinate.longitude)
-                
-//                let user = PFUser.currentUser()
-//                
-//                var uId = ""
-//                
-//                if let userId = user?.objectId {
-//                    uId = userId
-//                } else {
-//                    
-//                }
-                
-                carParkingLocation["location"] = point
-                //carParkingLocation["UserobjectId"] = uId
-                carParkingLocation["UserobjectId"] = self.appDel.storeUserId
-                carParkingLocation["name"] = title
-                
-                carParkingLocation.saveInBackgroundWithBlock({ (success, error) -> Void in
-                    if success {
-                        print("save success")
-                    } else {
-                        print("Failt")
-                    }
-                })
-                
+
                 // Putting a pin into map
                 let annotation = MKPointAnnotation()
                 
@@ -270,151 +248,107 @@ class NewMapViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
         let latitude  = userLocation.coordinate.latitude
         let longitude = userLocation.coordinate.longitude
         
-        
-        // *********Commented out the below code so we can scroll around on the map.*********
-//        let coordinate = CLLocationCoordinate2DMake(latitude, longitude)
-//        //let location = CLLocation(latitude: latitude, longitude: longitude)
-//        
-//        let latDelta:CLLocationDegrees = 0.001
-//        let lonDelta:CLLocationDegrees = 0.001
-//        
-//        let span:MKCoordinateSpan = MKCoordinateSpanMake(latDelta, lonDelta)
-//        let region:MKCoordinateRegion = MKCoordinateRegionMake(coordinate, span)
-//        
-//        self.map.setRegion(region, animated: true)
-        // *********Commented out the below code so we can scroll around on the map.*********
-        
         latLocal = latitude
         lonLocal = longitude
     }
     
     func indicateParkingLocation(latitude:Double, longitude:Double){
         
-        
-        let point = PFGeoPoint(latitude: latitude, longitude: longitude)
-        
         let openParkingLocation = PFObject(className: "spot")
         
-        let user = PFUser.currentUser()
-        
-        var uId = ""
-        
-        if let userId = user?.objectId {
-            uId = userId
-        } else {
-            
-        }
-        
-        openParkingLocation["location"] = point
-        openParkingLocation["userId"] = uId
+        openParkingLocation["location"] = PFGeoPoint(latitude: latitude, longitude: longitude)
+        openParkingLocation["userId"] = user!.objectId
+        openParkingLocation["isTaken"] = false
         
         openParkingLocation.saveInBackgroundWithBlock({ (success, error) -> Void in
             if success {
-                print("save success")
+                let alertController = UIAlertController(title: "Success", message:
+                    "Spot successfully reported!", preferredStyle: UIAlertControllerStyle.Alert)
+                alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.Default,handler: nil))
+                self.presentViewController(alertController, animated: true, completion: nil)
             } else {
-                print("Failt")
+                let alertController = UIAlertController(title: "Whoops", message:
+                    "Looks like something went wrong...", preferredStyle: UIAlertControllerStyle.Alert)
+                alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.Default,handler: nil))
+                self.presentViewController(alertController, animated: true, completion: nil)
             }
         })
 
         
     }
-
-    
-    
     
     func saveLocation(latitude:Double, longitude:Double) {
         let coordinate = CLLocationCoordinate2DMake(latitude, longitude)
         let location = CLLocation(latitude: latitude, longitude: longitude)
-        
-        
-        if saveCheck == true {
             
-            CLGeocoder().reverseGeocodeLocation(location, completionHandler: { (placemarks, error) -> Void in
-                
-                var title = ""
-                
-                if (error == nil) {
-                    if let p = placemarks?[0] {
-                        var subThoroughfare:String = ""
-                        var thoroughfare:String = ""
-                        
-                        if p.subThoroughfare != nil {
-                            subThoroughfare = p.subThoroughfare!
-                        }
-                        if p.thoroughfare != nil {
-                            thoroughfare = p.thoroughfare!
-                        }
-                        
-                        title = "\(subThoroughfare) \(thoroughfare)"
-                        
+        CLGeocoder().reverseGeocodeLocation(location, completionHandler: { (placemarks, error) -> Void in
+            
+            var title = ""
+            
+            if (error == nil) {
+                if let p = placemarks?[0] {
+                    var subThoroughfare:String = ""
+                    var thoroughfare:String = ""
+                    
+                    if p.subThoroughfare != nil {
+                        subThoroughfare = p.subThoroughfare!
                     }
-                }
-                
-                if title == "" {
-                    title = "Added \(NSDate())"
-                }
-                
-                // save location information into a dictionary
-                places.append(["name":title,"lat":"\(latitude)","lon":"\(longitude)"])
-                
-                
-                let carParkingLocation = PFObject(className: "car")
-                
-                let point = PFGeoPoint(latitude: latitude, longitude: longitude)
-                
-                let user = PFUser.currentUser()
-                
-                var uId = ""
-                
-                if let userId = user?.objectId {
-                    uId = userId
-                } else {
+                    if p.thoroughfare != nil {
+                        thoroughfare = p.thoroughfare!
+                    }
+                    
+                    title = "\(subThoroughfare) \(thoroughfare)"
                     
                 }
-                
-                carParkingLocation["location"] = point
-                carParkingLocation["UserobjectId"] = uId
-                carParkingLocation["name"] = title
-                
-                carParkingLocation.saveInBackgroundWithBlock({ (success, error) -> Void in
-                    if success {
-                        print("save success")
-                    } else {
-                        print("Failt")
-                    }
-                })
-                
-                let annotation = MKPointAnnotation()
-                
-                annotation.coordinate = coordinate
-                
-                annotation.title = title
-                
-                // ============================
-//                let reuseId = "pin"
-//                let pinView = self.map.dequeueReusableAnnotationViewWithIdentifier(reuseId) as? MKPinAnnotationView
-//                
-//                pinView!.rightCalloutAccessoryView = UIButton(type: .DetailDisclosure)
-                // ============================
-                
-                
-                
-                self.map.addAnnotation(annotation)
-                
-                self.saveCheck = false
-                print(places)
-                
-                let latDelta:CLLocationDegrees = 0.0008
-                let lonDelta:CLLocationDegrees = 0.0008
-                
-                let span:MKCoordinateSpan = MKCoordinateSpanMake(latDelta, lonDelta)
-                let region:MKCoordinateRegion = MKCoordinateRegionMake(coordinate, span)
-                
-                self.map.setRegion(region, animated: true)
-                
-            })
+            }
             
-        }
+            if title == "" {
+                title = "Added \(NSDate())"
+            }
+            
+            // save location information into a dictionary
+            places.append(["name":title,"lat":"\(latitude)","lon":"\(longitude)"])
+            
+            
+            
+            for vehicle in (self.user!["vehicles"] as? NSArray)!
+            {
+                if vehicle[3] != nil
+                {
+                    if vehicle[3] as! Bool == true
+                    {
+                        let make = vehicle[0]!
+                        let model = vehicle[1]!
+                        let location = PFGeoPoint(latitude: latitude, longitude: longitude)
+                        let isDefault = vehicle[3]
+                        
+                        let newVehicle = [make, model, location, isDefault]
+                        
+                        self.user!["vehicles"].replaceObjectAtIndex(self.user!["vehicles"].indexOfObject(vehicle), withObject: newVehicle)
+                    }
+                }
+            }
+
+            self.user!.saveEventually()
+
+            let annotation = MKPointAnnotation()
+            
+            annotation.coordinate = coordinate
+            
+            annotation.title = title
+            
+            self.map.addAnnotation(annotation)
+            
+            let latDelta:CLLocationDegrees = 0.0008
+            let lonDelta:CLLocationDegrees = 0.0008
+            
+            let span:MKCoordinateSpan = MKCoordinateSpanMake(latDelta, lonDelta)
+            let region:MKCoordinateRegion = MKCoordinateRegionMake(coordinate, span)
+            
+            self.map.setRegion(region, animated: true)
+            
+        })
+            
     }
 
 
@@ -427,13 +361,25 @@ class NewMapViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
         
         var pinView = mapView.dequeueReusableAnnotationViewWithIdentifier(reuseId) as? MKPinAnnotationView
         
-        if pinView == nil {
-            pinView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: reuseId)
-            pinView!.canShowCallout = true
-            pinView!.pinColor = .Red
-            pinView!.rightCalloutAccessoryView = UIButton(type: .DetailDisclosure)
+        if annotation.isKindOfClass(MKUserLocation){
+            return nil;
         }
-        else {
+        
+        if pinView == nil {
+                pinView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: reuseId)
+                pinView!.canShowCallout = true
+                if annotation.title! == "Open Spot!"{
+                    pinView!.pinColor = .Green
+                }else{
+                    pinView!.pinColor = .Red
+                }
+                pinView!.rightCalloutAccessoryView = UIButton(type: .DetailDisclosure)
+            } else {
+            if annotation.title! == "Open Spot!"{
+                pinView!.pinColor = .Green
+            }else{
+                pinView!.pinColor = .Red
+            }
             pinView!.annotation = annotation
         }
         
@@ -443,63 +389,77 @@ class NewMapViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
     
     func mapView(mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
         if control == view.rightCalloutAccessoryView {
+            canReport = false
+            canClaim = false
+            let userLocation = CLLocation(latitude: latLocal, longitude: lonLocal)
+            let pinLocation = CLLocation(latitude: view.annotation!.coordinate.latitude, longitude: view.annotation!.coordinate.longitude)
             
-//            let ind = places.count - 1
-//            //print(places[places.count-1]["name"])
-//            
-//            let lat = Double(places[ind]["lat"]!)
-//            let lon = Double(places[ind]["lon"]!)
-//            
-//            // Upload to Parse class name "spot"
-//            let spotReport = PFObject(className: "spot")
-//            
-//            let point = PFGeoPoint(latitude: lat!, longitude: lon!)
-//            
-//            let user = PFUser.currentUser()
-//            
-//            var uId = ""
-//            
-//            if let userId = user?.objectId {
-//                uId = userId
-//            } else {
-//                
-//            }
-//            
-//            spotReport["location"] = point
-//            spotReport["userId"] = uId
-//            
-//            
-//            spotReport.saveInBackgroundWithBlock({ (success, error) -> Void in
-//                if success {
-//                    print("save success")
-//                } else {
-//                    print("Failt")
-//                }
-//            })
+            if view.annotation!.title! == "Open Spot!" && userLocation.distanceFromLocation(pinLocation) < 200.0 {
+                canClaim = true
+            }else if userLocation.distanceFromLocation(pinLocation) < 200.0 {
+                canReport = true
+            }
             
             let actionSheet = UIAlertController(title: "Spot App", message: nil, preferredStyle: .ActionSheet)
             
-            actionSheet.addAction(UIAlertAction(title: "Report Spot", style: .Default, handler: { action in
-                self.reportSpot()
-            }))
+            let reportAction = UIAlertAction(title: "Report Spot", style: .Default, handler: { action in
+                self.reportSpot(pinLocation)
+            })
             
-            actionSheet.addAction(UIAlertAction(title: "Claim Spot", style: .Default, handler: { action in
-                self.claimSpot()
-            }))
+            let claimAction = UIAlertAction(title: "Claim Spot", style: .Destructive, handler: { action in
+                self.claimSpot(view.annotation!.subtitle!!)
+                mapView.removeAnnotation(view.annotation!)
+            })
             
-            actionSheet.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
+            let canelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
             
+            if canReport {
+                reportAction.enabled = true
+            }else{
+                reportAction.enabled = false
+            }
+            if canClaim {
+                claimAction.enabled = true
+            }else{
+                claimAction.enabled = false
+            }
+
+            actionSheet.addAction(reportAction)
+            actionSheet.addAction(claimAction)
+            actionSheet.addAction(canelAction)
+
             self.presentViewController(actionSheet, animated: true, completion: nil)
             
         }
     }
     
-    func reportSpot() {
-        print("report spot")
+    func reportSpot(pinLocation: CLLocation) {
+        self.indicateParkingLocation(pinLocation.coordinate.latitude, longitude: pinLocation.coordinate.longitude)
     }
     
-    func claimSpot() {
-        print("Claim spot")
+    func claimSpot(id: String) {
+        let query = PFQuery(className:"spot")
+        query.getObjectInBackgroundWithId(id) {
+            (spot: PFObject?, error: NSError?) -> Void in
+            if error != nil {
+                print(error)
+            } else if let spot = spot {
+                spot["isTaken"] = true
+                spot.saveInBackgroundWithBlock({ (success, error) -> Void in
+                    if success {
+                        let alertController = UIAlertController(title: "Success", message:
+                            "Spot successfully claimed!", preferredStyle: UIAlertControllerStyle.Alert)
+                        alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.Default,handler: nil))
+                        self.presentViewController(alertController, animated: true, completion: nil)
+                    } else {
+                        let alertController = UIAlertController(title: "Whoops", message:
+                            "Looks like something went wrong...", preferredStyle: UIAlertControllerStyle.Alert)
+                        alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.Default,handler: nil))
+                        self.presentViewController(alertController, animated: true, completion: nil)
+                    }
+                })
+            }
+        }
         
     }
     

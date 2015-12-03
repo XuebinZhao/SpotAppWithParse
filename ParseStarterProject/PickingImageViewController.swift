@@ -9,6 +9,8 @@ import UIKit
 import Parse
 
 class PickingImageViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    
+    let user = PFUser.currentUser()
 
     @IBOutlet weak var imagePickerView : UIImageView!
     
@@ -35,16 +37,13 @@ class PickingImageViewController: UIViewController, UIImagePickerControllerDeleg
         let profileController = self.storyboard!.instantiateViewControllerWithIdentifier("profileController") as! ProfileEditViewController
         profileController.userImage = imagePickerView
         
-        let user = PFUser.currentUser()
-        
         let imageData: NSData = UIImageJPEGRepresentation(imagePickerView.image!, 1.0)!
         let userImage: PFFile = PFFile(name: "profileImage.png", data: imageData)!
         
         user?.setObject(userImage, forKey: "userImage")
         user?.saveInBackgroundWithBlock({ (success, error) -> Void in
             if success {
-//                let mapViewControllerObejct = self.storyboard?.instantiateViewControllerWithIdentifier("navProfile")
-//                self.presentViewController(mapViewControllerObejct!, animated: true, completion: nil)
+
             } else {
                 print("Something wrong")
             }
@@ -64,16 +63,6 @@ class PickingImageViewController: UIViewController, UIImagePickerControllerDeleg
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }

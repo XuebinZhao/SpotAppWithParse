@@ -13,118 +13,25 @@ import CoreData
 class CarListTableViewController: UITableViewController {
     
     var model  = [""]
-    var userId = [""]
     var make  = [""]
+    
+    let user = PFUser.currentUser()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        let object = UIApplication.sharedApplication().delegate
-        let applicationDelegate = object as! AppDelegate
-        print(applicationDelegate.storeUserId)
 
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
-        
-//        let query = PFQuery(className:"car")
-//        
-//        query.whereKey("UserObjectId", equalTo:"\(applicationDelegate.storeUserId)")
-//        
-//        query.findObjectsInBackgroundWithBlock{
-//            (objects: [PFObject]?, error: NSError?) -> Void in
-//            
-//            if error == nil {
-//                // The find succeeded.
-//                print("Successfully retrieved \(objects!.count) cars.")
-//                
-//                let appDel: AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-//                
-//                let context: NSManagedObjectContext = appDel.managedObjectContext
-//                
-//                let request = NSFetchRequest(entityName: "Cars")
-//                
-//                request.returnsObjectsAsFaults = false
-//                
-//                do {
-//                    
-//                    let results = try context.executeFetchRequest(request)
-//                    
-//                    if results.count > 0 {
-//                        
-//                        for result in results as! [NSManagedObject] {
-//                            
-//                            if result.valueForKey("")!.isEqual(user?.objectId) {
-//                                // if the user exist in the local database, we don't need to update local database
-//                                userExist = true
-//                            }
-//                            
-//                        }
-//                        
-//                    }
-//                    
-//                } catch {
-//                    
-//                    print("Fetch Failed")
-//                }
-//                
-//                
-//                // Do something with the found objects
-//                if let objects = objects {
-//                    for object in objects {
-//                        if object !=
-//                    }
-//                }
-//            } else {
-//                // Log details of the failure
-//                print("Error: \(error!) \(error!.userInfo)")
-//            }
-//        }
-//        
-//
-//
-//        
-//
-//        
-//        if !(userExist) {
-//            let newUser = NSEntityDescription.insertNewObjectForEntityForName("Users", inManagedObjectContext: context)
-//            let newCar = NSEntityDescription.insertNewObjectForEntityForName("Cars", inManagedObjectContext: context)
-//            
-//            newUser.setValue(user!.username, forKey: "username")
-//            newUser.setValue(user!.objectId, forKey: "userId")
-//            
-//            newCar.setValue(user!.objectId, forKey: "userId")
-//            newCar.setValue("Default", forKey: "model")
-//            newCar.setValue("Car", forKey: "make")
-        
-        let appDel: AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-        
-        let context: NSManagedObjectContext = appDel.managedObjectContext
-        
-        let request = NSFetchRequest(entityName: "Cars")
-        
-        request.returnsObjectsAsFaults = false
-        
-        do {
             self.model.removeAll(keepCapacity: true)
-            self.userId.removeAll(keepCapacity: true)
             self.make.removeAll(keepCapacity: true)
-            
-            let results = try context.executeFetchRequest(request)
-            
-            if results.count > 0 {
-                
-                for result in results as! [NSManagedObject] {
-                    
-                    self.model.append(result.valueForKey("model") as! String)
-                    self.userId.append(result.valueForKey("userId") as! String)
-                    self.make.append(result.valueForKey("make") as! String)
+
+            for vehicle in (user!["vehicles"] as? NSArray)!
+            {
+                if(vehicle[0] != nil){
+                    self.make.append((vehicle[0] as? String)!)
+                }
+                if(vehicle[1] != nil){
+                    self.model.append((vehicle[1] as? String)!)
                 }
             }
-        } catch {
-            print("Fetch Failed")
-        }
     }
     
     override func viewDidAppear(animated: Bool) {
