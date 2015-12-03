@@ -92,65 +92,6 @@ class ViewController: UIViewController, UITextFieldDelegate {
                             }
                         }) // end setting a default for new user
                         
-//                        // update local user database as well
-//                        var carId = ""
-//                        let query = PFQuery(className: "car")
-//                        query.whereKey("UserobjectId", equalTo: user.objectId!)
-//                        query.whereKey("isDefault", equalTo: "YES")
-//                        query.findObjectsInBackgroundWithBlock { (cars:[PFObject]?, error:NSError?) -> Void in
-//                            if error == nil {
-//                                //print(cars)
-//                                for car in cars! {
-//                                    print("I am here \(car.objectId)")
-//                                    carId = car.objectId!
-//                                    
-//                                    let appDel: AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-//                                    let context: NSManagedObjectContext = appDel.managedObjectContext
-//                                    
-//                                    let newUser = NSEntityDescription.insertNewObjectForEntityForName("Users", inManagedObjectContext: context)
-//                                    
-//                                    newUser.setValue(user.username, forKey: "username")
-//                                    newUser.setValue(user.objectId, forKey: "userId")
-//                                    
-//                                    let newCar = NSEntityDescription.insertNewObjectForEntityForName("Cars", inManagedObjectContext: context)
-//                                    
-//                                    newCar.setValue(user.objectId, forKey: "userId")
-//                                    newCar.setValue("Default", forKey: "model")
-//                                    newCar.setValue("Car", forKey: "make")
-//                                    newCar.setValue(carId, forKey: "carId")
-//                                    
-//                                    do {
-//                                        try context.save()
-//                                    } catch {
-//                                        print("There was a problem")
-//                                    } // end updating local user table
-//                                    
-//                                    // show result after updated local user table
-//                                    let request = NSFetchRequest(entityName: "Cars")
-//                                    request.returnsObjectsAsFaults = false
-//                                    
-//                                    do {
-//                                        let results = try context.executeFetchRequest(request)
-//                                        print(results)
-//                                    } catch {
-//                                        print("Fetch Failed")
-//                                    }
-//                                    
-//                                    
-//                                    let mapViewControllerObejct = self.storyboard?.instantiateViewControllerWithIdentifier("logined")
-//                                    print("11111")
-//                                    self.presentViewController(mapViewControllerObejct!, animated: true, completion: nil)
-//
-//                                }
-//                            } else {
-//                                print(error)
-//                            }
-//                        }
-                        
-
-                        
-                        
-                        
                     } else {
                         if let errorString = error!.userInfo["error"] as? String {
                             errorMessage = errorString
@@ -159,6 +100,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
                 }
             })
             } else {
+                // begin to process login steps
                 PFUser.logInWithUsernameInBackground(userName.text!, password: password.text!, block: { (user, error) -> Void in
                     self.activityIndicator.stopAnimating()
                     UIApplication.sharedApplication().endIgnoringInteractionEvents()
