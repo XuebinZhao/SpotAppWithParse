@@ -164,13 +164,58 @@ class NewMapViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
         
     }
     
+    func showDirections(lat: Double, lon: Double) {
+        let coordinate = CLLocationCoordinate2DMake(latLocal+lat, lonLocal+lon)
+        let annotation = MKPointAnnotation()
+        annotation.coordinate = coordinate
+        
+        let place = MKPlacemark(coordinate: coordinate, addressDictionary: nil)
+        destination = MKMapItem(placemark: place)
+        
+        let request = MKDirectionsRequest()
+        request.source = MKMapItem.mapItemForCurrentLocation()
+        request.destination = destination!
+        request.requestsAlternateRoutes = false
+        
+        let directions = MKDirections(request: request)
+        directions.calculateDirectionsWithCompletionHandler({ (response: MKDirectionsResponse?, error:NSError?) -> Void in
+            if error != nil {
+                // if error then handle it
+            } else {
+                self.showRoute(response!)
+            }
+        })
+    }
+    
     // **********************************************************************
     func showRoute(response:MKDirectionsResponse) {
         for route in response.routes {
             map.addOverlay(route.polyline, level: MKOverlayLevel.AboveRoads)
             
             for step in route.steps {
-                print(step.instructions)
+                var subString: String
+                if step.instructions.hasPrefix("Proceed"){}
+                if step.instructions.hasPrefix("Arrive"){}
+                if step.instructions.hasPrefix("The destination"){}
+                if step.instructions.hasPrefix("Make a U-turn at")
+                {
+                    subString = step.instructions
+                    subString = subString.stringByReplacingOccurrencesOfString("Make a U-turn at ", withString: "")
+                    print(subString)
+                }
+                if step.instructions.hasPrefix("Turn right onto ")
+                {
+                    subString = step.instructions
+                    subString = subString.stringByReplacingOccurrencesOfString("Turn right onto ", withString: "")
+                    print(subString)
+                }
+                if step.instructions.hasPrefix("Turn left onto ")
+                {
+                    subString = step.instructions
+                    subString = subString.stringByReplacingOccurrencesOfString("Turn left onto ", withString: "")
+                    print(subString)
+                }
+                
             }
         }
 //        let region = MKCoordinateRegionMakeWithDistance(userLocation!.coordinate, 2000, 2000)
@@ -347,8 +392,15 @@ class NewMapViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
             
             self.map.setRegion(region, animated: true)
             
-        })
+            self.showDirections(0.0003, lon: 0.0003)
+            self.showDirections(-0.0003, lon: 0.0003)
+            self.showDirections(0.0003, lon: -0.0003)
+            self.showDirections(-0.0003, lon: -0.0003)
             
+            self.getRules()
+
+            
+        })
     }
 
 
@@ -464,8 +516,89 @@ class NewMapViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
     }
     
 
+    //MARK: - REST calls
+    // This makes the GET call to httpbin.org. It simply gets the IP address and displays it on the screen.
+    func getRules() {
+        var HOUSENUM : String! = "33-41"
+        var STREET : String! = "61STREET"
+        var BOROUGH : String = "QUEENS"
+        
+        // Setup the session to make REST GET call.  Notice the URL is https NOT http!!
+        let postEndpoint: String = "http://alternateside.nyc/api/v3/location/queens/61%20STREET/33-41"
+        let session = NSURLSession.sharedSession()
+        let url = NSURL(string: postEndpoint)!
+        
+        // Make the POST call and handle it in a completion handler
+        session.dataTaskWithURL(url, completionHandler: { ( data: NSData?, response: NSURLResponse?, error: NSError?) -> Void in
+            // Make sure we get an OK response
+            guard let realResponse = response as? NSHTTPURLResponse where
+                realResponse.statusCode == 200 else {
+                    print("Not a 200 response")
+                    return
+            }
+            print(realResponse.statusCode)
+            
+            // Read the JSON
+            do {
+                if let results = NSString(data:data!, encoding: NSUTF8StringEncoding) {
+                    let jsonDictionary = try NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.MutableContainers) as! NSDictionary
+                    let address = jsonDictionary["results"]
+                    print(address)
+                }
+            } catch {
+                print("bad things happened")
+            }
+        }).resume()
+    }
     
     
+    func postDataToURL() {
+        
+        // Setup the session to make REST POST call
+        let postEndpoint: String = "http://requestb.in/r4jz64r4"
+        let url = NSURL(string: postEndpoint)!
+        let session = NSURLSession.sharedSession()
+        let postParams : [String: AnyObject] = ["hello": "Hello POST world"]
+        
+        // Create the request
+        let request = NSMutableURLRequest(URL: url)
+        request.HTTPMethod = "POST"
+        request.setValue("application/json; charset=utf-8", forHTTPHeaderField: "Content-Type")
+        do {
+            request.HTTPBody = try NSJSONSerialization.dataWithJSONObject(postParams, options: NSJSONWritingOptions())
+            print(postParams)
+        } catch {
+            print("bad things happened")
+        }
+        
+        // Make the POST call and handle it in a completion handler
+        session.dataTaskWithRequest(request, completionHandler: { ( data: NSData?, response: NSURLResponse?, error: NSError?) -> Void in
+            // Make sure we get an OK response
+            guard let realResponse = response as? NSHTTPURLResponse where
+                realResponse.statusCode == 200 else {
+                    print("Not a 200 response")
+                    return
+            }
+            
+            // Read the JSON
+            if let postString = NSString(data:data!, encoding: NSUTF8StringEncoding) as? String {
+                // Print what we got from the call
+                print("POST: " + postString)
+                self.performSelectorOnMainThread("updatePostLabel:", withObject: postString, waitUntilDone: false)
+            }
+            
+        }).resume()
+    }
     
+    //MARK: - Methods to update the UI immediately
+    func updateIPLabel(text: String) {
+        var ipLabel = "Your IP is " + text
+    }
     
+    func updatePostLabel(text: String) {
+        var postResultLabel = "POST : " + text
+    }
 }
+    
+    
+
