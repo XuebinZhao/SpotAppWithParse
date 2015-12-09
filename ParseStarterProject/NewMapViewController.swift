@@ -245,23 +245,53 @@ class NewMapViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
             CLGeocoder().reverseGeocodeLocation(pinLocation, completionHandler: { (placemarks, error) -> Void in
                 
                 var title = ""
+                var house:String = ""
+                var street:String = ""
+                var borough:String = ""
                 
                 if (error == nil) {
                     if let p = placemarks?[0] {
-                        var subThoroughfare:String = ""
-                        var thoroughfare:String = ""
-                        
+                        var houseNumber:String = ""
+                        var streetNumber:String = ""
+                        var boroughName:String = ""
                         if p.subThoroughfare != nil {
-                            subThoroughfare = p.subThoroughfare!
+                            houseNumber = p.subThoroughfare!
+                            house = houseNumber
                         }
                         if p.thoroughfare != nil {
-                            thoroughfare = p.thoroughfare!
+                            streetNumber = p.thoroughfare!
+                            street = streetNumber
                         }
-
-                        title = "\(subThoroughfare) \(thoroughfare)"
+                        if p.subAdministrativeArea != nil {
+                            boroughName = p.subAdministrativeArea!
+                            borough = boroughName
+                        }
+                        
+                        title = "\(houseNumber) \(streetNumber)"
                         
                     }
                 }
+                
+                if street.rangeOfString("Ave") != nil{
+                    street.replaceRange(street.rangeOfString("Ave")!, with: "AVENUE")
+                }
+                else if street.rangeOfString("Rd") != nil{
+                    street.replaceRange(street.rangeOfString("Rd")!, with: "ROAD")
+                }
+                else if street.rangeOfString("Dr") != nil{
+                    street.replaceRange(street.rangeOfString("Dr")!, with: "DRIVE")
+                }
+                else if street.rangeOfString("St") != nil{
+                    street.replaceRange(street.rangeOfString("St")!, with: "STREET")
+                }
+                
+                if let range = street.rangeOfString("(\\d*(st|nd|rd|th)\\s)", options: .RegularExpressionSearch) {
+                    print(range)
+                    var removed = range.dropLast(3)
+                    //street.replaceRange(street.rangeOfString("st ")!, with: "%20")
+                }
+                
+                print(street)
                 
                 if title == "" {
                     title = "Added \(NSDate())"
@@ -329,23 +359,65 @@ class NewMapViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
         CLGeocoder().reverseGeocodeLocation(location, completionHandler: { (placemarks, error) -> Void in
             
             var title = ""
+            var house:String = ""
+            var street:String = ""
+            var borough:String = ""
             
             if (error == nil) {
                 if let p = placemarks?[0] {
-                    var subThoroughfare:String = ""
-                    var thoroughfare:String = ""
-                    
+                    var houseNumber:String = ""
+                    var streetNumber:String = ""
+                    var boroughName:String = ""
                     if p.subThoroughfare != nil {
-                        subThoroughfare = p.subThoroughfare!
+                        houseNumber = p.subThoroughfare!
+                        house = houseNumber
                     }
                     if p.thoroughfare != nil {
-                        thoroughfare = p.thoroughfare!
+                        streetNumber = p.thoroughfare!
+                        street = streetNumber
+                    }
+                    if p.subAdministrativeArea != nil {
+                        boroughName = p.subAdministrativeArea!
+                        borough = boroughName
                     }
                     
-                    title = "\(subThoroughfare) \(thoroughfare)"
+                    title = "\(houseNumber) \(streetNumber)"
                     
                 }
             }
+            
+            if street.rangeOfString("Ave") != nil{
+                street.replaceRange(street.rangeOfString("Ave")!, with: "AVENUE")
+            }
+            else if street.rangeOfString("Rd") != nil{
+                street.replaceRange(street.rangeOfString("Rd")!, with: "ROAD")
+            }
+            else if street.rangeOfString("Dr") != nil{
+                street.replaceRange(street.rangeOfString("Dr")!, with: "DRIVE")
+            }
+            else if street.rangeOfString("St") != nil{
+                street.replaceRange(street.rangeOfString("St")!, with: "STREET")
+            }
+            
+            if let range = street.rangeOfString("$st", options: .RegularExpressionSearch) {
+                print(range)
+                //street.replaceRange(street.rangeOfString("st ")!, with: "%20")
+            }
+            else if let range = street.rangeOfString("$nd", options: .RegularExpressionSearch) {
+                print(range)
+                //street.replaceRange(street.rangeOfString("st ")!, with: "%20")
+            }
+            else if let range = street.rangeOfString("$rd", options: .RegularExpressionSearch) {
+                print(range)
+                //street.replaceRange(street.rangeOfString("st ")!, with: "%20")
+            }
+            else if let range = street.rangeOfString("$th", options: .RegularExpressionSearch) {
+                print(range)
+                //street.replaceRange(street.rangeOfString("st ")!, with: "%20")
+            }
+            
+            print(street)
+            
             
             if title == "" {
                 title = "Added \(NSDate())"
@@ -392,12 +464,8 @@ class NewMapViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
             
             self.map.setRegion(region, animated: true)
             
-            self.showDirections(0.0003, lon: 0.0003)
-            self.showDirections(-0.0003, lon: 0.0003)
-            self.showDirections(0.0003, lon: -0.0003)
-            self.showDirections(-0.0003, lon: -0.0003)
             
-            self.getRules()
+            //self.getRules()
 
             
         })
@@ -518,13 +586,11 @@ class NewMapViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
 
     //MARK: - REST calls
     // This makes the GET call to httpbin.org. It simply gets the IP address and displays it on the screen.
-    func getRules() {
-        var HOUSENUM : String! = "33-41"
-        var STREET : String! = "61STREET"
-        var BOROUGH : String = "QUEENS"
+    func getRules(houseNumber : String, streetName : String, borough : String) {
+
         
         // Setup the session to make REST GET call.  Notice the URL is https NOT http!!
-        let postEndpoint: String = "http://alternateside.nyc/api/v3/location/queens/61%20STREET/33-41"
+        let postEndpoint: String = "http://alternateside.nyc/api/v3/location/\(borough)/\(streetName)/\(houseNumber)"
         let session = NSURLSession.sharedSession()
         let url = NSURL(string: postEndpoint)!
         
@@ -550,54 +616,7 @@ class NewMapViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
             }
         }).resume()
     }
-    
-    
-    func postDataToURL() {
-        
-        // Setup the session to make REST POST call
-        let postEndpoint: String = "http://requestb.in/r4jz64r4"
-        let url = NSURL(string: postEndpoint)!
-        let session = NSURLSession.sharedSession()
-        let postParams : [String: AnyObject] = ["hello": "Hello POST world"]
-        
-        // Create the request
-        let request = NSMutableURLRequest(URL: url)
-        request.HTTPMethod = "POST"
-        request.setValue("application/json; charset=utf-8", forHTTPHeaderField: "Content-Type")
-        do {
-            request.HTTPBody = try NSJSONSerialization.dataWithJSONObject(postParams, options: NSJSONWritingOptions())
-            print(postParams)
-        } catch {
-            print("bad things happened")
-        }
-        
-        // Make the POST call and handle it in a completion handler
-        session.dataTaskWithRequest(request, completionHandler: { ( data: NSData?, response: NSURLResponse?, error: NSError?) -> Void in
-            // Make sure we get an OK response
-            guard let realResponse = response as? NSHTTPURLResponse where
-                realResponse.statusCode == 200 else {
-                    print("Not a 200 response")
-                    return
-            }
-            
-            // Read the JSON
-            if let postString = NSString(data:data!, encoding: NSUTF8StringEncoding) as? String {
-                // Print what we got from the call
-                print("POST: " + postString)
-                self.performSelectorOnMainThread("updatePostLabel:", withObject: postString, waitUntilDone: false)
-            }
-            
-        }).resume()
-    }
-    
-    //MARK: - Methods to update the UI immediately
-    func updateIPLabel(text: String) {
-        var ipLabel = "Your IP is " + text
-    }
-    
-    func updatePostLabel(text: String) {
-        var postResultLabel = "POST : " + text
-    }
+
 }
     
     
