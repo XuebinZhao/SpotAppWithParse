@@ -231,8 +231,6 @@ class NewMapViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
     
     // **********************************************************************
     
-    
-    
     func action(gestureRecognizer:UIGestureRecognizer) {
         if gestureRecognizer.state == UIGestureRecognizerState.Began {
             
@@ -272,26 +270,16 @@ class NewMapViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
                     }
                 }
                 
-                if street.rangeOfString("Ave") != nil{
-                    street.replaceRange(street.rangeOfString("Ave")!, with: "AVENUE")
-                }
-                else if street.rangeOfString("Rd") != nil{
-                    street.replaceRange(street.rangeOfString("Rd")!, with: "ROAD")
-                }
-                else if street.rangeOfString("Dr") != nil{
-                    street.replaceRange(street.rangeOfString("Dr")!, with: "DRIVE")
-                }
-                else if street.rangeOfString("St") != nil{
-                    street.replaceRange(street.rangeOfString("St")!, with: "STREET")
-                }
+                street = self.parseStreet(street)
                 
-                if let range = street.rangeOfString("(\\d*(st|nd|rd|th)\\s)", options: .RegularExpressionSearch) {
-                    print(range)
-                    var removed = range.dropLast(3)
-                    //street.replaceRange(street.rangeOfString("st ")!, with: "%20")
-                }
+                house = self.parseHouse(house)
                 
+                print(house)
                 print(street)
+                print(borough)
+                
+                self.getRules(house, streetName: street, borough: borough)
+                
                 
                 if title == "" {
                     title = "Added \(NSDate())"
@@ -314,8 +302,6 @@ class NewMapViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
         }
     }
     
-
-
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         
         let userLocation:CLLocation = locations[0] as CLLocation
@@ -385,40 +371,7 @@ class NewMapViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
                     
                 }
             }
-            
-            if street.rangeOfString("Ave") != nil{
-                street.replaceRange(street.rangeOfString("Ave")!, with: "AVENUE")
-            }
-            else if street.rangeOfString("Rd") != nil{
-                street.replaceRange(street.rangeOfString("Rd")!, with: "ROAD")
-            }
-            else if street.rangeOfString("Dr") != nil{
-                street.replaceRange(street.rangeOfString("Dr")!, with: "DRIVE")
-            }
-            else if street.rangeOfString("St") != nil{
-                street.replaceRange(street.rangeOfString("St")!, with: "STREET")
-            }
-            
-            if let range = street.rangeOfString("$st", options: .RegularExpressionSearch) {
-                print(range)
-                //street.replaceRange(street.rangeOfString("st ")!, with: "%20")
-            }
-            else if let range = street.rangeOfString("$nd", options: .RegularExpressionSearch) {
-                print(range)
-                //street.replaceRange(street.rangeOfString("st ")!, with: "%20")
-            }
-            else if let range = street.rangeOfString("$rd", options: .RegularExpressionSearch) {
-                print(range)
-                //street.replaceRange(street.rangeOfString("st ")!, with: "%20")
-            }
-            else if let range = street.rangeOfString("$th", options: .RegularExpressionSearch) {
-                print(range)
-                //street.replaceRange(street.rangeOfString("st ")!, with: "%20")
-            }
-            
-            print(street)
-            
-            
+
             if title == "" {
                 title = "Added \(NSDate())"
             }
@@ -463,9 +416,6 @@ class NewMapViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
             let region:MKCoordinateRegion = MKCoordinateRegionMake(coordinate, span)
             
             self.map.setRegion(region, animated: true)
-            
-            
-            //self.getRules()
 
             
         })
@@ -502,7 +452,6 @@ class NewMapViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
             }
             pinView!.annotation = annotation
         }
-        
         return pinView
     }
     
@@ -587,7 +536,6 @@ class NewMapViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
     //MARK: - REST calls
     // This makes the GET call to httpbin.org. It simply gets the IP address and displays it on the screen.
     func getRules(houseNumber : String, streetName : String, borough : String) {
-
         
         // Setup the session to make REST GET call.  Notice the URL is https NOT http!!
         let postEndpoint: String = "http://alternateside.nyc/api/v3/location/\(borough)/\(streetName)/\(houseNumber)"
@@ -608,16 +556,57 @@ class NewMapViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
             do {
                 if let results = NSString(data:data!, encoding: NSUTF8StringEncoding) {
                     let jsonDictionary = try NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.MutableContainers) as! NSDictionary
-                    let address = jsonDictionary["results"]
-                    print(address)
+                    for var index = 0; index < jsonDictionary["results"]?.count; ++index {
+                        let example = jsonDictionary["results"]![index]
+                        print(example)
+                    }
                 }
             } catch {
                 print("bad things happened")
             }
         }).resume()
     }
+    
+    func parseStreet(var street: String) -> String {
+        if street.rangeOfString("Ave") != nil{
+            street.replaceRange(street.rangeOfString("Ave")!, with: "AVENUE")
+        }
+            
+        else if street.rangeOfString("Rd") != nil{
+            street.replaceRange(street.rangeOfString("Rd")!, with: "ROAD")
+        }
+            
+        else if street.rangeOfString("Dr") != nil{
+            street.replaceRange(street.rangeOfString("Dr")!, with: "DRIVE")
+        }
+            
+        else if street.rangeOfString("St") != nil{
+            street.replaceRange(street.rangeOfString("St")!, with: "STREET")
+        }
+        
+        if let range = street.rangeOfString("\\d*(st|nd|rd|th)", options: .RegularExpressionSearch) {
+            let newRange = Range<String.Index>(start: range.endIndex.advancedBy(-2), end: range.endIndex )
+            street = street.stringByReplacingCharactersInRange(newRange, withString: "")
+        }
+        
+        if let range = street.rangeOfString("\\s", options: .RegularExpressionSearch) {
+            street = street.stringByReplacingCharactersInRange(range, withString: "%20")
+        }
+        
+        return street
+    }
+    
+    func parseHouse(var house: String) -> String {
+        
+        if let range = house.rangeOfString("(\\d*–)", options: .RegularExpressionSearch) {
+            house = house.stringByReplacingCharactersInRange(range, withString: "")
+        }
+
+        return house
+    }
+
 
 }
-    
-    
+
+
 
