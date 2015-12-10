@@ -22,6 +22,8 @@ class NewMapViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
     
     var claimId = ""
     
+    var rules = [String]()
+    
     var canReport = false
     
     @IBOutlet var secondaryMenu: UIView!
@@ -278,7 +280,7 @@ class NewMapViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
                 print(street)
                 print(borough)
                 
-                self.getRules(house, streetName: street, borough: borough)
+                self.getRules(house, streetName: street, borough: borough, rules: &self.rules)
                 
                 
                 if title == "" {
@@ -417,6 +419,7 @@ class NewMapViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
             
             self.map.setRegion(region, animated: true)
 
+            self.printRules()
             
         })
     }
@@ -535,7 +538,7 @@ class NewMapViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
 
     //MARK: - REST calls
     // This makes the GET call to httpbin.org. It simply gets the IP address and displays it on the screen.
-    func getRules(houseNumber : String, streetName : String, borough : String) {
+    func getRules(houseNumber : String, streetName : String, borough : String, inout rules : [String]) {
         
         // Setup the session to make REST GET call.  Notice the URL is https NOT http!!
         let postEndpoint: String = "http://alternateside.nyc/api/v3/location/\(borough)/\(streetName)/\(houseNumber)"
@@ -556,10 +559,7 @@ class NewMapViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
             do {
                 if let results = NSString(data:data!, encoding: NSUTF8StringEncoding) {
                     let jsonDictionary = try NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.MutableContainers) as! NSDictionary
-                    for var index = 0; index < jsonDictionary["results"]?.count; ++index {
-                        let example = jsonDictionary["results"]![index]
-                        print(example)
-                    }
+                    self.updateRules(jsonDictionary)
                 }
             } catch {
                 print("bad things happened")
@@ -603,6 +603,18 @@ class NewMapViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
         }
 
         return house
+    }
+    
+    func printRules() {
+        print(self.rules)
+    }
+    
+    func updateRules(input : NSDictionary){
+        self.rules.removeAll()
+        for var index = 0; index < input["results"]?.count; ++index {
+            let rule = input["results"]![index] as! String
+            self.rules.append(rule)
+        }
     }
 
 
