@@ -201,9 +201,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		81BA81441A49DA1800E65899 /* SpotAppParse */ = {
+		81BA81441A49DA1800E65899 /* Spot */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 81BA81641A49DA1800E65899 /* Build configuration list for PBXNativeTarget "SpotAppParse" */;
+			buildConfigurationList = 81BA81641A49DA1800E65899 /* Build configuration list for PBXNativeTarget "Spot" */;
 			buildPhases = (
 				81BA81411A49DA1800E65899 /* Sources */,
 				81BA81421A49DA1800E65899 /* Frameworks */,
@@ -214,7 +214,7 @@
 			);
 			dependencies = (
 			);
-			name = SpotAppParse;
+			name = Spot;
 			productName = ParseStarterProject;
 			productReference = 81BA81451A49DA1800E65899 /* SpotAppParse.app */;
 			productType = "com.apple.product-type.application";
@@ -248,7 +248,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				81BA81441A49DA1800E65899 /* SpotAppParse */,
+				81BA81441A49DA1800E65899 /* Spot */,
 			);
 		};
 /* End PBXProject section */
@@ -410,7 +410,7 @@
 				INFOPLIST_FILE = Resources/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.teamsport.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.teamspot.SpotApp;
 				PRODUCT_NAME = SpotAppParse;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -428,7 +428,7 @@
 				INFOPLIST_FILE = Resources/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.teamsport.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.teamspot.SpotApp;
 				PRODUCT_NAME = SpotAppParse;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -446,7 +446,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		81BA81641A49DA1800E65899 /* Build configuration list for PBXNativeTarget "SpotAppParse" */ = {
+		81BA81641A49DA1800E65899 /* Build configuration list for PBXNativeTarget "Spot" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				81BA81651A49DA1800E65899 /* Debug */,
