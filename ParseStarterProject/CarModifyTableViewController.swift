@@ -38,7 +38,6 @@ class CarModifyTableViewController: UITableViewController, UIImagePickerControll
                 setDefault.setOn(false, animated: true)
             }
         }
-        
     }
     
     @IBAction func saveCar(sender: AnyObject) {
@@ -62,7 +61,6 @@ class CarModifyTableViewController: UITableViewController, UIImagePickerControll
             
             user!["vehicles"].insertObject(vehicle, atIndex: index)
             
-            //print (user!["vehicles"].count)
             if setDefault.on {
             for var i = 1; i<user!["vehicles"].count; i++ {
                 let make = user!["vehicles"][i][0]
@@ -76,6 +74,43 @@ class CarModifyTableViewController: UITableViewController, UIImagePickerControll
             }
             }
             user!.saveEventually()
+            
+            let query = PFQuery(className:"car")
+            let uId = user!.objectId! as String
+            query.whereKey("userId", equalTo:"\(uId)")
+            
+            query.findObjectsInBackgroundWithBlock{
+                (objects: [PFObject]?, error: NSError?) -> Void in
+                
+                if error == nil {
+                    // The find succeeded.
+                    for object in objects! {
+                        let ind = object["carIndex"] as! Int
+                        print(ind)
+                        object["carIndex"] = ind + 1
+                        object.saveInBackground()
+                    }
+                }
+            }
+            
+            let imageData: NSData = UIImageJPEGRepresentation(imagePickerView.image!, 1.0)!
+            let imageForCar: PFFile = PFFile(name: "carImage.png", data: imageData)!
+            
+            let carImage = PFObject(className: "car")
+            carImage["userId"] = user!.objectId
+            carImage["carImage"] = imageForCar
+            carImage["carIndex"] = index
+            
+            carImage.saveInBackgroundWithBlock({ (success, error) -> Void in
+                if success {
+                    print(success)
+                } else {
+                    print (error)
+                }
+            })
+            
+            
+            
             
         } else {
 
@@ -114,6 +149,25 @@ class CarModifyTableViewController: UITableViewController, UIImagePickerControll
                 }
             }
             
+            let query = PFQuery(className:"car")
+            let uId = user!.objectId! as String
+            query.whereKey("userId", equalTo:"\(uId)")
+            
+            query.findObjectsInBackgroundWithBlock{
+                (objects: [PFObject]?, error: NSError?) -> Void in
+                
+                if error == nil {
+                    // The find succeeded.
+                    for object in objects! {
+                        if object["carIndex"].isEqual(self.index) {
+                            let imageData: NSData = UIImageJPEGRepresentation(self.imagePickerView.image!, 1.0)!
+                            let imageForCar: PFFile = PFFile(name: "carImage.png", data: imageData)!
+                            object["carImage"] = imageForCar
+                            object.saveInBackground()
+                        }
+                    }
+                }
+            }
         }
         let mapViewControllerObejct = self.storyboard?.instantiateViewControllerWithIdentifier("logined")
         self.presentViewController(mapViewControllerObejct!, animated: true, completion: nil)
@@ -124,6 +178,35 @@ class CarModifyTableViewController: UITableViewController, UIImagePickerControll
         self.tableView.backgroundColor = UIColor(red: 243.0/255, green: 243.0/255, blue: 243.0/255, alpha: 1)
         modelTextField.delegate = self
         makeTextField.delegate = self
+        
+        if addCar {
+            let getImage = UIImage(named: "car_default.png")
+            imagePickerView.image = getImage
+        }else {
+            let query = PFQuery(className:"car")
+            let uId = user!.objectId! as String
+            query.whereKey("userId", equalTo:"\(uId)")
+            
+            query.findObjectsInBackgroundWithBlock{
+                (objects: [PFObject]?, error: NSError?) -> Void in
+                
+                if error == nil {
+                    // The find succeeded.
+                    for object in objects! {
+                        if object["carIndex"].isEqual(self.index) {
+                            if let imageFile: PFFile = object["carImage"] as? PFFile{
+                                imageFile.getDataInBackgroundWithBlock { (imageData, error) -> Void in
+                                    if error == nil {
+                                        let image = UIImage(data: imageData!)
+                                        self.imagePickerView.image = image
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
     
     override func didReceiveMemoryWarning() {
@@ -179,6 +262,7 @@ class CarModifyTableViewController: UITableViewController, UIImagePickerControll
         dismissViewControllerAnimated(true, completion: nil)
         if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
             imagePickerView.image = image
+            imagePickerView.contentMode = .ScaleAspectFit
         }
     }
     

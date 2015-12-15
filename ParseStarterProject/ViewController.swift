@@ -75,10 +75,6 @@ class ViewController: UIViewController, UITextFieldDelegate {
                         let location = PFGeoPoint()
                         let isDefault = true
                         
-//                        let getImage = UIImage(named: "car_default.png")
-//                        let imageData: NSData = UIImageJPEGRepresentation(getImage!, 1.0)!
-//                        let carImage: PFFile = PFFile(name: "carImage.png", data: imageData)!
-                        
                         let vehicle = [make, model, location, isDefault]
                         
                         let vehicles = [vehicle]
@@ -90,6 +86,23 @@ class ViewController: UIViewController, UITextFieldDelegate {
                         user.pinInBackground()
                         
                         user.saveEventually()
+                        
+                        let getImage = UIImage(named: "car_default.png")
+                        let imageData: NSData = UIImageJPEGRepresentation(getImage!, 1.0)!
+                        let imageForCar: PFFile = PFFile(name: "carImage.png", data: imageData)!
+                        
+                        let carImage = PFObject(className: "car")
+                        carImage["userId"] = user.objectId
+                        carImage["carImage"] = imageForCar
+                        carImage["carIndex"] = 0
+                        
+                        carImage.saveInBackgroundWithBlock({ (success, error) -> Void in
+                            if success {
+                                print(success)
+                            } else {
+                                print (error)
+                            }
+                        })
                         
                         let mapViewControllerObejct = self.storyboard?.instantiateViewControllerWithIdentifier("logined")
                         self.presentViewController(mapViewControllerObejct!, animated: true, completion: nil)
