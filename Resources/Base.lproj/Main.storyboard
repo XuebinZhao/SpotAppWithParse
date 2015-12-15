@@ -513,17 +513,94 @@
                                     <constraint firstAttribute="width" secondItem="55X-DT-6et" secondAttribute="height" multiplier="150:11" id="wIP-of-1R7"/>
                                 </constraints>
                             </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NWt-ag-B2S">
+                                <rect key="frame" x="0.0" y="334" width="600" height="44"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mVs-o7-L4o">
+                                        <rect key="frame" x="178" y="0.0" width="44" height="44"/>
+                                        <color key="backgroundColor" red="0.80000001190000003" green="0.40000000600000002" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                        <state key="normal" title="45 m">
+                                            <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="m45BeforeTime:" destination="oVm-b2-jbd" eventType="touchUpInside" id="FU0-Um-WR7"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qxo-IG-iXQ">
+                                        <rect key="frame" x="99" y="0.0" width="44" height="44"/>
+                                        <color key="backgroundColor" red="0.80000001190000003" green="0.40000000600000002" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                        <state key="normal" title="30 m">
+                                            <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="m30BeforeTime:" destination="oVm-b2-jbd" eventType="touchUpInside" id="bq4-I6-T2u"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hwc-EZ-zHV">
+                                        <rect key="frame" x="257" y="0.0" width="44" height="44"/>
+                                        <color key="backgroundColor" red="0.80000001190000003" green="0.40000000600000002" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                        <state key="normal" title="1 H">
+                                            <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="h1BeforeTime:" destination="oVm-b2-jbd" eventType="touchUpInside" id="4SV-vl-LRV"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bBN-tw-wOa">
+                                        <rect key="frame" x="20" y="0.0" width="44" height="44"/>
+                                        <color key="backgroundColor" red="0.80000001190000003" green="0.40000000600000002" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                        <state key="normal" title="15 m">
+                                            <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="m15BeforeTime:" destination="oVm-b2-jbd" eventType="touchUpInside" id="lep-BZ-cqp"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstItem="mVs-o7-L4o" firstAttribute="leading" secondItem="qxo-IG-iXQ" secondAttribute="trailing" constant="35" id="5g7-NF-SsA"/>
+                                    <constraint firstAttribute="height" constant="44" id="7iF-ad-CmB"/>
+                                    <constraint firstItem="qxo-IG-iXQ" firstAttribute="leading" secondItem="bBN-tw-wOa" secondAttribute="trailing" constant="35" id="I1o-br-lyh"/>
+                                    <constraint firstItem="hwc-EZ-zHV" firstAttribute="leading" secondItem="mVs-o7-L4o" secondAttribute="trailing" constant="35" id="qet-gY-DEQ"/>
+                                    <constraint firstItem="bBN-tw-wOa" firstAttribute="leading" secondItem="NWt-ag-B2S" secondAttribute="leading" constant="20" id="rvg-Jf-iOO"/>
+                                    <constraint firstAttribute="width" secondItem="NWt-ag-B2S" secondAttribute="height" multiplier="150:11" id="yny-R0-6f4"/>
+                                </constraints>
+                            </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Add time to meter:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3cc-ol-gzh">
+                                <rect key="frame" x="20" y="397" width="142" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Set alerm before meter time up:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eP8-kY-kGN">
+                                <rect key="frame" x="20" y="289" width="243" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="ssw-bI-VBv" firstAttribute="top" secondItem="Mcu-Vh-U7h" secondAttribute="bottom" constant="40" id="2Rf-gr-gOT"/>
                             <constraint firstAttribute="trailing" secondItem="dDn-SB-gYz" secondAttribute="trailing" id="5Js-Et-tLV"/>
+                            <constraint firstItem="55X-DT-6et" firstAttribute="top" secondItem="3cc-ol-gzh" secondAttribute="bottom" constant="20" id="8Vv-mK-vbz"/>
+                            <constraint firstItem="NWt-ag-B2S" firstAttribute="top" secondItem="eP8-kY-kGN" secondAttribute="bottom" constant="24" id="JXH-fr-8zC"/>
                             <constraint firstItem="55X-DT-6et" firstAttribute="leading" secondItem="Q8p-g4-Yvc" secondAttribute="leading" id="Mbw-Jy-htf"/>
+                            <constraint firstAttribute="leadingMargin" secondItem="eP8-kY-kGN" secondAttribute="leading" id="RHQ-jj-qke"/>
                             <constraint firstItem="ssw-bI-VBv" firstAttribute="centerX" secondItem="Q8p-g4-Yvc" secondAttribute="centerX" id="WWn-oC-R19"/>
                             <constraint firstItem="dDn-SB-gYz" firstAttribute="top" secondItem="55X-DT-6et" secondAttribute="bottom" constant="20" id="We6-Di-bOx"/>
+                            <constraint firstItem="55X-DT-6et" firstAttribute="leading" secondItem="3cc-ol-gzh" secondAttribute="trailing" constant="-162" id="cU0-gM-3YL"/>
+                            <constraint firstAttribute="trailing" secondItem="NWt-ag-B2S" secondAttribute="trailing" id="ivT-xR-AdQ"/>
                             <constraint firstItem="dDn-SB-gYz" firstAttribute="leading" secondItem="Q8p-g4-Yvc" secondAttribute="leading" id="kZr-Ua-KYx"/>
                             <constraint firstAttribute="trailing" secondItem="55X-DT-6et" secondAttribute="trailing" id="nsn-5I-ii4"/>
                             <constraint firstItem="Kz6-8W-AIS" firstAttribute="top" secondItem="dDn-SB-gYz" secondAttribute="bottom" constant="5" id="o3A-rl-R2H"/>
+                            <constraint firstItem="55X-DT-6et" firstAttribute="top" secondItem="NWt-ag-B2S" secondAttribute="bottom" constant="60" id="ohS-98-ucy"/>
+                            <constraint firstItem="NWt-ag-B2S" firstAttribute="leading" secondItem="Q8p-g4-Yvc" secondAttribute="leading" id="xGe-P7-y5O"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="lEU-bo-nDi"/>
