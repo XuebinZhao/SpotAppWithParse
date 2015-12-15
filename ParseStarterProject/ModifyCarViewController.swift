@@ -52,7 +52,7 @@ class ModifyCarViewController: UIViewController, UITextFieldDelegate {
     
     @IBAction func updateCar(sender: AnyObject) {
         if addCar {
-            //addOrUpdateButton.setTitle("Add", forState: UIControlState.Normal)
+            
             let make = "\(makeTextField.text!)"
             let model = "\(modelTextField.text!)"
             let location = PFGeoPoint()
@@ -71,8 +71,12 @@ class ModifyCarViewController: UIViewController, UITextFieldDelegate {
             let model = "\(modelTextField.text!)"
             let location = PFGeoPoint()
             let isDefault = user!["vehicles"][index][3]
-            
+        
             let vehicle = [make, model, location, isDefault]
+            
+            for i in 0..<user!["vehicles"].count{
+                 user!["vehicles"][i].replaceObjectAtIndex(3, withObject: false)
+            }
             
             user!["vehicles"].replaceObjectAtIndex(index, withObject: vehicle)
             

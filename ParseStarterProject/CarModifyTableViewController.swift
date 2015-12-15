@@ -44,16 +44,14 @@ class CarModifyTableViewController: UITableViewController, UIImagePickerControll
         
         
         if addCar {
-            //addOrUpdateButton.setTitle("Add", forState: UIControlState.Normal)
+
             let make = "\(makeTextField.text!)"
             let model = "\(modelTextField.text!)"
             let location = PFGeoPoint()
             var isDefault = false
             if setDefault.on {
-                print("it is on")
                 isDefault = true
             } else {
-                print("it is off")
                 isDefault = false
             }
             
@@ -217,7 +215,7 @@ class CarModifyTableViewController: UITableViewController, UIImagePickerControll
     override func tableView(tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         let headerView = view as! UITableViewHeaderFooterView
         headerView.textLabel!.textColor = UIColor(red: 151.0/255, green: 193.0/255, blue: 100.0/255, alpha: 1)
-        let font = UIFont(name: "Helvetica Neue", size: 18.0)
+        let font = UIFont(name: "Helvetica Neue", size: 14.0)
         headerView.textLabel!.font = font!
     }
     
