@@ -13,6 +13,8 @@ import Parse
 
 class NewMapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
     
+    var rules = Dictionary<String,[String]>()
+    
     let user = PFUser.currentUser()
 
     @IBOutlet weak var openParkingSpot: UIBarButtonItem!
@@ -21,8 +23,6 @@ class NewMapViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
     var canClaim = false
     
     var claimId = ""
-    
-    var rules = [String]()
     
     var canReport = false
     
@@ -67,7 +67,7 @@ class NewMapViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
                 for spots in objects!{
                     let point = spots["location"]
                     
-                    let annotation = MKPointAnnotation()
+                    let annotation = CustomPointAnnotationOpenSpot()
                     annotation.coordinate = CLLocationCoordinate2DMake(point.latitude, point.longitude)
                     annotation.title = "Open Spot!"
                     annotation.subtitle = spots.objectId!
@@ -211,22 +211,20 @@ class NewMapViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
                 print(street)
                 print(borough)
                 
-                self.getRules(house, streetName: street, borough: borough, rules: &self.rules)
-                
                 
                 if title == "" {
                     title = "Added \(NSDate())"
                 }
 
                 // Putting a pin into map
-                let annotation = MKPointAnnotation()
+                
+                let annotation = CustomPointAnnotationSpot()
                 
                 annotation.coordinate = newCoordinate
                 
                 annotation.title = title
                 
-                // Try to add a UIButton in the pin
-                //annotation.
+                self.getRules(house, streetName: street, borough: borough, title: title)
                 
                 self.map.addAnnotation(annotation)
                 
@@ -336,7 +334,7 @@ class NewMapViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
 
             self.user!.saveEventually()
 
-            let annotation = MKPointAnnotation()
+            let annotation = CustomPointAnnotationMySpot()
             
             annotation.coordinate = coordinate
             
@@ -351,8 +349,6 @@ class NewMapViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
             let region:MKCoordinateRegion = MKCoordinateRegionMake(coordinate, span)
             
             self.map.setRegion(region, animated: true)
-
-            self.printRules()
             
         })
     }
@@ -372,19 +368,23 @@ class NewMapViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
         }
         
         if pinView == nil {
-                pinView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: reuseId)
-                pinView!.canShowCallout = true
-                if annotation.title! == "Open Spot!"{
-                    pinView!.pinColor = .Green
-                }else{
-                    pinView!.pinColor = .Red
-                }
-                pinView!.rightCalloutAccessoryView = UIButton(type: .DetailDisclosure)
-            } else {
-            if annotation.title! == "Open Spot!"{
-                pinView!.pinColor = .Green
-            }else{
-                pinView!.pinColor = .Red
+            pinView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: reuseId)
+            pinView!.canShowCallout = true
+            if annotation.isMemberOfClass(CustomPointAnnotationOpenSpot){
+                pinView!.pinTintColor = .greenColor()
+            }else if annotation.isMemberOfClass(CustomPointAnnotationMySpot){
+                pinView!.pinTintColor = .purpleColor()
+            }else {
+                pinView!.pinTintColor = .redColor()
+            }
+            pinView!.rightCalloutAccessoryView = UIButton(type: .DetailDisclosure)
+        } else {
+            if annotation.isMemberOfClass(CustomPointAnnotationOpenSpot){
+                pinView!.pinTintColor = .greenColor()
+            }else if annotation.isMemberOfClass(CustomPointAnnotationMySpot){
+                pinView!.pinTintColor = .purpleColor()
+            }else {
+                pinView!.pinTintColor = .redColor()
             }
             pinView!.annotation = annotation
         }
@@ -416,6 +416,11 @@ class NewMapViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
                 mapView.removeAnnotation(view.annotation!)
             })
             
+            let rulesAction = UIAlertAction(title: "Get Rules", style: .Default, handler: { action in
+                self.showRules(view.annotation)
+                
+            })
+
             let canelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
             
             if canReport {
@@ -429,6 +434,7 @@ class NewMapViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
                 claimAction.enabled = false
             }
 
+            actionSheet.addAction(rulesAction)
             actionSheet.addAction(reportAction)
             actionSheet.addAction(claimAction)
             actionSheet.addAction(canelAction)
@@ -468,10 +474,26 @@ class NewMapViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
         
     }
     
-
+    
+    func showRules(point: MKAnnotation?){
+        
+        if self.rules.isEmpty {
+            
+            let alertController = UIAlertController(title: "Whoops", message:
+                "Looks like something went wrong...", preferredStyle: UIAlertControllerStyle.Alert)
+            alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.Default,handler: nil))
+            self.presentViewController(alertController, animated: true, completion: nil)
+        } else {
+            let alertController = UIAlertController(title: "Success", message:
+                "\(self.rules)", preferredStyle: UIAlertControllerStyle.Alert)
+            alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.Default,handler: nil))
+            self.presentViewController(alertController, animated: true, completion: nil)
+        }
+    }
+    
     //MARK: - REST calls
     // This makes the GET call to httpbin.org. It simply gets the IP address and displays it on the screen.
-    func getRules(houseNumber : String, streetName : String, borough : String, inout rules : [String]) {
+    func getRules(houseNumber : String, streetName : String, borough : String, title : String) {
         
         // Setup the session to make REST GET call.  Notice the URL is https NOT http!!
         let postEndpoint: String = "http://alternateside.nyc/api/v3/location/\(borough)/\(streetName)/\(houseNumber)"
@@ -491,8 +513,14 @@ class NewMapViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
             // Read the JSON
             do {
                 if let results = NSString(data:data!, encoding: NSUTF8StringEncoding) {
+                    var rules = [""]
                     let jsonDictionary = try NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.MutableContainers) as! NSDictionary
-                    self.updateRules(jsonDictionary)
+                    for var index = 0; index < jsonDictionary["results"]?.count; ++index {
+                        let rule = jsonDictionary["results"]![index] as! String
+                        rules.append(rule)
+                    }
+                    self.rules.updateValue(rules, forKey: title)
+                    print(self.rules)
                 }
             } catch {
                 print("bad things happened")
@@ -537,20 +565,18 @@ class NewMapViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
 
         return house
     }
-    
-    func printRules() {
-        print(self.rules)
-    }
-    
-    func updateRules(input : NSDictionary){
-        self.rules.removeAll()
-        for var index = 0; index < input["results"]?.count; ++index {
-            let rule = input["results"]![index] as! String
-            self.rules.append(rule)
-        }
+
+    class CustomPointAnnotationOpenSpot: MKPointAnnotation {
+        var rules: [String] = []
     }
 
-
+    class CustomPointAnnotationMySpot: MKPointAnnotation {
+        var rules: [String] = []
+    }
+    
+    class CustomPointAnnotationSpot: MKPointAnnotation {
+        var rules: [String] = []
+    }
 }
 
 
