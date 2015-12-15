@@ -113,14 +113,26 @@ class CarListTableViewController: UITableViewController {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
         
+//        if segue.identifier == "modifyCar" {
+//            let vc: ModifyCarViewController = segue.destinationViewController as! ModifyCarViewController
+//            
+//            let selectedIndex = self.tableView.indexPathForCell(sender as! UITableViewCell)
+//            
+//            vc.index = (selectedIndex?.row)!
+//        } else {
+//            let vc: ModifyCarViewController = segue.destinationViewController as! ModifyCarViewController
+//            
+//            vc.addCar = true
+//        }
+        
         if segue.identifier == "modifyCar" {
-            let vc: ModifyCarViewController = segue.destinationViewController as! ModifyCarViewController
+            let vc: CarModifyTableViewController = segue.destinationViewController as! CarModifyTableViewController
             
             let selectedIndex = self.tableView.indexPathForCell(sender as! UITableViewCell)
             
             vc.index = (selectedIndex?.row)!
         } else {
-            let vc: ModifyCarViewController = segue.destinationViewController as! ModifyCarViewController
+            let vc: CarModifyTableViewController = segue.destinationViewController as! CarModifyTableViewController
             
             vc.addCar = true
         }

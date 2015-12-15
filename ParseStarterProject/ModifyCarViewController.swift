@@ -24,7 +24,7 @@ class ModifyCarViewController: UIViewController, UITextFieldDelegate {
     
     var addCar = false
     
-    var cars = [NSManagedObject]()
+    //var cars = [NSManagedObject]()
     
     override func viewDidLoad() {
         super.viewDidLoad()

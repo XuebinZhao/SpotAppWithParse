@@ -98,6 +98,33 @@ class NewMapViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
         self.tabBarController?.tabBar.hidden = false
     }
     
+//    override func viewWillAppear(animated: Bool) {
+//        map.delegate = self
+//        manager = CLLocationManager()
+//        manager.delegate = self
+//        manager.desiredAccuracy = kCLLocationAccuracyBest
+//        
+//        self.map.showsUserLocation = true
+//        
+//        let region = MKCoordinateRegionMakeWithDistance(userLocation!.coordinate, 2000, 2000)
+//        map.setRegion(region, animated: true)
+//        
+//    }
+    func zoomInOnce() {
+        //print("here")
+        let coordinate = CLLocationCoordinate2DMake(latLocal, lonLocal)
+        
+        let latDelta:CLLocationDegrees = 0.05
+        
+        let lonDelta:CLLocationDegrees = 0.05
+        
+        let span:MKCoordinateSpan = MKCoordinateSpanMake(latDelta, lonDelta)
+        
+        let region:MKCoordinateRegion = MKCoordinateRegionMake(coordinate, span)
+        
+        self.map.setRegion(region, animated: false)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         map.delegate = self
@@ -110,6 +137,12 @@ class NewMapViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
         if activePlace == -1 {
             manager.requestAlwaysAuthorization()
             manager.startUpdatingLocation()
+            
+            let triggerTime = (Int64(NSEC_PER_SEC) * 3)
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, triggerTime), dispatch_get_main_queue(), { () -> Void in
+                self.zoomInOnce()
+            })
+            
         } else {
             
             let latitude  = NSString(string: places[activePlace]["lat"]!).doubleValue
@@ -138,22 +171,22 @@ class NewMapViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
             // **********************************************************************
             // code for route direction
             
-            let place = MKPlacemark(coordinate: coordinate, addressDictionary: nil)
-            destination = MKMapItem(placemark: place)
-            
-            let request = MKDirectionsRequest()
-            request.source = MKMapItem.mapItemForCurrentLocation()
-            request.destination = destination!
-            request.requestsAlternateRoutes = false
-            
-            let directions = MKDirections(request: request)
-            directions.calculateDirectionsWithCompletionHandler({ (response: MKDirectionsResponse?, error:NSError?) -> Void in
-                if error != nil {
-                    // if error then handle it
-                } else {
-                    self.showRoute(response!)
-                }
-            })
+//            let place = MKPlacemark(coordinate: coordinate, addressDictionary: nil)
+//            destination = MKMapItem(placemark: place)
+//            
+//            let request = MKDirectionsRequest()
+//            request.source = MKMapItem.mapItemForCurrentLocation()
+//            request.destination = destination!
+//            request.requestsAlternateRoutes = false
+//            
+//            let directions = MKDirections(request: request)
+//            directions.calculateDirectionsWithCompletionHandler({ (response: MKDirectionsResponse?, error:NSError?) -> Void in
+//                if error != nil {
+//                    // if error then handle it
+//                } else {
+//                    self.showRoute(response!)
+//                }
+//            })
             // **********************************************************************
             
         }
@@ -166,70 +199,70 @@ class NewMapViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
         
     }
     
-    func showDirections(lat: Double, lon: Double) {
-        let coordinate = CLLocationCoordinate2DMake(latLocal+lat, lonLocal+lon)
-        let annotation = MKPointAnnotation()
-        annotation.coordinate = coordinate
-        
-        let place = MKPlacemark(coordinate: coordinate, addressDictionary: nil)
-        destination = MKMapItem(placemark: place)
-        
-        let request = MKDirectionsRequest()
-        request.source = MKMapItem.mapItemForCurrentLocation()
-        request.destination = destination!
-        request.requestsAlternateRoutes = false
-        
-        let directions = MKDirections(request: request)
-        directions.calculateDirectionsWithCompletionHandler({ (response: MKDirectionsResponse?, error:NSError?) -> Void in
-            if error != nil {
-                // if error then handle it
-            } else {
-                self.showRoute(response!)
-            }
-        })
-    }
+//    func showDirections(lat: Double, lon: Double) {
+//        let coordinate = CLLocationCoordinate2DMake(latLocal+lat, lonLocal+lon)
+//        let annotation = MKPointAnnotation()
+//        annotation.coordinate = coordinate
+//        
+//        let place = MKPlacemark(coordinate: coordinate, addressDictionary: nil)
+//        destination = MKMapItem(placemark: place)
+//        
+//        let request = MKDirectionsRequest()
+//        request.source = MKMapItem.mapItemForCurrentLocation()
+//        request.destination = destination!
+//        request.requestsAlternateRoutes = false
+//        
+//        let directions = MKDirections(request: request)
+//        directions.calculateDirectionsWithCompletionHandler({ (response: MKDirectionsResponse?, error:NSError?) -> Void in
+//            if error != nil {
+//                // if error then handle it
+//            } else {
+//                self.showRoute(response!)
+//            }
+//        })
+//    }
     
     // **********************************************************************
-    func showRoute(response:MKDirectionsResponse) {
-        for route in response.routes {
-            map.addOverlay(route.polyline, level: MKOverlayLevel.AboveRoads)
-            
-            for step in route.steps {
-                var subString: String
-                if step.instructions.hasPrefix("Proceed"){}
-                if step.instructions.hasPrefix("Arrive"){}
-                if step.instructions.hasPrefix("The destination"){}
-                if step.instructions.hasPrefix("Make a U-turn at")
-                {
-                    subString = step.instructions
-                    subString = subString.stringByReplacingOccurrencesOfString("Make a U-turn at ", withString: "")
-                    print(subString)
-                }
-                if step.instructions.hasPrefix("Turn right onto ")
-                {
-                    subString = step.instructions
-                    subString = subString.stringByReplacingOccurrencesOfString("Turn right onto ", withString: "")
-                    print(subString)
-                }
-                if step.instructions.hasPrefix("Turn left onto ")
-                {
-                    subString = step.instructions
-                    subString = subString.stringByReplacingOccurrencesOfString("Turn left onto ", withString: "")
-                    print(subString)
-                }
-                
-            }
-        }
-//        let region = MKCoordinateRegionMakeWithDistance(userLocation!.coordinate, 2000, 2000)
-//        map.setRegion(region, animated: true)
-    }
-    
-    func mapView(mapView: MKMapView, rendererForOverlay overlay: MKOverlay) -> MKOverlayRenderer {
-        let renderer = MKPolylineRenderer(overlay: overlay)
-        renderer.strokeColor = UIColor.blueColor()
-        renderer.lineWidth = 5.0
-        return renderer
-    }
+//    func showRoute(response:MKDirectionsResponse) {
+//        for route in response.routes {
+//            map.addOverlay(route.polyline, level: MKOverlayLevel.AboveRoads)
+//            
+//            for step in route.steps {
+//                var subString: String
+//                if step.instructions.hasPrefix("Proceed"){}
+//                if step.instructions.hasPrefix("Arrive"){}
+//                if step.instructions.hasPrefix("The destination"){}
+//                if step.instructions.hasPrefix("Make a U-turn at")
+//                {
+//                    subString = step.instructions
+//                    subString = subString.stringByReplacingOccurrencesOfString("Make a U-turn at ", withString: "")
+//                    print(subString)
+//                }
+//                if step.instructions.hasPrefix("Turn right onto ")
+//                {
+//                    subString = step.instructions
+//                    subString = subString.stringByReplacingOccurrencesOfString("Turn right onto ", withString: "")
+//                    print(subString)
+//                }
+//                if step.instructions.hasPrefix("Turn left onto ")
+//                {
+//                    subString = step.instructions
+//                    subString = subString.stringByReplacingOccurrencesOfString("Turn left onto ", withString: "")
+//                    print(subString)
+//                }
+//                
+//            }
+//        }
+////        let region = MKCoordinateRegionMakeWithDistance(userLocation!.coordinate, 2000, 2000)
+////        map.setRegion(region, animated: true)
+//    }
+//    
+//    func mapView(mapView: MKMapView, rendererForOverlay overlay: MKOverlay) -> MKOverlayRenderer {
+//        let renderer = MKPolylineRenderer(overlay: overlay)
+//        renderer.strokeColor = UIColor.blueColor()
+//        renderer.lineWidth = 5.0
+//        return renderer
+//    }
     
     // **********************************************************************
     
@@ -313,6 +346,8 @@ class NewMapViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
         
         latLocal = latitude
         lonLocal = longitude
+        
+        
     }
     
     func indicateParkingLocation(latitude:Double, longitude:Double){
