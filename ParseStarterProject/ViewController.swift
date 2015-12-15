@@ -77,7 +77,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
                         
                         let vehicle = [make, model, location, isDefault]
                         
-                        var vehicles = [vehicle]
+                        let vehicles = [vehicle]
                         
                         user["vehicles"] = vehicles
                         user["firstName"] = "Spot"
@@ -87,8 +87,26 @@ class ViewController: UIViewController, UITextFieldDelegate {
                         
                         user.saveEventually()
                         
+                        let getImage = UIImage(named: "car_default.png")
+                        let imageData: NSData = UIImageJPEGRepresentation(getImage!, 1.0)!
+                        let imageForCar: PFFile = PFFile(name: "carImage.png", data: imageData)!
+                        
+                        let carImage = PFObject(className: "car")
+                        carImage["userId"] = user.objectId
+                        carImage["carImage"] = imageForCar
+                        carImage["carIndex"] = 0
+                        
+                        carImage.saveInBackgroundWithBlock({ (success, error) -> Void in
+                            if success {
+                                print(success)
+                            } else {
+                                print (error)
+                            }
+                        })
+                        
                         let mapViewControllerObejct = self.storyboard?.instantiateViewControllerWithIdentifier("logined")
                         self.presentViewController(mapViewControllerObejct!, animated: true, completion: nil)
+                        
                     } else {
                         if let errorString = error!.userInfo["error"] as? String {
                             errorMessage = errorString
@@ -97,6 +115,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
                     }
                 })
             } else {
+                // begin to process login steps
                 PFUser.logInWithUsernameInBackground(userName.text!, password: password.text!, block: { (user, error) -> Void in
                     self.activityIndicator.stopAnimating()
                     UIApplication.sharedApplication().endIgnoringInteractionEvents()
