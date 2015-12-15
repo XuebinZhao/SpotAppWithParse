@@ -13,6 +13,8 @@ import Parse
 
 class NewMapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
     
+    var rules = Dictionary<String,[String]>()
+    
     let user = PFUser.currentUser()
 
     @IBOutlet weak var openParkingSpot: UIBarButtonItem!
@@ -222,7 +224,7 @@ class NewMapViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
                 
                 annotation.title = title
                 
-                self.getRules(house, streetName: street, borough: borough, rules: &annotation.rules)
+                self.getRules(house, streetName: street, borough: borough, title: title)
                 
                 self.map.addAnnotation(annotation)
                 
@@ -415,9 +417,10 @@ class NewMapViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
             })
             
             let rulesAction = UIAlertAction(title: "Get Rules", style: .Default, handler: { action in
-                self.Get(pinLocation)
+                self.showRules(view.annotation)
+                
             })
-            
+
             let canelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
             
             if canReport {
@@ -431,6 +434,7 @@ class NewMapViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
                 claimAction.enabled = false
             }
 
+            actionSheet.addAction(rulesAction)
             actionSheet.addAction(reportAction)
             actionSheet.addAction(claimAction)
             actionSheet.addAction(canelAction)
@@ -470,10 +474,26 @@ class NewMapViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
         
     }
     
-
+    
+    func showRules(point: MKAnnotation?){
+        
+        if self.rules.isEmpty {
+            
+            let alertController = UIAlertController(title: "Whoops", message:
+                "Looks like something went wrong...", preferredStyle: UIAlertControllerStyle.Alert)
+            alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.Default,handler: nil))
+            self.presentViewController(alertController, animated: true, completion: nil)
+        } else {
+            let alertController = UIAlertController(title: "Success", message:
+                "\(self.rules)", preferredStyle: UIAlertControllerStyle.Alert)
+            alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.Default,handler: nil))
+            self.presentViewController(alertController, animated: true, completion: nil)
+        }
+    }
+    
     //MARK: - REST calls
     // This makes the GET call to httpbin.org. It simply gets the IP address and displays it on the screen.
-    func getRules(houseNumber : String, streetName : String, borough : String, inout rules : [String]) {
+    func getRules(houseNumber : String, streetName : String, borough : String, title : String) {
         
         // Setup the session to make REST GET call.  Notice the URL is https NOT http!!
         let postEndpoint: String = "http://alternateside.nyc/api/v3/location/\(borough)/\(streetName)/\(houseNumber)"
@@ -493,8 +513,14 @@ class NewMapViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
             // Read the JSON
             do {
                 if let results = NSString(data:data!, encoding: NSUTF8StringEncoding) {
+                    var rules = [""]
                     let jsonDictionary = try NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.MutableContainers) as! NSDictionary
-                    self.updateRules(jsonDictionary)
+                    for var index = 0; index < jsonDictionary["results"]?.count; ++index {
+                        let rule = jsonDictionary["results"]![index] as! String
+                        rules.append(rule)
+                    }
+                    self.rules.updateValue(rules, forKey: title)
+                    print(self.rules)
                 }
             } catch {
                 print("bad things happened")
@@ -538,14 +564,6 @@ class NewMapViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
         }
 
         return house
-    }
-    
-    func updateRules(input : NSDictionary){
-        self.rules.removeAll()
-        for var index = 0; index < input["results"]?.count; ++index {
-            let rule = input["results"]![index] as! String
-            self.rules.append(rule)
-        }
     }
 
     class CustomPointAnnotationOpenSpot: MKPointAnnotation {
