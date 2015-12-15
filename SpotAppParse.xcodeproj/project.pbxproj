@@ -26,12 +26,10 @@
 		915C6A321BE998E600CBD487 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 915C6A311BE998E600CBD487 /* CoreData.framework */; };
 		915C6A3B1BE9CDE900CBD487 /* UserProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 915C6A3A1BE9CDE900CBD487 /* UserProfileViewController.swift */; };
 		917587EC1BFEA2E50087D9BA /* ModifyCarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 917587EB1BFEA2E50087D9BA /* ModifyCarViewController.swift */; };
-		918468A31BE00EC600C2455E /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 918468A21BE00EC600C2455E /* MapViewController.swift */; };
 		918468A51BE03D7900C2455E /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 918468A41BE03D7900C2455E /* CoreLocation.framework */; };
 		91A2683E1BF2CD8C00288D6B /* ProfileEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91A2683D1BF2CD8C00288D6B /* ProfileEditViewController.swift */; };
 		91FB78D51BF3C1EC006F2DFD /* PickingImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91FB78D41BF3C1EC006F2DFD /* PickingImageViewController.swift */; };
 		91FB78D71BF55B2B006F2DFD /* CarListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91FB78D61BF55B2B006F2DFD /* CarListTableViewController.swift */; };
-		91FEF8B21BD967B100DE6868 /* UserListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91FEF8B11BD967B100DE6868 /* UserListTableViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -59,12 +57,10 @@
 		915C6A311BE998E600CBD487 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		915C6A3A1BE9CDE900CBD487 /* UserProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserProfileViewController.swift; sourceTree = "<group>"; };
 		917587EB1BFEA2E50087D9BA /* ModifyCarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModifyCarViewController.swift; sourceTree = "<group>"; };
-		918468A21BE00EC600C2455E /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		918468A41BE03D7900C2455E /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		91A2683D1BF2CD8C00288D6B /* ProfileEditViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileEditViewController.swift; sourceTree = "<group>"; };
 		91FB78D41BF3C1EC006F2DFD /* PickingImageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PickingImageViewController.swift; sourceTree = "<group>"; };
 		91FB78D61BF55B2B006F2DFD /* CarListTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CarListTableViewController.swift; sourceTree = "<group>"; };
-		91FEF8B11BD967B100DE6868 /* UserListTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserListTableViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -119,10 +115,8 @@
 		81BA81471A49DA1800E65899 /* SpotAppParse */ = {
 			isa = PBXGroup;
 			children = (
-				915C6A361BE99A4600CBD487 /* Models */,
 				915C6A371BE99A8400CBD487 /* Views */,
 				915C6A381BE99A9A00CBD487 /* Controllers */,
-				915C6A391BE99B5000CBD487 /* forTesting */,
 			);
 			name = SpotAppParse;
 			path = ParseStarterProject;
@@ -156,14 +150,6 @@
 			name = "System Frameworks";
 			sourceTree = "<group>";
 		};
-		915C6A361BE99A4600CBD487 /* Models */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Models;
-			path = ..;
-			sourceTree = "<group>";
-		};
 		915C6A371BE99A8400CBD487 /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -189,21 +175,12 @@
 			name = Controllers;
 			sourceTree = "<group>";
 		};
-		915C6A391BE99B5000CBD487 /* forTesting */ = {
-			isa = PBXGroup;
-			children = (
-				91FEF8B11BD967B100DE6868 /* UserListTableViewController.swift */,
-				918468A21BE00EC600C2455E /* MapViewController.swift */,
-			);
-			name = forTesting;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		81BA81441A49DA1800E65899 /* SpotAppParse */ = {
+		81BA81441A49DA1800E65899 /* Spot */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 81BA81641A49DA1800E65899 /* Build configuration list for PBXNativeTarget "SpotAppParse" */;
+			buildConfigurationList = 81BA81641A49DA1800E65899 /* Build configuration list for PBXNativeTarget "Spot" */;
 			buildPhases = (
 				81BA81411A49DA1800E65899 /* Sources */,
 				81BA81421A49DA1800E65899 /* Frameworks */,
@@ -214,7 +191,7 @@
 			);
 			dependencies = (
 			);
-			name = SpotAppParse;
+			name = Spot;
 			productName = ParseStarterProject;
 			productReference = 81BA81451A49DA1800E65899 /* SpotAppParse.app */;
 			productType = "com.apple.product-type.application";
@@ -248,7 +225,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				81BA81441A49DA1800E65899 /* SpotAppParse */,
+				81BA81441A49DA1800E65899 /* Spot */,
 			);
 		};
 /* End PBXProject section */
@@ -288,7 +265,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				91FEF8B21BD967B100DE6868 /* UserListTableViewController.swift in Sources */,
 				9157D5F41BE15D4000D63832 /* NewMapViewController.swift in Sources */,
 				915C6A301BE96FBB00CBD487 /* CounterViewController.swift in Sources */,
 				91A2683E1BF2CD8C00288D6B /* ProfileEditViewController.swift in Sources */,
@@ -299,7 +275,6 @@
 				81BA814B1A49DA1800E65899 /* AppDelegate.swift in Sources */,
 				915C6A3B1BE9CDE900CBD487 /* UserProfileViewController.swift in Sources */,
 				91FB78D51BF3C1EC006F2DFD /* PickingImageViewController.swift in Sources */,
-				918468A31BE00EC600C2455E /* MapViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -410,7 +385,7 @@
 				INFOPLIST_FILE = Resources/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.teamsport.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.teamspot.SpotApp;
 				PRODUCT_NAME = SpotAppParse;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -428,7 +403,7 @@
 				INFOPLIST_FILE = Resources/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.teamsport.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.teamspot.SpotApp;
 				PRODUCT_NAME = SpotAppParse;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -446,7 +421,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		81BA81641A49DA1800E65899 /* Build configuration list for PBXNativeTarget "SpotAppParse" */ = {
+		81BA81641A49DA1800E65899 /* Build configuration list for PBXNativeTarget "Spot" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				81BA81651A49DA1800E65899 /* Debug */,

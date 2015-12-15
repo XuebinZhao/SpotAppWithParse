@@ -67,10 +67,11 @@ class NewMapViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
                 for spots in objects!{
                     let point = spots["location"]
                     
-                    let annotation = MKPointAnnotation()
+                    let annotation = CustomPointAnnotation()
                     annotation.coordinate = CLLocationCoordinate2DMake(point.latitude, point.longitude)
                     annotation.title = "Open Spot!"
                     annotation.subtitle = spots.objectId!
+                    annotation.rules = spots["parkingRules"] as! [String]
                     self.map.addAnnotation(annotation)
                 }
                 
@@ -133,7 +134,6 @@ class NewMapViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
             
             annotation.title = places[activePlace]["name"]
             
-            //self.map.addAnnotation(annotation)
             
             // **********************************************************************
             // code for route direction
@@ -236,6 +236,8 @@ class NewMapViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
     func action(gestureRecognizer:UIGestureRecognizer) {
         if gestureRecognizer.state == UIGestureRecognizerState.Began {
             
+            var status = 0;
+            
             let touchPoint = gestureRecognizer.locationInView(self.map)
             
             let newCoordinate = self.map.convertPoint(touchPoint, toCoordinateFromView: self.map)
@@ -244,6 +246,7 @@ class NewMapViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
             
             CLGeocoder().reverseGeocodeLocation(pinLocation, completionHandler: { (placemarks, error) -> Void in
                 
+                var status = 0;
                 var title = ""
                 var house:String = ""
                 var street:String = ""
@@ -276,19 +279,14 @@ class NewMapViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
                 
                 house = self.parseHouse(house)
                 
-                print(house)
-                print(street)
-                print(borough)
-                
-                self.getRules(house, streetName: street, borough: borough, rules: &self.rules)
-                
+                self.getRules(house, streetName: street, borough: borough, rules: &self.rules, status: &status)
                 
                 if title == "" {
                     title = "Added \(NSDate())"
                 }
 
                 // Putting a pin into map
-                let annotation = MKPointAnnotation()
+                let annotation = CustomPointAnnotation()
                 
                 annotation.coordinate = newCoordinate
                 
@@ -298,6 +296,7 @@ class NewMapViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
                 //annotation.
                 
                 self.map.addAnnotation(annotation)
+                
                 
             })
             
@@ -336,7 +335,6 @@ class NewMapViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
                 self.presentViewController(alertController, animated: true, completion: nil)
             }
         })
-
         
     }
     
@@ -381,8 +379,6 @@ class NewMapViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
             // save location information into a dictionary
             places.append(["name":title,"lat":"\(latitude)","lon":"\(longitude)"])
             
-            
-            
             for vehicle in (self.user!["vehicles"] as? NSArray)!
             {
                 if vehicle[3] != nil
@@ -400,7 +396,7 @@ class NewMapViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
                     }
                 }
             }
-
+            
             self.user!.saveEventually()
 
             let annotation = MKPointAnnotation()
@@ -418,8 +414,6 @@ class NewMapViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
             let region:MKCoordinateRegion = MKCoordinateRegionMake(coordinate, span)
             
             self.map.setRegion(region, animated: true)
-
-            self.printRules()
             
         })
     }
@@ -463,6 +457,7 @@ class NewMapViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
         if control == view.rightCalloutAccessoryView {
             canReport = false
             canClaim = false
+            
             let userLocation = CLLocation(latitude: latLocal, longitude: lonLocal)
             let pinLocation = CLLocation(latitude: view.annotation!.coordinate.latitude, longitude: view.annotation!.coordinate.longitude)
             
@@ -474,14 +469,21 @@ class NewMapViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
             
             let actionSheet = UIAlertController(title: "Spot App", message: nil, preferredStyle: .ActionSheet)
             
-            let reportAction = UIAlertAction(title: "Report Spot", style: .Default, handler: { action in
+            
+            let reportAction = UIAlertAction(title: "Report Spot", style: .Destructive, handler: { action in
                 self.reportSpot(pinLocation)
             })
             
-            let claimAction = UIAlertAction(title: "Claim Spot", style: .Destructive, handler: { action in
+            let claimAction = UIAlertAction(title: "Claim Spot", style: .Default,  handler: { action in
+
                 self.claimSpot(view.annotation!.subtitle!!)
                 mapView.removeAnnotation(view.annotation!)
+
             })
+            
+
+
+        
             
             let canelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
             
@@ -538,7 +540,7 @@ class NewMapViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
 
     //MARK: - REST calls
     // This makes the GET call to httpbin.org. It simply gets the IP address and displays it on the screen.
-    func getRules(houseNumber : String, streetName : String, borough : String, inout rules : [String]) {
+    func getRules(houseNumber : String, streetName : String, borough : String, inout rules : [String], inout status : Int) {
         
         // Setup the session to make REST GET call.  Notice the URL is https NOT http!!
         let postEndpoint: String = "http://alternateside.nyc/api/v3/location/\(borough)/\(streetName)/\(houseNumber)"
@@ -553,7 +555,9 @@ class NewMapViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
                     print("Not a 200 response")
                     return
             }
-            print(realResponse.statusCode)
+            if realResponse.statusCode == 200 {
+                status = 200;
+            }
             
             // Read the JSON
             do {
@@ -583,6 +587,8 @@ class NewMapViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
         else if street.rangeOfString("St") != nil{
             street.replaceRange(street.rangeOfString("St")!, with: "STREET")
         }
+        
+        // insert the code for the rest of the street endings
         
         if let range = street.rangeOfString("\\d*(st|nd|rd|th)", options: .RegularExpressionSearch) {
             let newRange = Range<String.Index>(start: range.endIndex.advancedBy(-2), end: range.endIndex )
@@ -618,6 +624,10 @@ class NewMapViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
     }
 
 
+}
+
+class CustomPointAnnotation: MKPointAnnotation {
+    var rules: [String]!
 }
 
 
