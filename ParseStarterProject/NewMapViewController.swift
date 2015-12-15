@@ -22,8 +22,6 @@ class NewMapViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
     
     var claimId = ""
     
-    var rules = [String]()
-    
     var canReport = false
     
     @IBOutlet var secondaryMenu: UIView!
@@ -67,7 +65,7 @@ class NewMapViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
                 for spots in objects!{
                     let point = spots["location"]
                     
-                    let annotation = MKPointAnnotation()
+                    let annotation = CustomPointAnnotationOpenSpot()
                     annotation.coordinate = CLLocationCoordinate2DMake(point.latitude, point.longitude)
                     annotation.title = "Open Spot!"
                     annotation.subtitle = spots.objectId!
@@ -211,22 +209,20 @@ class NewMapViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
                 print(street)
                 print(borough)
                 
-                self.getRules(house, streetName: street, borough: borough, rules: &self.rules)
-                
                 
                 if title == "" {
                     title = "Added \(NSDate())"
                 }
 
                 // Putting a pin into map
-                let annotation = MKPointAnnotation()
+                
+                let annotation = CustomPointAnnotationSpot()
                 
                 annotation.coordinate = newCoordinate
                 
                 annotation.title = title
                 
-                // Try to add a UIButton in the pin
-                //annotation.
+                self.getRules(house, streetName: street, borough: borough, rules: &annotation.rules)
                 
                 self.map.addAnnotation(annotation)
                 
@@ -336,7 +332,7 @@ class NewMapViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
 
             self.user!.saveEventually()
 
-            let annotation = MKPointAnnotation()
+            let annotation = CustomPointAnnotationMySpot()
             
             annotation.coordinate = coordinate
             
@@ -351,8 +347,6 @@ class NewMapViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
             let region:MKCoordinateRegion = MKCoordinateRegionMake(coordinate, span)
             
             self.map.setRegion(region, animated: true)
-
-            self.printRules()
             
         })
     }
@@ -372,19 +366,23 @@ class NewMapViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
         }
         
         if pinView == nil {
-                pinView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: reuseId)
-                pinView!.canShowCallout = true
-                if annotation.title! == "Open Spot!"{
-                    pinView!.pinColor = .Green
-                }else{
-                    pinView!.pinColor = .Red
-                }
-                pinView!.rightCalloutAccessoryView = UIButton(type: .DetailDisclosure)
-            } else {
-            if annotation.title! == "Open Spot!"{
-                pinView!.pinColor = .Green
-            }else{
-                pinView!.pinColor = .Red
+            pinView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: reuseId)
+            pinView!.canShowCallout = true
+            if annotation.isMemberOfClass(CustomPointAnnotationOpenSpot){
+                pinView!.pinTintColor = .greenColor()
+            }else if annotation.isMemberOfClass(CustomPointAnnotationMySpot){
+                pinView!.pinTintColor = .purpleColor()
+            }else {
+                pinView!.pinTintColor = .redColor()
+            }
+            pinView!.rightCalloutAccessoryView = UIButton(type: .DetailDisclosure)
+        } else {
+            if annotation.isMemberOfClass(CustomPointAnnotationOpenSpot){
+                pinView!.pinTintColor = .greenColor()
+            }else if annotation.isMemberOfClass(CustomPointAnnotationMySpot){
+                pinView!.pinTintColor = .purpleColor()
+            }else {
+                pinView!.pinTintColor = .redColor()
             }
             pinView!.annotation = annotation
         }
@@ -414,6 +412,10 @@ class NewMapViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
             let claimAction = UIAlertAction(title: "Claim Spot", style: .Destructive, handler: { action in
                 self.claimSpot(view.annotation!.subtitle!!)
                 mapView.removeAnnotation(view.annotation!)
+            })
+            
+            let rulesAction = UIAlertAction(title: "Get Rules", style: .Default, handler: { action in
+                self.Get(pinLocation)
             })
             
             let canelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
@@ -538,10 +540,6 @@ class NewMapViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
         return house
     }
     
-    func printRules() {
-        print(self.rules)
-    }
-    
     func updateRules(input : NSDictionary){
         self.rules.removeAll()
         for var index = 0; index < input["results"]?.count; ++index {
@@ -550,7 +548,17 @@ class NewMapViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
         }
     }
 
+    class CustomPointAnnotationOpenSpot: MKPointAnnotation {
+        var rules: [String] = []
+    }
 
+    class CustomPointAnnotationMySpot: MKPointAnnotation {
+        var rules: [String] = []
+    }
+    
+    class CustomPointAnnotationSpot: MKPointAnnotation {
+        var rules: [String] = []
+    }
 }
 
 
