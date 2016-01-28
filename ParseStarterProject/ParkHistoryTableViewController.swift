@@ -19,7 +19,9 @@ class ParkHistoryTableViewController: UITableViewController {
 
         if places.count == 1 {
             
-            places.append(["name":"Grand Central Terminal","lat":"40.7528","lon":"-73.9765"])
+            places.removeAtIndex(0)
+            
+            places.insert(["name":"Grand Central Terminal","lat":"40.7528","lon":"-73.9765"], atIndex: 0)
         }
     }
 

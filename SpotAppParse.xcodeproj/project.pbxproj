@@ -24,7 +24,9 @@
 		9157D5F61BE15E2C00D63832 /* ParkHistoryTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9157D5F51BE15E2C00D63832 /* ParkHistoryTableViewController.swift */; };
 		915C6A321BE998E600CBD487 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 915C6A311BE998E600CBD487 /* CoreData.framework */; };
 		915C6A3B1BE9CDE900CBD487 /* UserProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 915C6A3A1BE9CDE900CBD487 /* UserProfileViewController.swift */; };
-		917587EC1BFEA2E50087D9BA /* ModifyCarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 917587EB1BFEA2E50087D9BA /* ModifyCarViewController.swift */; };
+		917D26791C1FAB29000FEFB5 /* lexus_1.png in Resources */ = {isa = PBXBuildFile; fileRef = 917D26781C1FAB29000FEFB5 /* lexus_1.png */; };
+		917D267B1C1FB6C5000FEFB5 /* CarModifyTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 917D267A1C1FB6C5000FEFB5 /* CarModifyTableViewController.swift */; };
+		918468A31BE00EC600C2455E /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 918468A21BE00EC600C2455E /* MapViewController.swift */; };
 		918468A51BE03D7900C2455E /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 918468A41BE03D7900C2455E /* CoreLocation.framework */; };
 		91A2683E1BF2CD8C00288D6B /* ProfileEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91A2683D1BF2CD8C00288D6B /* ProfileEditViewController.swift */; };
 		91C6FFBF1C1FDB4900D2F869 /* car_default.png in Resources */ = {isa = PBXBuildFile; fileRef = 91C6FFBE1C1FDB4900D2F869 /* car_default.png */; };
@@ -33,6 +35,7 @@
 		91E046FD1C1FD25D00D29912 /* ShowRouteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91E046FC1C1FD25D00D29912 /* ShowRouteViewController.swift */; };
 		91FB78D51BF3C1EC006F2DFD /* PickingImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91FB78D41BF3C1EC006F2DFD /* PickingImageViewController.swift */; };
 		91FB78D71BF55B2B006F2DFD /* CarListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91FB78D61BF55B2B006F2DFD /* CarListTableViewController.swift */; };
+		91FEF8B21BD967B100DE6868 /* UserListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91FEF8B11BD967B100DE6868 /* UserListTableViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -58,7 +61,9 @@
 		9157D5F51BE15E2C00D63832 /* ParkHistoryTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParkHistoryTableViewController.swift; sourceTree = "<group>"; };
 		915C6A311BE998E600CBD487 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		915C6A3A1BE9CDE900CBD487 /* UserProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserProfileViewController.swift; sourceTree = "<group>"; };
-		917587EB1BFEA2E50087D9BA /* ModifyCarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModifyCarViewController.swift; sourceTree = "<group>"; };
+		917D26781C1FAB29000FEFB5 /* lexus_1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = lexus_1.png; sourceTree = "<group>"; };
+		917D267A1C1FB6C5000FEFB5 /* CarModifyTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CarModifyTableViewController.swift; sourceTree = "<group>"; };
+		918468A21BE00EC600C2455E /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		918468A41BE03D7900C2455E /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		91A2683D1BF2CD8C00288D6B /* ProfileEditViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileEditViewController.swift; sourceTree = "<group>"; };
 		91C6FFBE1C1FDB4900D2F869 /* car_default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = car_default.png; sourceTree = "<group>"; };
@@ -67,6 +72,7 @@
 		91E046FC1C1FD25D00D29912 /* ShowRouteViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShowRouteViewController.swift; sourceTree = "<group>"; };
 		91FB78D41BF3C1EC006F2DFD /* PickingImageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PickingImageViewController.swift; sourceTree = "<group>"; };
 		91FB78D61BF55B2B006F2DFD /* CarListTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CarListTableViewController.swift; sourceTree = "<group>"; };
+		91FEF8B11BD967B100DE6868 /* UserListTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserListTableViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -124,8 +130,10 @@
 		81BA81471A49DA1800E65899 /* SpotAppParse */ = {
 			isa = PBXGroup;
 			children = (
+				915C6A361BE99A4600CBD487 /* Models */,
 				915C6A371BE99A8400CBD487 /* Views */,
 				915C6A381BE99A9A00CBD487 /* Controllers */,
+				915C6A391BE99B5000CBD487 /* forTesting */,
 			);
 			name = SpotAppParse;
 			path = ParseStarterProject;
@@ -159,6 +167,14 @@
 			name = "System Frameworks";
 			sourceTree = "<group>";
 		};
+		915C6A361BE99A4600CBD487 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Models;
+			path = ..;
+			sourceTree = "<group>";
+		};
 		915C6A371BE99A8400CBD487 /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -183,6 +199,15 @@
 				915C6A3A1BE9CDE900CBD487 /* UserProfileViewController.swift */,
 			);
 			name = Controllers;
+			sourceTree = "<group>";
+		};
+		915C6A391BE99B5000CBD487 /* forTesting */ = {
+			isa = PBXGroup;
+			children = (
+				91FEF8B11BD967B100DE6868 /* UserListTableViewController.swift */,
+				918468A21BE00EC600C2455E /* MapViewController.swift */,
+			);
+			name = forTesting;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -278,6 +303,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				91FEF8B21BD967B100DE6868 /* UserListTableViewController.swift in Sources */,
 				9157D5F41BE15D4000D63832 /* NewMapViewController.swift in Sources */,
 				917D267B1C1FB6C5000FEFB5 /* CarModifyTableViewController.swift in Sources */,
 				91E046FD1C1FD25D00D29912 /* ShowRouteViewController.swift in Sources */,
@@ -289,6 +315,7 @@
 				915C6A3B1BE9CDE900CBD487 /* UserProfileViewController.swift in Sources */,
 				91C6FFC11C208C8000D2F869 /* TimeMeterViewController.swift in Sources */,
 				91FB78D51BF3C1EC006F2DFD /* PickingImageViewController.swift in Sources */,
+				918468A31BE00EC600C2455E /* MapViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

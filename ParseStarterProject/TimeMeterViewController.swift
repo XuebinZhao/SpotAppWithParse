@@ -106,17 +106,6 @@ class TimeMeterViewController: UIViewController {
     @IBAction func m30TimeButtonTapped(sender: AnyObject) {remainingSeconds += 1800}
     @IBAction func h1TimeButtonTapped(sender: AnyObject) {remainingSeconds += 3600}
 
-    @IBAction func m15BeforeTime(sender: AnyObject) {remainingSeconds -= 900
-    }
-    @IBAction func m30BeforeTime(sender: AnyObject) {remainingSeconds -= 1800
-    }
-    @IBAction func m45BeforeTime(sender: AnyObject) {remainingSeconds -= 2700
-    }
-    @IBAction func h1BeforeTime(sender: AnyObject) {remainingSeconds -= 3600
-    }
-    
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
 
