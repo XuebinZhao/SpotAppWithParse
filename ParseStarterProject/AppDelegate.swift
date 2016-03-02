@@ -40,8 +40,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // ParseCrashReporting.enable()
         //
         // Uncomment and fill in with your Parse credentials:
-        Parse.setApplicationId("26paobnlHmdNmoGPaaNeuhke2fgDlWcI3xxiB3YN",
-            clientKey: "NrezxIZVuHoqupYuV0y6DUuUqJO1ScGGZpLFr0bN")
+//        Parse.setApplicationId("26paobnlHmdNmoGPaaNeuhke2fgDlWcI3xxiB3YN",
+//            clientKey: "NrezxIZVuHoqupYuV0y6DUuUqJO1ScGGZpLFr0bN")
+        
+        Parse.setLogLevel(PFLogLevel.Info);
+        
+        let config = ParseClientConfiguration(block: {
+            (ParseMutableClientConfiguration) -> Void in
+            
+            ParseMutableClientConfiguration.applicationId = "26paobnlHmdNmoGPaaNeuhke2fgDlWcI3xxiB3YN";
+            ParseMutableClientConfiguration.clientKey = "NrezxIZVuHoqupYuV0y6DUuUqJO1ScGGZpLFr0bN";
+            ParseMutableClientConfiguration.server = "http://myapp.herokuapp.com/parse";
+        });
+        
+        Parse.initializeWithConfiguration(config)
         //
         // If you are using Facebook, uncomment and add your FacebookAppID to your bundle's plist as
         // described here: https://developers.facebook.com/docs/getting-started/facebook-sdk-for-ios/
@@ -54,7 +66,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let defaultACL = PFACL();
 
         // If you would like all objects to be private by default, remove this line.
-        defaultACL.setPublicReadAccess(true)
+        let acl = PFACL()
+        acl.publicReadAccess = true
+        acl.publicWriteAccess = true
+      
+
 
         PFACL.setDefaultACL(defaultACL, withAccessForCurrentUser:true)
 

@@ -427,7 +427,7 @@ class NewMapViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
                 
             })
 
-            let canelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
+            let canelAction = UIAlertAction(title: " l", style: .Cancel, handler: nil)
             
             if canReport {
                 reportAction.enabled = true
